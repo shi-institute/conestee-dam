@@ -57,6 +57,22 @@
 		align-items: center;
 		height: 100%;
 		padding: 0 1rem;
-		gap: 1rem;
+		gap: 0.25rem;
+	}
+
+	a {
+		text-decoration: none;
+		cursor: default;
+		color: #4868a9;
+		font-weight: 500;
+		padding: 0.5rem 0.5rem;
+		transition: background-color 80ms ease-in-out;
+		border-radius: 0.25rem;
+	}
+	a:hover {
+		background-color: #ecf3ff;
+	}
+	a:active {
+		background-color: #d6e2ff;
 	}
 </style>
