@@ -27,6 +27,15 @@
 		--header-height: 3rem;
 	}
 
+	/* make StoryMap navigation bar stick below the main app navigation bar */
+	:global(.layout-wrapper.navigation-bar) {
+		top: var(--header-height) !important;
+	}
+	/* make StoryMap navigation bar the same size as the main app navigation bar */
+	:global(.layout-wrapper.navigation-bar .bar-container) {
+		height: var(--header-height) !important;
+	}
+
 	header {
 		position: sticky;
 		top: 0;
