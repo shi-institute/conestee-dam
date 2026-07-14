@@ -1,0 +1,50 @@
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  pull-requests: write
+  contents: write
+
+concurrency:
+  group: preview-pages-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v7
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v7
+        with:
+          node-version: 24
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build
+        run: npm run build
+        env:
+          BASE_PATH: '/${{ github.event.repository.name }}'
+
+      - name: Deploy branch preview
+        uses: rajyan/preview-pages@v1
+        with:
+          source-dir: build
+          target-branch: gh-pages
+          branch-per-commit: false
+          pr-per-commit: false
+
+      - name: Deploy commit preview
+        uses: rajyan/preview-pages@v1
+        with:
+          source-dir: build
+          target-branch: gh-pages
+          branch-per-commit: true
+          pr-per-commit: true
