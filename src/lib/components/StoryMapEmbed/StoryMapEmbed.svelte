@@ -66,7 +66,6 @@
 						node instanceof HTMLElement &&
 						node.tagName === 'ARTICLE' &&
 						node.classList.contains('story') &&
-						node.querySelector('.title-container') &&
 						node.querySelector('.sc-title')
 					) {
 						observer.disconnect();
@@ -112,7 +111,7 @@
 	.loading-message {
 		position: absolute;
 		inset: 0;
-
+		background-color: #f5f9ff;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
