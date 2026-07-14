@@ -8,6 +8,9 @@
 	<nav>
 		<ul>
 			<li>
+				<a href={resolve('/')}>Home</a>
+			</li>
+			<li>
 				<a href={resolve('/story/pollution')}>Pollution StoryMap</a>
 			</li>
 			<li>
