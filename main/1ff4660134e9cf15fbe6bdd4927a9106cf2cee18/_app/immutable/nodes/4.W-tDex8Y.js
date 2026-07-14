@@ -1,0 +1,1 @@
+import"../chunks/CoRu_uAO.js";import"../chunks/xihTtKlq.js";import{n as e}from"../chunks/TL_Npbko.js";function t(t){e(t,{storyId:`1e96d03d7144440ab8c44a8bb5a4db6b`,loadingHeight:`calc(100dvh - var(--header-height))`})}export{t as component};
