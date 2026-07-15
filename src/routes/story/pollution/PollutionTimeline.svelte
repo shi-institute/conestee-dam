@@ -1,14 +1,34 @@
 <script lang="ts">
 	import { Timeline } from '$lib/components';
+
+	import TimberDam from './Glendale-Timber-Dam.png?enhanced&w=96&aspect=1';
+	import Sanborn2020 from './Sanborn-ConesteeMills-1920.png?enhanced&w=96&aspect=1';
 </script>
 
 <Timeline.Track>
-	<Timeline.Entry date={1980}>
+	<Timeline.Entry
+		date={1920}
+		icon={{
+			src: Sanborn2020,
+			alt: ''
+		}}
+	>
 		{#snippet heading()}
-			Lorem ipsum dolor sit amet consectetur adipiscing elit.
+			Sanborn Map
 		{/snippet}
 		{#snippet caption()}
-			1980
+			1920
+		{/snippet}
+
+		<enhanced:img src="./Sanborn-ConesteeMills-1920.png" alt="Sanborn Map 1920" />
+	</Timeline.Entry>
+
+	<Timeline.Entry date={1923} icon={{ src: TimberDam, alt: '' }}>
+		{#snippet heading()}
+			City determined need for sewage disposal plant for Greenville
+		{/snippet}
+		{#snippet caption()}
+			1923
 		{/snippet}
 
 		<p>
@@ -34,12 +54,12 @@
 		</ol>
 	</Timeline.Entry>
 
-	<Timeline.Entry date={1981}>
+	<Timeline.Entry date={{ start: 1923, end: 1924 }} icon={{ src: TimberDam, alt: '' }}>
 		{#snippet heading()}
-			Lorem ipsum dolor sit amet consectetur adipiscing elit.
+			Reedy River and Lake Conestee conditions "at their worst"
 		{/snippet}
 		{#snippet caption()}
-			1981
+			1923-1924
 		{/snippet}
 
 		<p>
@@ -66,17 +86,17 @@
 	</Timeline.Entry>
 
 	<Timeline.Entry
-		date={{ start: 1981, end: 1985 }}
+		date={{ start: 1923, end: 1924 }}
 		icon={{
 			src: 'https://imgs.search.brave.com/fk3dWwxKWb3Rso5QonAo8o3pOS0mF7qRYcU_16STB4Q/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9iLnRo/dW1icy5yZWRkaXRt/ZWRpYS5jb20vZkpP/Qm1MclJ3d0NUNG1O/RTZjdGN4WjM5VDAy/WVpGMkUzdGdvN0ZY/bG5rcy5qcGc',
 			alt: 'Sample icon'
 		}}
 	>
 		{#snippet heading()}
-			Lorem ipsum dolor sit amet consectetur adipiscing elit.
+			much sickness in Conestee Mills
 		{/snippet}
 		{#snippet caption()}
-			1981-1985
+			1923-1924
 		{/snippet}
 
 		<p>
@@ -121,35 +141,79 @@
 		</p>
 	</Timeline.Entry>
 
-	<Timeline.Entry date={1984}>
+	<Timeline.Entry date={{ start: 1923, end: 1927 }} icon={{ src: TimberDam, alt: '' }}>
 		{#snippet heading()}
-			Lorem ipsum dolor sit amet consectetur adipiscing elit.
+			Widespread complaints about sewage in the Reedy River and Lake Conestee throughout the City
 		{/snippet}
 		{#snippet caption()}
-			1984
+			1923-1927
 		{/snippet}
 
 		<p>
-			Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus
-			duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus
-			nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut
-			hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra
-			inceptos himenaeos.
+			R.F. Watson-Mayor; first sewage complaints (1924 or 1925); complaints throughout City; need
+			for sewer District; raw sewage from sources upstream of city; 15-20 times as many people above
+			the City, e.g. City View
 		</p>
+	</Timeline.Entry>
+
+	<Timeline.Entry date={1923} icon={{ src: TimberDam, alt: '' }}>
+		{#snippet heading()}
+			State and County healthy authorities become active
+		{/snippet}
+		{#snippet caption()}
+			1923
+		{/snippet}
+
+		<p>conditions very serious; State and County healthy authorities become active</p>
 
 		<p>
-			Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae
-			pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean
-			sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis
-			massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti
-			sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
+			Reedy River in very bad condition; per Dr. Baylis Earle; inspections by Earle and Filby (City
+			Engineer)
 		</p>
+	</Timeline.Entry>
 
-		<ol>
-			<li>First item</li>
-			<li>Second item</li>
-			<li>Third item</li>
-		</ol>
+	<Timeline.Entry date={1924} icon={{ src: TimberDam, alt: '' }}>
+		{#snippet heading()}
+			lake drawn down several times to release contaminated water
+		{/snippet}
+		{#snippet caption()}
+			1924
+		{/snippet}
+
+		<p>conditions very serious; State and County healthy authorities become active</p>
+
+		<p>
+			Reedy River in very bad condition; per Dr. Baylis Earle; inspections by Earle and Filby (City
+			Engineer)
+		</p>
+	</Timeline.Entry>
+
+	<Timeline.Entry date={{ start: 1924, end: 1925 }} icon={{ src: TimberDam, alt: '' }}>
+		{#snippet heading()}
+			After long legislative stuggle, Greenville becomes first city in South Carolina to treat
+			sewage
+		{/snippet}
+		{#snippet caption()}
+			1924-1925
+		{/snippet}
+
+		<p>City agitated legislature in 1924</p>
+
+		<p>
+			minutes of Greater Greenville Sewer District Commission; proposals for award to J.E. Sirrine
+			for sewer plant
+		</p>
+	</Timeline.Entry>
+
+	<Timeline.Entry date={1925} icon={{ src: TimberDam, alt: '' }}>
+		{#snippet heading()}
+			Conestee Mills sues City of Greenville
+		{/snippet}
+		{#snippet caption()}
+			1924-1925
+		{/snippet}
+
+		<p>Lawsuit Conestee Mills v. City of Greenville Commenced - seeking $100K damages</p>
 	</Timeline.Entry>
 </Timeline.Track>
 
