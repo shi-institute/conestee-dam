@@ -209,4 +209,10 @@
 	details[open] {
 		margin-block: 0.25rem;
 	}
+
+	/* children styles */
+	:is(details :global(img)) {
+		max-width: 100%;
+		height: auto;
+	}
 </style>
