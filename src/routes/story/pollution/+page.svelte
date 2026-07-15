@@ -8,16 +8,17 @@
 		const timelineCodeBlock = Array.from(codeBlocks).find((block) => {
 			const codeElement = block.querySelector('pre > code');
 			return codeElement?.textContent === '{ "type": "mount", "component": "PollutionTimeline" }';
-		});
+		}) as HTMLElement | undefined;
 
-		if (!timelineCodeBlock) {
+		if (!timelineCodeBlock || !timelineCodeBlock.firstElementChild) {
 			console.error('Timeline code block not found in the article.');
 			return;
 		}
 
 		const target = document.createElement('div');
-		target.style.padding = '0 1rem';
-		timelineCodeBlock.firstElementChild?.replaceWith(target);
+		target.style.margin = '0 auto';
+		timelineCodeBlock.firstElementChild.innerHTML = '';
+		timelineCodeBlock.firstElementChild.appendChild(target);
 		mount(PollutionTimeline, { target });
 	}
 </script>
