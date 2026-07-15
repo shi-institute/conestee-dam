@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { Picture } from '@sveltejs/enhanced-img';
 	import { untrack, type Snippet } from 'svelte';
 	import { getTimelineTrackContext, type TimelineDate } from './context';
 
@@ -25,7 +26,7 @@
 		 */
 		children?: Snippet;
 		icon?: {
-			src: string;
+			src: string | Picture;
 			alt: string;
 		};
 		/**
@@ -52,7 +53,11 @@
 			<div class="line"></div>
 		</div>
 
-		<img src={icon?.src} alt={icon?.alt} class="timeline-entry-icon" />
+		{#if typeof icon?.src === 'string' || !icon?.src}
+			<img src={icon?.src} alt={icon?.alt} class="timeline-entry-icon" />
+		{:else if icon?.src}
+			<enhanced:img src={icon.src} alt={icon.alt} class="timeline-entry-icon enhanced" />
+		{/if}
 
 		<div class="timeline-entry-summary-content">
 			<svelte:element this={headingLevel} class="timeline-entry-heading">
@@ -108,6 +113,11 @@
 	}
 	:is(details:hover, details:focus-within) .timeline-entry-line .line {
 		width: 100%;
+	}
+
+	/* enhanced-image wraps img tags in a picture tag */
+	:global(picture:has(.timeline-entry-icon)) {
+		display: contents;
 	}
 
 	.timeline-entry-icon {
