@@ -1,0 +1,1 @@
+import{B as e,V as t,n,x as r,y as i}from"../chunks/DiLCZN5A.js";import"../chunks/xihTtKlq.js";var a=r(`<p>Redirecting to <a href="https://lakeconesteedam.org/">https://lakeconesteedam.org/</a>...</p>`);function o(r,o){t(o,!0),n(()=>{window.location.replace(`https://lakeconesteedam.org/`)}),i(r,a()),e()}export{o as component};
