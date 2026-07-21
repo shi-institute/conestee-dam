@@ -30,7 +30,23 @@
 
 		window.storyMapsEmbedConfig = {
 			storyId,
-			rootNode: `.${randomClass}`
+			rootNode: `.${randomClass}`,
+			font: {
+				body: {
+					fontFamily: 'greycliff-cf',
+					weight: {
+						normal: 400,
+						bold: 700
+					}
+				},
+				title: {
+					fontFamily: 'greycliff-cf',
+					weight: {
+						normal: 600,
+						bold: 600
+					}
+				}
+			}
 		};
 
 		const script = document.createElement('script');
