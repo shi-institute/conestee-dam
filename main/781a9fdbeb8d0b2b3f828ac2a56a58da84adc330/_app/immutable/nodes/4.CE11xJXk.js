@@ -1,0 +1,1 @@
+import{C as e,G as t,M as n,O as r,u as i,y as a}from"../chunks/D4qvsVl9.js";import"../chunks/xihTtKlq.js";function o(o){t();var s=e(`Under construction`);i(`1430cki`,e=>{r(()=>{n.title=`Documentary`})}),a(o,s)}export{o as component};
