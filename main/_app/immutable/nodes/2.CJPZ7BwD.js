@@ -1,0 +1,1 @@
+import{C as e,G as t,y as n}from"../chunks/D4qvsVl9.js";import"../chunks/xihTtKlq.js";function r(r){t(),n(r,e(`Under construction`))}export{r as component};
