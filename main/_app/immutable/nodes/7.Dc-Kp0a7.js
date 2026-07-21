@@ -1,0 +1,1 @@
+import{M as e,O as t,u as n}from"../chunks/D4qvsVl9.js";import"../chunks/xihTtKlq.js";import{n as r}from"../chunks/BXdSGLTs.js";function i(i){n(`8pqg5y`,n=>{t(()=>{e.title=`Sediment StoryMap`})}),r(i,{storyId:`0406f88b70a74be4ac21fd0050fcdd8f`,loadingHeight:`calc(100dvh - var(--header-height))`})}export{i as component};
