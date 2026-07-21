@@ -23,6 +23,10 @@
 	}
 </script>
 
+<svelte:head>
+	<title>Pollution StoryMap</title>
+</svelte:head>
+
 <StoryMapEmbed
 	storyId="1dffd70478584a8eb9a42daf25f12f5b"
 	loadingHeight="calc(100dvh - var(--header-height))"
