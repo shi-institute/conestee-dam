@@ -156,8 +156,8 @@
 		left: 0;
 		width: 240px;
 		display: block !important;
-		background-color: white;
-		box-shadow: 1px 0 0 #ccc;
+		background-color: light-dark(white, #212121);
+		box-shadow: 0 1px 0 light-dark(#ccc, #333);
 
 		transform: translateX(calc(-100% - 1px));
 		transition: transform 200ms cubic-bezier(0.16, 1, 0.3, 1);
@@ -196,7 +196,7 @@
 	.menu-button {
 		text-decoration: none;
 		cursor: default;
-		color: #4868a9;
+		color: light-dark(#4868a9, #c5dbff);
 		font-weight: 500;
 		padding: 0.5rem 0.5rem;
 		transition: background-color 80ms ease-in-out;
@@ -217,11 +217,11 @@
 	}
 	a:hover,
 	.menu-button:hover {
-		background-color: #ecf3ff;
+		background-color: light-dark(#ecf3ff, #303030);
 	}
 	a:active,
 	.menu-button:active {
-		background-color: #d6e2ff;
+		background-color: light-dark(#d6e2ff, #3a3a3a);
 	}
 
 	svg {
