@@ -1,0 +1,1 @@
+import{M as e,O as t,u as n}from"../chunks/D4qvsVl9.js";import"../chunks/xihTtKlq.js";import{n as r}from"../chunks/BXdSGLTs.js";function i(i){n(`sqqw4a`,n=>{t(()=>{e.title=`Interactive Timeline`})}),r(i,{storyId:`5f9c9e9e40494b0c81041ffed5927214`,loadingHeight:`calc(100dvh - var(--header-height))`})}export{i as component};
