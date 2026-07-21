@@ -1,0 +1,1 @@
+import{M as e,O as t,u as n,x as r,y as i}from"../chunks/D4qvsVl9.js";import"../chunks/xihTtKlq.js";var a=r(`<article class="svelte-1430cki">Under construction</article>`);function o(r){var o=a();n(`1430cki`,n=>{t(()=>{e.title=`Documentary`})}),i(r,o)}export{o as component};
