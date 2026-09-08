@@ -1,0 +1,1 @@
+:root:has(article.svelte-1430cki){--lightningcss-light:initial;--lightningcss-dark: ;color-scheme:light dark}@media (prefers-color-scheme:dark){:root:has(article.svelte-1430cki){--lightningcss-light: ;--lightningcss-dark:initial}}
