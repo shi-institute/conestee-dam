@@ -30,5 +30,9 @@ export default defineConfig({
 			$lib: '/src/lib',
 			$timelines: '/src/lib/timelines'
 		}
+	},
+	build: {
+		// target versions that support light-dark()
+		cssTarget: ['chrome123', 'edge123', 'firefox120', 'safari17.5', 'ios17.5']
 	}
 });
