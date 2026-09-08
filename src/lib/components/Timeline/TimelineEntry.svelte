@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { wrapImagesInLightbox } from '$lib/components';
 	import type { Picture } from '@sveltejs/enhanced-img';
 	import { untrack, type Snippet } from 'svelte';
 	import { getTimelineTrackContext, type TimelineDate } from './context';
@@ -71,7 +72,9 @@
 		</div>
 	</summary>
 
-	{@render children?.()}
+	<div style="display: contents" {@attach wrapImagesInLightbox}>
+		{@render children?.()}
+	</div>
 </details>
 
 <style>
