@@ -1,0 +1,1 @@
+import{L as e,N as t,d as n}from"../chunks/CRMpaftO.js";import"../chunks/xihTtKlq.js";import{n as r}from"../chunks/CZruptED.js";function i(i){n(`8pqg5y`,n=>{t(()=>{e.title=`Sediment StoryMap`})}),r(i,{storyId:`0406f88b70a74be4ac21fd0050fcdd8f`,loadingHeight:`calc(100dvh - var(--header-height))`})}export{i as component};
