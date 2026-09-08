@@ -1,0 +1,1 @@
+import{L as e,N as t,T as n,X as r,d as i,x as a}from"../chunks/CRMpaftO.js";import"../chunks/xihTtKlq.js";function o(o){r();var s=n(`Under construction`);i(`19vapmx`,n=>{t(()=>{e.title=`Glossary`})}),a(o,s)}export{o as component};

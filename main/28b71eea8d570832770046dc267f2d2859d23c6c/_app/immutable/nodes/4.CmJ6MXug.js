@@ -1,0 +1,1 @@
+import{C as e,L as t,N as n,d as r,x as i}from"../chunks/CRMpaftO.js";import"../chunks/xihTtKlq.js";var a=e(`<article class="svelte-1430cki">Under construction</article>`);function o(e){var o=a();r(`1430cki`,e=>{n(()=>{t.title=`Documentary`})}),i(e,o)}export{o as component};
