@@ -1,0 +1,1 @@
+import{L as e,N as t,d as n}from"../chunks/CRMpaftO.js";import"../chunks/xihTtKlq.js";import{n as r}from"../chunks/CZruptED.js";function i(i){n(`sqqw4a`,n=>{t(()=>{e.title=`Interactive Timeline`})}),r(i,{storyId:`5f9c9e9e40494b0c81041ffed5927214`,loadingHeight:`calc(100dvh - var(--header-height))`})}export{i as component};
