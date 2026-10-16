@@ -1,219 +1,309 @@
 <script lang="ts">
 	import { Timeline } from '$lib/components';
-
-	import TimberDam from './Glendale-Timber-Dam.png?enhanced&w=96&aspect=1';
-	import Sanborn2020 from './Sanborn-ConesteeMills-1920.png?enhanced&w=96&aspect=1';
 </script>
 
 <Timeline.Track>
-	<Timeline.Entry
-		date={1920}
-		icon={{
-			src: Sanborn2020,
-			alt: ''
-		}}
-	>
+	<Timeline.Entry date={1785}>
 		{#snippet heading()}
-			Sanborn Map
+			First land grant along the Reedy River
 		{/snippet}
 		{#snippet caption()}
-			1920
+			1785
 		{/snippet}
 
-		<enhanced:img src="./Sanborn-ConesteeMills-1920.png" alt="Sanborn Map 1920" />
+		<p>
+			The first land grant along the Reedy River is made, followed by another in 1794, and the
+			development of multiple dams and mills.
+		</p>
 	</Timeline.Entry>
 
-	<Timeline.Entry date={1923} icon={{ src: TimberDam, alt: '' }}>
+	<Timeline.Entry date={1815}>
 		{#snippet heading()}
-			City determined need for sewage disposal plant for Greenville
+			Carruth’s armory begins manufacturing muskets
+		{/snippet}
+		{#snippet caption()}
+			1815
+		{/snippet}
+
+		<p>
+			Carruth’s armory, which has now constructed a musket factory and accompanying dam, begins
+			manufacturing muskets for the cause of the War of 1812.
+		</p>
+	</Timeline.Entry>
+
+	<Timeline.Entry date={1820}>
+		{#snippet heading()}
+			A village develops around the mills
+		{/snippet}
+		{#snippet caption()}
+			1820
+		{/snippet}
+
+		<p>A village is developed around the mills at the Reedy River.</p>
+	</Timeline.Entry>
+
+	<Timeline.Entry date={{ start: 1890, end: 1915 }}>
+		{#snippet heading()}
+			Major textile mills are built along the Reedy River
+		{/snippet}
+		{#snippet caption()}
+			1890-1915
+		{/snippet}
+
+		<p>Construction of ~12 major textile mills along the Reedy River.</p>
+	</Timeline.Entry>
+
+	<Timeline.Entry date={1892}>
+		{#snippet heading()}
+			Greenville constructs a sewer system that discharges into the Reedy River
+		{/snippet}
+		{#snippet caption()}
+			1892
+		{/snippet}
+
+		<p>
+			A sewer system is constructed for the City of Greenville; the collection system, which did not
+			have an accompanying treatment facility, discharges at the junction of Richland Creek and
+			Reedy River (present-day Cleveland Park).
+		</p>
+	</Timeline.Entry>
+
+	<Timeline.Entry date={1892}>
+		{#snippet heading()}
+			Reedy River Manufacturing Company builds the Lake Conestee Dam
+		{/snippet}
+		{#snippet caption()}
+			1892
+		{/snippet}
+
+		<p>
+			The Reedy River Manufacturing Company built a dam across the Reedy River to provide mechanical
+			power for its growing textile factory. This dam and power works were first converted to
+			hydroelectric power in 1916, providing more power for what was then Conestee Mill. The 1892
+			stone-masonry dam was a remarkable construction achievement when it was built. It created a
+			large reservoir, extraordinary for its time at 140 acres.
+		</p>
+
+		<p>
+			(This dam remains today, though it is now submerged by the New Lake Conestee Dam, which was
+			completed in 2025 and is located immediately downstream of the old dam. This new structure
+			provides a ‘containment barrier’ to keep the massive amount of contaminated sediment behind it
+			from being released if the old dam were to fail.)
+		</p>
+	</Timeline.Entry>
+
+	<Timeline.Entry date={1915}>
+		{#snippet heading()}
+			Typhoid fever breaks out in Conestee and Greenville
+		{/snippet}
+		{#snippet caption()}
+			1915
+		{/snippet}
+
+		<p>
+			Typhoid fever broke out in Conestee and the greater Greenville area. Employees at Conestee
+			Mills abandoned their houses along the Reedy River and, in 1916, refused to move into new
+			houses near the reservoir and along the river.
+		</p>
+	</Timeline.Entry>
+
+	<Timeline.Entry date={1917}>
+		{#snippet heading()}
+			Cattle die from drinking Reedy River water
+		{/snippet}
+		{#snippet caption()}
+			1917
+		{/snippet}
+
+		<p>Cattle in pastures died from drinking water from the Reedy River.</p>
+	</Timeline.Entry>
+
+	<Timeline.Entry date={1923}>
+		{#snippet heading()}
+			City determines need for a sewage disposal plant
 		{/snippet}
 		{#snippet caption()}
 			1923
 		{/snippet}
 
 		<p>
-			Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus
-			duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus
-			nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut
-			hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra
-			inceptos himenaeos.
-		</p>
-
-		<p>
-			Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae
-			pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean
-			sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis
-			massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti
-			sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
-		</p>
-
-		<ol>
-			<li>First item</li>
-			<li>Second item</li>
-			<li>Third item</li>
-		</ol>
-	</Timeline.Entry>
-
-	<Timeline.Entry date={{ start: 1923, end: 1924 }} icon={{ src: TimberDam, alt: '' }}>
-		{#snippet heading()}
-			Reedy River and Lake Conestee conditions "at their worst"
-		{/snippet}
-		{#snippet caption()}
-			1923-1924
-		{/snippet}
-
-		<p>
-			Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus
-			duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus
-			nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut
-			hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra
-			inceptos himenaeos.
-		</p>
-
-		<p>
-			Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae
-			pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean
-			sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis
-			massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti
-			sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
-		</p>
-
-		<ol>
-			<li>First item</li>
-			<li>Second item</li>
-			<li>Third item</li>
-		</ol>
-	</Timeline.Entry>
-
-	<Timeline.Entry
-		date={{ start: 1923, end: 1924 }}
-		icon={{
-			src: 'https://imgs.search.brave.com/fk3dWwxKWb3Rso5QonAo8o3pOS0mF7qRYcU_16STB4Q/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9iLnRo/dW1icy5yZWRkaXRt/ZWRpYS5jb20vZkpP/Qm1MclJ3d0NUNG1O/RTZjdGN4WjM5VDAy/WVpGMkUzdGdvN0ZY/bG5rcy5qcGc',
-			alt: 'Sample icon'
-		}}
-	>
-		{#snippet heading()}
-			much sickness in Conestee Mills
-		{/snippet}
-		{#snippet caption()}
-			1923-1924
-		{/snippet}
-
-		<p>
-			Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus
-			duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus
-			nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut
-			hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra
-			inceptos himenaeos.
-		</p>
-
-		<img
-			src="https://imgs.search.brave.com/fk3dWwxKWb3Rso5QonAo8o3pOS0mF7qRYcU_16STB4Q/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly9iLnRo/dW1icy5yZWRkaXRt/ZWRpYS5jb20vZkpP/Qm1MclJ3d0NUNG1O/RTZjdGN4WjM5VDAy/WVpGMkUzdGdvN0ZY/bG5rcy5qcGc"
-			alt=""
-		/>
-
-		<p>
-			Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae
-			pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean
-			sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis
-			massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti
-			sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.
-		</p>
-
-		<ol>
-			<li>First item</li>
-			<li>Second item</li>
-			<li>Third item</li>
-		</ol>
-
-		<p>
-			Habitant morbi senectus netus suscipit auctor curabitur facilisi cubilia curae hac habitasse
-			platea dictumst lorem ipsum dolor sit amet consectetur adipiscing elit quisque faucibus ex
-			sapien vitae pellentesque sem placerat in id cursus mi pretium tellus duis convallis tempus
-			leo eu aenean sed diam urna tempor pulvinar vivamus fringilla lacus nec metus bibendum egestas
-			iaculis massa nisl malesuada lacinia integer nunc posuere ut hendrerit semper vel class aptent
-			taciti sociosqu ad litora torquent per conubia nostra inceptos himenaeos orci varius natoque
-			penatibus et magnis dis parturient montes nascetur ridiculus mus donec rhoncus eros lobortis
-			nulla molestie mattis scelerisque maximus eget fermentum odio phasellus non purus est
-			efficitur laoreet mauris pharetra vestibulum fusce dictum risus blandit quis suspendisse
-			aliquet nisi sodales consequat magna ante condimentum neque at luctus nibh finibus facilisis
-			dapibus etiam interdum tortor ligula congue sollicitudin erat viverra ac tincidunt nam.
+			The City determined a need for a sewage disposal plant for Greenville. Reedy River and Lake
+			Conestee conditions “at their worst.”
 		</p>
 	</Timeline.Entry>
 
-	<Timeline.Entry date={{ start: 1923, end: 1927 }} icon={{ src: TimberDam, alt: '' }}>
+	<Timeline.Entry date={1925}>
 		{#snippet heading()}
-			Widespread complaints about sewage in the Reedy River and Lake Conestee throughout the City
+			Conestee Mills sues the City of Greenville due to raw sewage
 		{/snippet}
 		{#snippet caption()}
-			1923-1927
+			1925
 		{/snippet}
 
 		<p>
-			R.F. Watson-Mayor; first sewage complaints (1924 or 1925); complaints throughout City; need
-			for sewer District; raw sewage from sources upstream of city; 15-20 times as many people above
-			the City, e.g. City View
+			Conestee Mills sued the City of Greenville for financial damages due to raw sewage
+			contaminating Lake Conestee and Reedy River: “The water has become so foul and contaminated as
+			to be a source of disease and constant peril to the health and lives of the operatives of
+			Conestee Mills.” (Conestee Mills v. City of Greenville, amended complaint 1929).
 		</p>
 	</Timeline.Entry>
 
-	<Timeline.Entry date={1923} icon={{ src: TimberDam, alt: '' }}>
+	<Timeline.Entry date={1926}>
 		{#snippet heading()}
-			State and County healthy authorities become active
+			Greater Greenville Sanitation District is created
 		{/snippet}
 		{#snippet caption()}
-			1923
+			1926
 		{/snippet}
-
-		<p>conditions very serious; State and County healthy authorities become active</p>
 
 		<p>
-			Reedy River in very bad condition; per Dr. Baylis Earle; inspections by Earle and Filby (City
-			Engineer)
+			The Greater Greenville Sanitation District is created (now ReWa), resulting in the
+			construction of Greenville’s first ‘modern’ wastewater treatment plant.
 		</p>
 	</Timeline.Entry>
 
-	<Timeline.Entry date={1924} icon={{ src: TimberDam, alt: '' }}>
+	<Timeline.Entry date={1928}>
 		{#snippet heading()}
-			lake drawn down several times to release contaminated water
+			Mills Mill discharges sewage into a nearby stream
 		{/snippet}
 		{#snippet caption()}
-			1924
+			1928
 		{/snippet}
 
-		<p>conditions very serious; State and County healthy authorities become active</p>
+		<p>Mills Mill (Brushy Creek) discharged sewage into a nearby stream.</p>
+	</Timeline.Entry>
+
+	<Timeline.Entry date={1928}>
+		{#snippet heading()}
+			Greenville constructs its first sewage treatment facilities
+		{/snippet}
+		{#snippet caption()}
+			1928
+		{/snippet}
 
 		<p>
-			Reedy River in very bad condition; per Dr. Baylis Earle; inspections by Earle and Filby (City
-			Engineer)
+			Greenville constructed its first sewage treatment facilities at the present Mauldin Road
+			wastewater treatment plant site. It served most of the then-City, but not the numerous mill
+			villages in the watershed above the dam.
 		</p>
 	</Timeline.Entry>
 
-	<Timeline.Entry date={{ start: 1924, end: 1925 }} icon={{ src: TimberDam, alt: '' }}>
+	<Timeline.Entry date={1930}>
 		{#snippet heading()}
-			After long legislative stuggle, Greenville becomes first city in South Carolina to treat
-			sewage
+			Conestee Mills president testifies about gas plant pollution
 		{/snippet}
 		{#snippet caption()}
-			1924-1925
+			1930
 		{/snippet}
-
-		<p>City agitated legislature in 1924</p>
 
 		<p>
-			minutes of Greater Greenville Sewer District Commission; proposals for award to J.E. Sirrine
-			for sewer plant
+			President of Conestee Mills testified, “Gas plant emptying sulfur, acids, and poisons that
+			killed fish (in Lake Conestee).”
 		</p>
 	</Timeline.Entry>
 
-	<Timeline.Entry date={1925} icon={{ src: TimberDam, alt: '' }}>
+	<Timeline.Entry date={1931}>
 		{#snippet heading()}
-			Conestee Mills sues City of Greenville
+			Conestee Mills v. City of Greenville is settled
 		{/snippet}
 		{#snippet caption()}
-			1924-1925
+			1931
 		{/snippet}
 
-		<p>Lawsuit Conestee Mills v. City of Greenville Commenced - seeking $100K damages</p>
+		<p>
+			After two rounds of hearings by the SC Supreme Court, the parties reached a settlement. Six
+			years of litigation in Conestee Mills v. City of Greenville resulted in the City of Greenville
+			paying $75,000 in financial damages.
+		</p>
+	</Timeline.Entry>
+
+	<Timeline.Entry date={{ start: 1931, end: 1999 }}>
+		{#snippet heading()}
+			Mills close, but legacy pollution remains
+		{/snippet}
+		{#snippet caption()}
+			1931-1999
+		{/snippet}
+
+		<p>
+			During the Great Depression, Conestee Mills closed in 1939 and never operated again as a
+			locally owned textile plant. Over the next several decades, other mills are sold and cease
+			operations, marking the sunset of Greenville’s days as the “Textile Center of the World.”
+		</p>
+
+		<p>
+			Remedial activities to address legacy pollution at many sites are ongoing. For example,
+			substantial cleanup at Union Bleachery has occurred, and the Broad Street Manufactured Gas
+			Plant has been thoroughly remediated. Still other sites, such as the Bramlett Manufactured Gas
+			Plant, have undergone substantial cleanup efforts, but an additional major remediation project
+			is planned there.
+		</p>
+
+		<p>
+			Some sites, such as the Greenville Steam Plant, a coal-fired power plant operating from 1909
+			to the 1950s, have received little attention, although they certainly had a significant
+			impact. Although much has been learned about industrial contamination in this watershed since
+			the 1970s, new sites and sources of contamination will continue to be recognized.
+		</p>
+	</Timeline.Entry>
+
+	<Timeline.Entry date={1999}>
+		{#snippet heading()}
+			Conestee Foundation is chartered
+		{/snippet}
+		{#snippet caption()}
+			1999
+		{/snippet}
+
+		<p>Conestee Foundation is chartered as a 501(c)3 public nonprofit organization.</p>
+	</Timeline.Entry>
+
+	<Timeline.Entry date={2000}>
+		{#snippet heading()}
+			Conestee Foundation acquires the Lake Conestee Dam and Reservoir
+		{/snippet}
+		{#snippet caption()}
+			2000
+		{/snippet}
+
+		<p>
+			Conestee Foundation acquires the Lake Conestee Dam and Reservoir, initiates decades of
+			assessments, studies, design, and permitting, and enters a Voluntary Cleanup Contract to
+			establish a long-term management plan for the Lake Conestee Site.
+		</p>
+	</Timeline.Entry>
+
+	<Timeline.Entry date={2025}>
+		{#snippet heading()}
+			New Lake Conestee Dam is completed
+		{/snippet}
+		{#snippet caption()}
+			2025
+		{/snippet}
+
+		<p>
+			A new dam is completed in October 2025, immediately downstream of the old 1892 Lake Conestee
+			Dam. Thanks to the dedication of the Lake Conestee Dam Rehabilitation Project, the old Lake
+			Conestee Dam no longer presents a risk of physical failure and the catastrophic release of
+			massive quantities of contaminated sediments downstream.
+		</p>
+	</Timeline.Entry>
+
+	<Timeline.Entry date={2027}>
+		{#snippet heading()}
+			Lake Conestee Dam Authority expected to take ownership
+		{/snippet}
+		{#snippet caption()}
+			2027 (Pending Legislative Action)
+		{/snippet}
+
+		<p>
+			Today, the new dam is owned by the Lake Conestee Dam Rehabilitation Project, LLC. Pending
+			legislative authorization, a new governmental entity (the Lake Conestee Dam Authority) is
+			expected to take ownership of the dam in 2027. That entity will be responsible for ongoing
+			maintenance and monitoring of the dam. The agency will be overseen by appointed
+			representatives from Greenville, Laurens, and Greenwood Counties.
+		</p>
 	</Timeline.Entry>
 </Timeline.Track>
 
