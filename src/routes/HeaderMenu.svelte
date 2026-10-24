@@ -245,6 +245,7 @@
 
 	header {
 		--fade-duration: 167ms;
+		--slide-distance: 0.125rem;
 
 		/* keep the header in place (instead of fading with the page) during view transitions */
 		view-transition-name: header;
@@ -294,12 +295,16 @@
 		position: absolute;
 		inset: 0;
 		opacity: 1;
-		transition: opacity var(--fade-duration) ease;
+		transform: translateY(0);
+		transition:
+			opacity var(--fade-duration) ease,
+			transform var(--fade-duration) ease;
 	}
 
 	/* not scrolled: show the nav, hide the title */
 	.title {
 		opacity: 0;
+		transform: translateY(var(--slide-distance));
 		pointer-events: none;
 		transition-delay: 0s;
 	}
@@ -308,11 +313,13 @@
 		/* scrolled: hide the nav (fades out first), then fade in the title */
 		header.scrolled .content {
 			opacity: 0;
+			transform: translateY(calc(-1 * var(--slide-distance)));
 			pointer-events: none;
 			transition-delay: 0s;
 		}
 		header.scrolled .title {
 			opacity: 1;
+			transform: translateY(0);
 			pointer-events: auto;
 			transition-delay: var(--fade-duration);
 		}
@@ -330,13 +337,21 @@
 		/* on small screens, always show the title and hide the nav */
 		.content {
 			opacity: 0;
+			transform: translateY(calc(-1 * var(--slide-distance)));
 			pointer-events: none;
 			transition-delay: 0s;
 		}
 		.title {
 			opacity: 1;
+			transform: translateY(0);
 			pointer-events: auto;
 			transition-delay: 0s;
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		header {
+			--slide-distance: 0px;
 		}
 	}
 
