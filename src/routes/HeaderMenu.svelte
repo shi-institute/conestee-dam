@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
+	import { page } from '$app/state';
 	import OverlayMenu from './OverlayMenu.svelte';
 
 	/**
@@ -16,7 +17,27 @@
 	let gestureStartScrollY = 0;
 	let isFingerDown = false;
 
+	/** Whether the current page is a storymap page, which shows a reading progress bar. */
+	const showsProgress = $derived(page.route.id?.startsWith('/story') ?? false);
+
+	/**
+	 * How far the reader is through the page, from 0 to 1.
+	 *
+	 * It is eased such that the bar advances more quickly near the top of the page
+	 * and slows down toward the bottom.
+	 */
+	let progress = $state(0);
+	const EXPONENTIAL_EASE = 1.5;
+
+	function updateProgress() {
+		const scrollableHeight = document.documentElement.scrollHeight - window.innerHeight;
+		const linearProgress =
+			scrollableHeight > 0 ? Math.min(Math.max(window.scrollY / scrollableHeight, 0), 1) : 0;
+		progress = 1 - Math.pow(1 - linearProgress, EXPONENTIAL_EASE);
+	}
+
 	function handleScroll() {
+		updateProgress();
 		const currentScrollY = window.scrollY;
 		if (currentScrollY <= 0) {
 			isScrolledDown = false;
@@ -49,13 +70,16 @@
 	$effect(() => {
 		recordGestureStart();
 		isScrolledDown = window.scrollY > 0;
+		updateProgress();
 		window.addEventListener('scroll', handleScroll, { passive: true });
+		window.addEventListener('resize', updateProgress, { passive: true });
 		window.addEventListener('scrollend', handleScrollEnd, { passive: true });
 		window.addEventListener('touchstart', handleTouchStart, { passive: true });
 		window.addEventListener('touchend', handleTouchRelease, { passive: true });
 		window.addEventListener('touchcancel', handleTouchRelease, { passive: true });
 		return () => {
 			window.removeEventListener('scroll', handleScroll);
+			window.removeEventListener('resize', updateProgress);
 			window.removeEventListener('scrollend', handleScrollEnd);
 			window.removeEventListener('touchstart', handleTouchStart);
 			window.removeEventListener('touchend', handleTouchRelease);
@@ -191,6 +215,10 @@
 			<h1>{title}</h1>
 		</div>
 	</div>
+
+	{#if showsProgress}
+		<div class="progress" style:transform="scaleX({progress})"></div>
+	{/if}
 </header>
 
 <style>
@@ -222,6 +250,17 @@
 		height: var(--header-height);
 		padding: 0 1rem 0 0.5rem;
 		box-shadow: 0 1px 0 light-dark(#ccc, #333);
+	}
+
+	.progress {
+		position: absolute;
+		left: 0;
+		right: 0;
+		bottom: -1px;
+		height: 3px;
+		background-color: light-dark(#4868a9, #c5dbff);
+		transform-origin: left;
+		pointer-events: none;
 	}
 
 	.stack {
