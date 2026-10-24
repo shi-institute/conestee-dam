@@ -1,23 +1,23 @@
 <script lang="ts">
 	import ProgressRing from '$components/ProgressRing/ProgressRing.svelte';
+	import type { StoryLoad } from './storyLoader';
 
 	const {
-		storyId,
+		story,
 		onStoryLoaded,
 		loadingHeight,
 		class: className
 	} = $props<{
 		/**
-		 * The ArcGIS StoryMaps story ID to embed.
+		 * The story to show from `loadStory()`. It is `null` when the page is prerendered.
 		 */
-		storyId: string;
+		story: StoryLoad | null;
 
 		/**
 		 * Fires when the story has finished loading.
 		 *
-		 * Since StoryMaps does not provide a callback for when the story has loaded,
-		 * we watch for the presence of `.title-container` with `.sc-title` to estimate
-		 * that the story has loaded.
+		 * If the story already loaded before the page was shown (such as when
+		 * navigating from another page), it fires as soon as the story is in the page.
 		 */
 		onStoryLoaded?: (node: HTMLElement) => void;
 
@@ -30,101 +30,51 @@
 
 		/**
 		 * Optional class to apply to the root element of the component.
+		 *
+		 * It is rendered into the prerendered HTML, so it can be used for styles
+		 * (such as the color scheme) that must apply before the story loads.
 		 */
 		class?: string;
 	}>();
 
-	function embed(host: HTMLDivElement) {
-		const randomClass = `storymaps-root-${Math.random().toString(36).slice(2)}`;
-		host.classList.add(randomClass);
-
-		window.storyMapsEmbedConfig = {
-			storyId,
-			rootNode: `.${randomClass}`,
-			// StoryMaps sizes, sticks, and scrolls immersive blocks below this offset
-			topOffset:
-				(getComputedStyle(document.body)
-					.getPropertyValue('--header-height')
-					.trim() as `${string}px`) || ('3rem' as `${string}rem`),
-			font: {
-				body: {
-					fontFamily: 'greycliff-cf',
-					weight: {
-						normal: 400,
-						bold: 700
-					}
-				},
-				title: {
-					fontFamily: 'greycliff-cf',
-					weight: {
-						normal: 600,
-						bold: 600
-					}
-				}
-			}
-		};
-
-		const script = document.createElement('script');
-		script.src = 'https://storymaps.arcgis.com/embed/view';
-		script.type = 'text/javascript';
-		script.async = true;
-		host.ownerDocument.head.appendChild(script);
-
-		// wait for the story to load so that we can call the onStoryLoaded callback.
-		const storyLoadWatcher = waitForStoryToLoad(host);
-
-		return {
-			destroy() {
-				delete window.storyMapsEmbedConfig;
-				host.ownerDocument.head.removeChild(script);
-				storyLoadWatcher.destroy();
-			}
-		};
-	}
-
 	let loaded = $state(false);
 
-	/**
-	 * The presence of `.title-container` with `.sc-title` indicates that the story has loaded.
-	 *
-	 * We watch for this element to appear so that we can then act on the story being loaded.
-	 */
-	function waitForStoryToLoad(host: HTMLDivElement) {
-		const observer = new MutationObserver((mutations) => {
-			for (const mutation of mutations) {
-				for (const node of mutation.addedNodes) {
-					if (
-						node instanceof HTMLElement &&
-						node.tagName === 'ARTICLE' &&
-						node.classList.contains('story') &&
-						node.querySelector('.sc-title')
-					) {
-						observer.disconnect();
-						loaded = true;
-						onStoryLoaded?.(node as HTMLElement);
-						return;
-					}
-				}
-			}
-		});
+	// move the story from the off-screen container into this page
+	function adopt(slot: HTMLDivElement) {
+		if (!story) return;
+		const host = story.host;
+		host.style.setProperty('--loading-height', loadingHeight ?? '100dvh');
+		slot.appendChild(host);
+		// the page is shown, so its URL matches and the story may load (if it has not already)
+		story.adopted = true;
+		story.start();
 
-		observer.observe(host, { childList: true, subtree: true });
+		let cancelled = false;
+		const markLoaded = (article: HTMLElement | null) => {
+			if (cancelled || !article) return;
+			loaded = true;
+			onStoryLoaded?.(article);
+		};
+		if (story.article) markLoaded(story.article);
+		else story.ready.then(markLoaded);
 
-		return {
-			destroy() {
-				observer.disconnect();
-			}
+		return () => {
+			cancelled = true;
+			story.dispose();
 		};
 	}
+
+	$effect(() => {
+		story?.host.classList.toggle('loaded', loaded);
+	});
 </script>
 
-<div class="storymap-embed-wrapper">
-	<div
-		use:embed
-		class="storymap-embed {className}"
-		class:loaded
-		style="--loading-height: {loadingHeight}"
-	></div>
+<!-- reserve the loading height up front, since the story is only added to the page after it mounts -->
+<div
+	class="storymap-embed-wrapper {className ?? ''}"
+	style:min-height={loaded ? undefined : (loadingHeight ?? '100dvh')}
+>
+	<div class="storymap-slot" {@attach adopt}></div>
 	{#if !loaded}
 		<div class="loading-message">
 			<ProgressRing></ProgressRing>
@@ -157,18 +107,18 @@
 		margin-top: 0.25rem;
 	}
 
-	.storymap-embed:not(.loaded) {
+	:global(.storymap-embed:not(.loaded)) {
 		height: var(--loading-height, 100dvh);
 	}
 
-	.storymap-embed :global(> *) {
+	:global(.storymap-embed) :global(> *) {
 		opacity: 0;
 		transform: translateY(40px);
 		transition:
 			opacity 210ms cubic-bezier(0.16, 1, 0.3, 1),
 			transform 210ms cubic-bezier(0.16, 1, 0.3, 1);
 	}
-	.storymap-embed.loaded :global(> *) {
+	:global(.storymap-embed.loaded) :global(> *) {
 		transform: translateY(0);
 		opacity: 1;
 	}
@@ -176,8 +126,8 @@
 	/* Esri has a bug where they do not set the display mode for
 	the category buttons inside categorical map tours. It also
 	causes missing styles for the category dropdown. */
-	.storymap-embed :global(.immersive.categorized > .places-section .sm-button),
-	.storymap-embed
+	:global(.storymap-embed) :global(.immersive.categorized > .places-section .sm-button),
+	:global(.storymap-embed)
 		:global(
 			.immersive.categorized
 				[data-testid='categorized-tour-nav-header']
@@ -190,7 +140,7 @@
 		gap: var(--sm-web-theme-spacing-xxxs);
 		align-items: center;
 	}
-	.storymap-embed
+	:global(.storymap-embed)
 		:global(
 			.immersive.categorized [data-testid='categorized-tour-nav-header'] .sm-button > .icon-wrapper
 		) {
@@ -211,7 +161,7 @@
 	}
 
 	/* the header of a categorized map tour (shown after choosing a category) should stick below the titlebar */
-	.storymap-embed :global(.immersive.categorized nav.header) {
+	:global(.storymap-embed) :global(.immersive.categorized nav.header) {
 		position: sticky !important;
 		top: var(--header-height) !important;
 		z-index: 2;
@@ -223,7 +173,7 @@
 		grid-row: 1 !important;
 		align-self: start;
 	}
-	.storymap-embed :global(.immersive.categorized .places-section) {
+	:global(.storymap-embed) :global(.immersive.categorized .places-section) {
 		grid-row: 1 !important;
 	}
 </style>

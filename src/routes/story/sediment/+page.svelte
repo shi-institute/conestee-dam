@@ -1,12 +1,12 @@
-<script>
+<script lang="ts">
+	import type { PageProps } from './$types';
 	import { StoryMapEmbed } from '$lib/components';
+
+	let { data }: PageProps = $props();
 </script>
 
 <svelte:head>
 	<title>Sediment Aggradation - Lake Conestee Dam</title>
 </svelte:head>
 
-<StoryMapEmbed
-	storyId="0406f88b70a74be4ac21fd0050fcdd8f"
-	loadingHeight="calc(100dvh - var(--header-height))"
-/>
+<StoryMapEmbed story={data.story} loadingHeight="calc(100dvh - var(--header-height))" />

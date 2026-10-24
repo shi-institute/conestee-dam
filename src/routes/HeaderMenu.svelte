@@ -238,6 +238,8 @@
 	header {
 		--fade-duration: 167ms;
 
+		/* keep the header in place (instead of fading with the page) during view transitions */
+		view-transition-name: header;
 		position: sticky;
 		top: 0;
 		z-index: 100;

@@ -1,4 +1,5 @@
 <script lang="ts">
+	import type { PageProps } from './$types';
 	import { StoryMapEmbed } from '$lib/components';
 	import { mount } from 'svelte';
 	import PollutionTimeline from './PollutionTimeline.svelte';
@@ -21,6 +22,8 @@
 		timelineCodeBlock.firstElementChild.appendChild(target);
 		mount(PollutionTimeline, { target });
 	}
+
+	let { data }: PageProps = $props();
 </script>
 
 <svelte:head>
@@ -28,7 +31,7 @@
 </svelte:head>
 
 <StoryMapEmbed
-	storyId="1dffd70478584a8eb9a42daf25f12f5b"
+	story={data.story}
 	loadingHeight="calc(100dvh - var(--header-height))"
 	onStoryLoaded={(article) => {
 		replaceTimelinePlaceholder(article);

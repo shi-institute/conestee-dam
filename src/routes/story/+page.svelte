@@ -1,5 +1,8 @@
 <script lang="ts">
+	import type { PageProps } from './$types';
 	import { StoryMapEmbed } from '$lib/components';
+
+	let { data }: PageProps = $props();
 </script>
 
 <svelte:head>
@@ -7,7 +10,7 @@
 </svelte:head>
 
 <StoryMapEmbed
-	storyId="b3daea8f94a14558b386108914d9d3b9"
+	story={data.story}
 	loadingHeight="calc(100dvh - var(--header-height))"
 	class="documentary-storymap"
 />
