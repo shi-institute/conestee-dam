@@ -105,7 +105,7 @@
 				if (mutation.type === 'childList') {
 					const titleElement = head?.querySelector('title');
 					if (titleElement) {
-						title = titleElement.textContent || '';
+						title = (titleElement.textContent || '').replace(/ - Lake Conestee Dam$/, '');
 					}
 				}
 			}
