@@ -31,6 +31,11 @@
 		window.storyMapsEmbedConfig = {
 			storyId,
 			rootNode: `.${randomClass}`,
+			// StoryMaps sizes, sticks, and scrolls immersive blocks below this offset
+			topOffset:
+				(getComputedStyle(document.body)
+					.getPropertyValue('--header-height')
+					.trim() as `${string}px`) || ('3rem' as `${string}rem`),
 			font: {
 				body: {
 					fontFamily: 'greycliff-cf',
@@ -156,5 +161,59 @@
 	.storymap-embed.loaded :global(> *) {
 		transform: translateY(0);
 		opacity: 1;
+	}
+
+	/* Esri has a bug where they do not set the display mode for
+	the category buttons inside categorical map tours. It also
+	causes missing styles for the category dropdown. */
+	.storymap-embed :global(.immersive.categorized > .places-section .sm-button),
+	.storymap-embed
+		:global(
+			.immersive.categorized
+				[data-testid='categorized-tour-nav-header']
+				:where(.sm-button, .sm-button > .icon-wrapper)
+		) {
+		user-select: none;
+		letter-spacing: calc(var(--storymaps-spacing-scale, 1) * 0.02rem);
+		grid-auto-flow: column;
+		display: inline-grid;
+		gap: var(--sm-web-theme-spacing-xxxs);
+		align-items: center;
+	}
+	.storymap-embed
+		:global(
+			.immersive.categorized [data-testid='categorized-tour-nav-header'] .sm-button > .icon-wrapper
+		) {
+		width: auto;
+		--sm-web-theme-spacing-xxxs: calc(var(--storymaps-spacing-scale, 1) * 0.8rem);
+		--sm-web-theme-spacing-md: calc(var(--storymaps-spacing-scale, 1) * 4rem);
+		height: var(--sm-web-theme-spacing-md);
+		padding: var(--sm-web-theme-spacing-xxxs);
+	}
+	:global(
+		div[data-floating-ui-portal]
+			ul[aria-labelledby='category-combobox-label-id']
+			li.combobox-option-color
+	) {
+		--sm-web-theme-spacing-xxs: calc(var(--storymaps-spacing-scale, 1) * 1.6rem);
+		--sm-web-theme-spacing-xxxs: calc(var(--storymaps-spacing-scale, 1) * 0.8rem);
+		--sm-web-theme-border-radius-regular: 2px;
+	}
+
+	/* the header of a categorized map tour (shown after choosing a category) should stick below the titlebar */
+	.storymap-embed :global(.immersive.categorized nav.header) {
+		position: sticky !important;
+		top: var(--header-height) !important;
+		z-index: 2;
+		/*
+		 * It was originally absolutely positioned, so it did not take a grid area.
+		 * Sticky elements do, so share the first row with the sections (which already
+		 * reserve space for the header with padding) instead of pushing them to a new row.
+		 */
+		grid-row: 1 !important;
+		align-self: start;
+	}
+	.storymap-embed :global(.immersive.categorized .places-section) {
+		grid-row: 1 !important;
 	}
 </style>
