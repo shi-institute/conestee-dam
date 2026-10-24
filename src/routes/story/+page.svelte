@@ -1,6 +1,22 @@
 <script lang="ts">
+	import { ProjectTitle, StoryMapEmbed } from '$lib/components';
+	import { mount } from 'svelte';
 	import type { PageProps } from './$types';
-	import { StoryMapEmbed } from '$lib/components';
+
+	function replaceTitle(article: HTMLElement) {
+		const firstBlock = article.querySelector('div:first-child .grid-item-lite');
+
+		if (!firstBlock || !firstBlock.firstElementChild) {
+			console.error('First block not found in the article.');
+			return;
+		}
+
+		const target = document.createElement('div');
+		target.style.margin = '0 auto';
+		firstBlock.firstElementChild.innerHTML = '';
+		firstBlock.firstElementChild.appendChild(target);
+		mount(ProjectTitle, { target });
+	}
 
 	let { data }: PageProps = $props();
 </script>
@@ -13,6 +29,9 @@
 	story={data.story}
 	loadingHeight="calc(100dvh - var(--header-height))"
 	class="documentary-storymap"
+	onStoryLoaded={(article) => {
+		replaceTitle(article);
+	}}
 />
 
 <style>

@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { afterNavigate } from '$app/navigation';
 	import { resolve } from '$app/paths';
-	import { wrapImagesInLightbox } from '$lib/components';
+	import { ProjectTitle, wrapImagesInLightbox } from '$lib/components';
 	import newDam from './new-dam.webp?enhanced';
 	import oldDam from './old-dam.webp?enhanced';
 	import historicMap from './story/pollution/Sanborn-ConesteeMills-1920.png?enhanced';
@@ -138,10 +138,7 @@
 			</div>
 		</div>
 		<div class="hero-inner">
-			<h1>
-				<span class="title-main">Containment<span class="visually-hidden">:</span></span>
-				<span class="title-sub">The Conestee Dam Story</span>
-			</h1>
+			<ProjectTitle />
 			<p class="lead">
 				Since 1892, a dam on the Reedy River has shaped the land, the water, and the communities
 				around it. Explore how Lake Conestee came to hold more than a century of sediment, and how a
@@ -257,7 +254,6 @@
 		line-height: 1.55;
 	}
 
-	h1,
 	h2,
 	h3 {
 		line-height: 1.15;
@@ -328,49 +324,6 @@
 		display: flex;
 		flex-direction: column;
 		gap: 1.25rem;
-	}
-
-	h1 {
-		display: flex;
-		flex-direction: column;
-		gap: 0.75rem;
-	}
-
-	.title-main {
-		font-size: clamp(3rem, 11vw, 7.5rem);
-		font-weight: 800;
-		line-height: 0.95;
-		letter-spacing: -0.03em;
-		text-shadow: 0 2px 24px rgba(0 0 0 / 35%);
-	}
-
-	.title-sub {
-		display: flex;
-		align-items: center;
-		gap: 1rem;
-		font-size: clamp(1rem, 2.6vw, 1.5rem);
-		font-weight: 600;
-		letter-spacing: 0.14em;
-		text-transform: uppercase;
-		color: var(--accent);
-	}
-
-	.title-sub::before {
-		content: '';
-		flex: none;
-		width: clamp(2rem, 6vw, 4rem);
-		height: 3px;
-		border-radius: 2px;
-		background-color: currentColor;
-	}
-
-	.visually-hidden {
-		position: absolute;
-		width: 1px;
-		height: 1px;
-		overflow: hidden;
-		clip-path: inset(50%);
-		white-space: nowrap;
 	}
 
 	.lead {
