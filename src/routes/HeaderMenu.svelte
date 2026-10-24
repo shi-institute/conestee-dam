@@ -2,16 +2,65 @@
 	import { resolve } from '$app/paths';
 	import OverlayMenu from './OverlayMenu.svelte';
 
-	let scrolled = $state(false);
+	/**
+	 * Whether the latest scroll action was down.
+	 *
+	 * This is primarily for controlling whether the full navigation menu is displayed.
+	 */
+	let isScrolledDown = $state(false);
+
+	// The nav is restored only when the net scroll delta since the start of the
+	// current scroll gesture is negative. A gesture begins at touchstart (the
+	// finger stays down, so small upward jitter must not count) or, for
+	// non-touch input, after the previous scroll has ended.
+	let gestureStartScrollY = 0;
+	let isFingerDown = false;
 
 	function handleScroll() {
-		scrolled = window.scrollY > 0;
+		const currentScrollY = window.scrollY;
+		if (currentScrollY <= 0) {
+			isScrolledDown = false;
+			return;
+		}
+		const scrollDeltaSinceGestureStart = currentScrollY - gestureStartScrollY;
+		if (scrollDeltaSinceGestureStart > 0) isScrolledDown = true;
+		else if (scrollDeltaSinceGestureStart < 0) isScrolledDown = false;
+	}
+
+	function recordGestureStart() {
+		gestureStartScrollY = window.scrollY;
+	}
+
+	function handleTouchStart() {
+		isFingerDown = true;
+		recordGestureStart();
+	}
+
+	function handleTouchRelease() {
+		isFingerDown = false;
+	}
+
+	function handleScrollEnd() {
+		if (!isFingerDown) {
+			recordGestureStart();
+		}
 	}
 
 	$effect(() => {
+		recordGestureStart();
+		isScrolledDown = window.scrollY > 0;
 		window.addEventListener('scroll', handleScroll, { passive: true });
-		handleScroll();
-		return () => window.removeEventListener('scroll', handleScroll);
+		window.addEventListener('scrollend', handleScrollEnd, { passive: true });
+		window.addEventListener('touchstart', handleTouchStart, { passive: true });
+		window.addEventListener('touchend', handleTouchRelease, { passive: true });
+		window.addEventListener('touchcancel', handleTouchRelease, { passive: true });
+		return () => {
+			window.removeEventListener('scroll', handleScroll);
+			window.removeEventListener('scrollend', handleScrollEnd);
+			window.removeEventListener('touchstart', handleTouchStart);
+			window.removeEventListener('touchend', handleTouchRelease);
+			window.removeEventListener('touchcancel', handleTouchRelease);
+		};
 	});
 
 	// match the document title in head using a mutation observer
@@ -35,7 +84,7 @@
 	});
 </script>
 
-<header class:scrolled>
+<header class:scrolled={isScrolledDown}>
 	<OverlayMenu />
 
 	<div class="stack">
