@@ -1,7 +1,12 @@
 <script lang="ts">
 	import ProgressRing from '$components/ProgressRing/ProgressRing.svelte';
 
-	const { storyId, onStoryLoaded, loadingHeight } = $props<{
+	const {
+		storyId,
+		onStoryLoaded,
+		loadingHeight,
+		class: className
+	} = $props<{
 		/**
 		 * The ArcGIS StoryMaps story ID to embed.
 		 */
@@ -22,6 +27,11 @@
 		 * story once it has loaded.
 		 */
 		loadingHeight?: string;
+
+		/**
+		 * Optional class to apply to the root element of the component.
+		 */
+		class?: string;
 	}>();
 
 	function embed(host: HTMLDivElement) {
@@ -111,7 +121,7 @@
 <div class="storymap-embed-wrapper">
 	<div
 		use:embed
-		class="storymap-embed"
+		class="storymap-embed {className}"
 		class:loaded
 		style="--loading-height: {loadingHeight}"
 	></div>
@@ -132,7 +142,7 @@
 	.loading-message {
 		position: absolute;
 		inset: 0;
-		background-color: #f5f9ff;
+		background-color: light-dark(#f5f9ff, #212121);
 		display: flex;
 		flex-direction: column;
 		align-items: center;
