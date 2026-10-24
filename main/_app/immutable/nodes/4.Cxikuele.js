@@ -1,0 +1,1 @@
+import{L as e,N as t,d as n}from"../chunks/CRMpaftO.js";import"../chunks/xihTtKlq.js";import{n as r}from"../chunks/DFSKR7DY.js";function i(i){n(`1430cki`,n=>{t(()=>{e.title=`Documentary`})}),r(i,{storyId:`b3daea8f94a14558b386108914d9d3b9`,loadingHeight:`calc(100dvh - var(--header-height))`,class:`documentary-storymap`})}export{i as component};
