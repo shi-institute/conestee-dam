@@ -10,6 +10,12 @@
 	 */
 	let isScrolledDown = $state(false);
 
+	/** Whether the page is scrolled to the very top. */
+	let isAtTop = $state(true);
+
+	/** Whether the header is transparent so the home page hero shows beneath it. */
+	const isTransparent = $derived(page.route.id === '/' && isAtTop);
+
 	// The nav is restored only when the net scroll delta since the start of the
 	// current scroll gesture is negative. A gesture begins at touchstart (the
 	// finger stays down, so small upward jitter must not count) or, for
@@ -39,6 +45,7 @@
 	function handleScroll() {
 		updateProgress();
 		const currentScrollY = window.scrollY;
+		isAtTop = currentScrollY <= 0;
 		if (currentScrollY <= 0) {
 			isScrolledDown = false;
 			return;
@@ -70,6 +77,7 @@
 	$effect(() => {
 		recordGestureStart();
 		isScrolledDown = window.scrollY > 0;
+		isAtTop = window.scrollY <= 0;
 		updateProgress();
 		window.addEventListener('scroll', handleScroll, { passive: true });
 		window.addEventListener('resize', updateProgress, { passive: true });
@@ -108,7 +116,7 @@
 	});
 </script>
 
-<header class:scrolled={isScrolledDown}>
+<header class:scrolled={isScrolledDown} class:transparent={isTransparent}>
 	<OverlayMenu />
 
 	<div class="stack">
@@ -252,6 +260,16 @@
 		height: var(--header-height);
 		padding: 0 1rem 0 0.5rem;
 		box-shadow: 0 1px 0 light-dark(#ccc, #333);
+		transition:
+			background-color var(--fade-duration) ease,
+			box-shadow var(--fade-duration) ease;
+	}
+
+	/* over the hero photo: no background, and light-on-dark colors in both color schemes */
+	header.transparent {
+		color-scheme: dark;
+		background-color: transparent;
+		box-shadow: 0 1px 0 transparent;
 	}
 
 	.progress {

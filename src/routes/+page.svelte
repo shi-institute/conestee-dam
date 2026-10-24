@@ -252,6 +252,8 @@
 		--content-width: 68rem;
 		color: light-dark(#1a1a1a, #f0f0f0);
 		line-height: 1.55;
+		/* slide the content up beneath the (sticky) header */
+		margin-top: calc(-1 * var(--header-height));
 	}
 
 	h2,
@@ -278,6 +280,7 @@
 		color: white;
 		background-color: #1f2c47;
 		padding-block: clamp(5rem, 22vh, 12rem);
+		padding-top: calc(clamp(5rem, 22vh, 12rem) + var(--header-height));
 	}
 
 	.hero-photo {
