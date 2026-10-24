@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-	<title>Interactive Timeline</title>
+	<title>Timeline - Lake Conestee Dam</title>
 </svelte:head>
 
 <StoryMapEmbed

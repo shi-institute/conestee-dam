@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-	<title>New Dam StoryMap</title>
+	<title>The New Dam - Lake Conestee Dam</title>
 </svelte:head>
 
 <StoryMapEmbed

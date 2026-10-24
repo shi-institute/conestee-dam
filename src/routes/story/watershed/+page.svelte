@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-	<title>Watershed StoryMap</title>
+	<title>About the Watershed - Lake Conestee Dam</title>
 </svelte:head>
 
 <StoryMapEmbed

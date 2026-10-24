@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-	<title>Sediment StoryMap</title>
+	<title>Sediment Aggradation - Lake Conestee Dam</title>
 </svelte:head>
 
 <StoryMapEmbed

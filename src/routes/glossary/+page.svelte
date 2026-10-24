@@ -1,5 +1,5 @@
 <svelte:head>
-	<title>Glossary</title>
+	<title>Glossary - Lake Conestee Dam</title>
 </svelte:head>
 
 Under construction

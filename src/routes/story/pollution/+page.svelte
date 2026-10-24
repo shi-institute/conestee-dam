@@ -24,7 +24,7 @@
 </script>
 
 <svelte:head>
-	<title>Pollution StoryMap</title>
+	<title>Pollution in Lake Conestee - Lake Conestee Dam</title>
 </svelte:head>
 
 <StoryMapEmbed

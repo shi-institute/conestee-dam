@@ -3,7 +3,7 @@
 </script>
 
 <svelte:head>
-	<title>Documentary</title>
+	<title>Documentary - Lake Conestee Dam</title>
 </svelte:head>
 
 <StoryMapEmbed
