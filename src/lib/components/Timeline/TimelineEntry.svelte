@@ -46,6 +46,35 @@
 			if (registration) track?.unregister(registration.id);
 		};
 	});
+
+	// A snippet is a function that renders into the DOM, so it has no string value
+	// until it is rendered. We must read the text back from the rendered heading.
+	let headingElement = $state<HTMLElement | null>(null);
+	let headingText = $state('');
+	$effect(() => {
+		if (!headingElement) {
+			return;
+		}
+
+		// re-read whenever the rendered heading changes
+		const update = () => (headingText = headingElement?.textContent?.trim() ?? '');
+		update();
+
+		const observer = new MutationObserver(update);
+		observer.observe(headingElement, { childList: true, subtree: true, characterData: true });
+		return () => observer.disconnect();
+	});
+
+	function stringToHslColor(str: string, s = 70, l = 30) {
+		let hash = 0;
+		for (let i = 0; i < str.length; i++) {
+			hash = str.charCodeAt(i) + ((hash << 5) - hash);
+		}
+
+		const h = Math.abs(hash) % 360;
+
+		return `hsl(${h}, ${s}%, ${l}%)`;
+	}
 </script>
 
 <details style={registration ? `order: ${registration.order}` : undefined}>
@@ -55,13 +84,14 @@
 		</div>
 
 		{#if typeof icon?.src === 'string' || !icon?.src}
-			<img src={icon?.src} alt={icon?.alt} class="timeline-entry-icon" />
+			{@const color = headingText ? stringToHslColor(headingText) : undefined}
+			<div class="timeline-entry-icon" style:--color={color}></div>
 		{:else if icon?.src}
 			<enhanced:img src={icon.src} alt={icon.alt} class="timeline-entry-icon enhanced" />
 		{/if}
 
 		<div class="timeline-entry-summary-content">
-			<svelte:element this={headingLevel} class="timeline-entry-heading">
+			<svelte:element this={headingLevel} class="timeline-entry-heading" bind:this={headingElement}>
 				{@render heading()}
 			</svelte:element>
 			{#if caption}
@@ -126,7 +156,7 @@
 	.timeline-entry-icon {
 		block-size: 3rem;
 		inline-size: 3rem;
-		background-color: aquamarine;
+		background-color: var(--color, aquamarine);
 		border: none;
 		border-radius: 0.25rem;
 		margin-right: 0.5rem;
@@ -134,6 +164,9 @@
 		object-fit: cover;
 		flex-grow: 0;
 		flex-shrink: 0;
+	}
+	div.timeline-entry-icon {
+		box-shadow: inset 0 0 0px 1px rgba(0, 0, 0, 0.1);
 	}
 	:is(details[open], summary:hover, summary:focus-visible) .timeline-entry-icon {
 		block-size: 3.5rem;
