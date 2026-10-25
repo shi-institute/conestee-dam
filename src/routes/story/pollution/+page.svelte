@@ -1,26 +1,27 @@
 <script lang="ts">
 	import type { PageProps } from './$types';
 	import { StoryMapEmbed } from '$lib/components';
-	import { mount } from 'svelte';
+	import { mount, type Component } from 'svelte';
+	import PollutionInfographics from './PollutionInfographics.svelte';
 	import PollutionTimeline from './PollutionTimeline.svelte';
 
-	function replaceTimelinePlaceholder(article: HTMLElement) {
+	function replacePlaceholder(article: HTMLElement, name: string, component: Component) {
 		const codeBlocks = article.querySelectorAll('div:has(> div > pre > code)');
-		const timelineCodeBlock = Array.from(codeBlocks).find((block) => {
+		const placeholderCodeBlock = Array.from(codeBlocks).find((block) => {
 			const codeElement = block.querySelector('pre > code');
-			return codeElement?.textContent === '{ "type": "mount", "component": "PollutionTimeline" }';
+			return codeElement?.textContent === `{ "type": "mount", "component": "${name}" }`;
 		}) as HTMLElement | undefined;
 
-		if (!timelineCodeBlock || !timelineCodeBlock.firstElementChild) {
-			console.error('Timeline code block not found in the article.');
+		if (!placeholderCodeBlock || !placeholderCodeBlock.firstElementChild) {
+			console.error(`${name} code block not found in the article.`);
 			return;
 		}
 
 		const target = document.createElement('div');
 		target.style.margin = '0 auto';
-		timelineCodeBlock.firstElementChild.innerHTML = '';
-		timelineCodeBlock.firstElementChild.appendChild(target);
-		mount(PollutionTimeline, { target });
+		placeholderCodeBlock.firstElementChild.innerHTML = '';
+		placeholderCodeBlock.firstElementChild.appendChild(target);
+		mount(component, { target });
 	}
 
 	let { data }: PageProps = $props();
@@ -35,6 +36,7 @@
 	loadingHeight="calc(100dvh - var(--header-height))"
 	navigation
 	onStoryLoaded={(article) => {
-		replaceTimelinePlaceholder(article);
+		replacePlaceholder(article, 'PollutionTimeline', PollutionTimeline);
+		replacePlaceholder(article, 'PollutionInfographics', PollutionInfographics);
 	}}
 />
