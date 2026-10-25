@@ -4,6 +4,8 @@
   "preview_urls": true,
   "assets": {
     // deploy the build output directory as static assets on Cloudflare
-    "directory": "./build"
+    "directory": "./build",
+    // serve the SvelteKit fallback for unknown paths so /archive/* can install the proxy service worker
+    "not_found_handling": "404-page"
   }
 }
