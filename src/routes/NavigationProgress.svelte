@@ -9,6 +9,8 @@
 	/** The most progress that is shown before the navigation actually finishes. */
 	const MAX_PENDING_PROGRESS = 0.92;
 	const FINISH_DURATION_MS = 250;
+	/** How long going back or forward waits for SvelteKit to start navigating before giving up. */
+	const TRAVERSAL_CLAIM_MS = 250;
 
 	let visible = $state(false);
 	let progress = $state(0);
@@ -22,7 +24,7 @@
 	 * We only use the parts below.
 	 */
 	interface NavigateEvent extends Event {
-		info: unknown;
+		navigationType: string;
 		canIntercept: boolean;
 		intercept(options: {
 			handler: () => Promise<void>;
@@ -30,76 +32,108 @@
 			scroll: 'manual';
 		}): void;
 	}
-	interface NavigationApi extends EventTarget {
-		navigate(
-			url: string,
-			options: { history: 'replace'; info: unknown }
-		): { finished: Promise<unknown> };
+
+	function getNavigation() {
+		return (window as { navigation?: EventTarget }).navigation;
 	}
 
-	const NATIVE_INDICATOR_INFO = 'native-loading-indicator';
-
-	let nativeIndicator: { frame: HTMLIFrameElement; release: () => void } | undefined;
+	/** Finishes the navigation that keeps the browser's own loading indicator showing. */
+	let releaseNativeIndicator: (() => void) | undefined;
 
 	/**
-	 * Makes the browser show its own page loading indicator (such as the spinner in the tab).
+	 * Runs `changeUrl` (which must change the URL with the History API) and makes the browser
+	 * show its own page loading indicator (such as the spinner in the tab) until
+	 * `stopNativeIndicator()` is called or another navigation starts.
 	 *
-	 * Browsers show it while a same-document navigation that was intercepted by the
-	 * Navigation API is pending. We start one inside a hidden iframe, so that nothing
-	 * about the real page or its history (which SvelteKit relies on) is touched,
-	 * and keep it pending until the real navigation is ready. It does nothing
-	 * in browsers without the Navigation API.
+	 * Browsers show it while a same-document navigation in the top-level page that was
+	 * intercepted by the Navigation API is pending, so we intercept the navigation that the
+	 * History API call starts. Unlike `navigation.navigate()`, that keeps the state that
+	 * SvelteKit needs on the history entry. Without the Navigation API, it only changes the URL.
 	 */
-	async function startNativeIndicator() {
-		if (!('navigation' in window) || nativeIndicator) return;
+	function withNativeIndicator(changeUrl: () => void) {
+		const navigation = getNavigation();
+		if (!navigation) {
+			changeUrl();
+			return;
+		}
 
-		const frame = document.createElement('iframe');
-		frame.hidden = true;
-		frame.tabIndex = -1;
-		frame.setAttribute('aria-hidden', 'true');
-		frame.srcdoc = '';
 		let release!: () => void;
 		const hold = new Promise<void>((resolve) => (release = resolve));
-		nativeIndicator = { frame, release };
-
-		document.body.appendChild(frame);
-		await new Promise((resolve) => frame.addEventListener('load', resolve, { once: true }));
-
-		// the navigation may have finished while the frame was loading
-		if (nativeIndicator?.frame !== frame) return;
-		const frameWindow = frame.contentWindow as unknown as {
-			navigation?: NavigationApi;
-			location: Location;
-		} | null;
-		const frameNavigation = frameWindow?.navigation;
-		if (!frameWindow || !frameNavigation) return;
-
-		frameNavigation.addEventListener('navigate', (event) => {
+		const onNavigate = (event: Event) => {
 			const navigateEvent = event as NavigateEvent;
-			if (navigateEvent.info !== NATIVE_INDICATOR_INFO || !navigateEvent.canIntercept) return;
+			if (!navigateEvent.canIntercept) return;
 			navigateEvent.intercept({ handler: () => hold, focusReset: 'manual', scroll: 'manual' });
-		});
+		};
 
-		// replacing the iframe's entry with its current URL does not change anything
-		frameNavigation
-			.navigate(frameWindow.location.href, { history: 'replace', info: NATIVE_INDICATOR_INFO })
-			.finished.catch(() => {});
+		// the History API fires the navigate event synchronously
+		navigation.addEventListener('navigate', onNavigate);
+		try {
+			changeUrl();
+		} finally {
+			navigation.removeEventListener('navigate', onNavigate);
+		}
+
+		// the new navigation aborted the previous one, so release it as well
+		releaseNativeIndicator?.();
+		releaseNativeIndicator = release;
 	}
 
 	function stopNativeIndicator() {
-		if (!nativeIndicator) return;
-		const { frame, release } = nativeIndicator;
-		nativeIndicator = undefined;
-		release();
-		frame.remove();
+		releaseNativeIndicator?.();
+		releaseNativeIndicator = undefined;
 	}
 
+	/** Finishes the intercepted back or forward navigation. */
+	let traversal: { release: () => void; claimed: boolean } | undefined;
+
+	/** Whether this component is going back itself (to leave the placeholder entry). */
+	let removingPlaceholder = false;
+
 	/**
-	 * Keys that SvelteKit's router stores in `history.state`. They let it recognize a history
-	 * entry as its own, so going forward to the placeholder entry below runs a normal navigation.
+	 * Makes the browser show its own loading indicator while going back and forward, too.
+	 *
+	 * The traversal is intercepted and held until SvelteKit's navigation to the page completes
+	 * (see `beforeNavigate`). If SvelteKit does not navigate (for example, when only the hash
+	 * changes), it is released after a moment.
 	 */
-	const HISTORY_INDEX = 'sveltekit:history';
-	const NAVIGATION_INDEX = 'sveltekit:navigation';
+	function onTraverse(event: Event) {
+		const navigateEvent = event as NavigateEvent;
+		if (navigateEvent.navigationType !== 'traverse' || !navigateEvent.canIntercept) return;
+		if (removingPlaceholder) return;
+
+		traversal?.release();
+		let release!: () => void;
+		const hold = new Promise<void>((resolve) => (release = resolve));
+		const current = {
+			release: () => {
+				if (traversal === current) traversal = undefined;
+				release();
+			},
+			claimed: false
+		};
+		traversal = current;
+		setTimeout(() => {
+			if (!current.claimed) current.release();
+		}, TRAVERSAL_CLAIM_MS);
+
+		navigateEvent.intercept({ handler: () => hold, focusReset: 'manual', scroll: 'manual' });
+	}
+
+	$effect(() => {
+		const navigation = getNavigation();
+		navigation?.addEventListener('navigate', onTraverse);
+		return () => {
+			navigation?.removeEventListener('navigate', onTraverse);
+			traversal?.release();
+		};
+	});
+
+	/**
+	 * The key that SvelteKit's router stores its metadata under in `history.state`. It lets it
+	 * recognize a history entry as its own, so going forward to the placeholder entry below
+	 * runs a normal navigation.
+	 */
+	const HISTORY_METADATA = 'sveltekit:metadata';
 
 	/**
 	 * The navigation to a story page that is loading, whose URL is already in the address bar
@@ -120,10 +154,16 @@
 	let waiting = $state(false);
 
 	function pushPlaceholderEntry(url: URL) {
-		const state = history.state ?? {};
+		const metadata = history.state?.[HISTORY_METADATA] ?? {};
 		const placeholderState = {
-			[HISTORY_INDEX]: (state[HISTORY_INDEX] ?? 0) + 1,
-			[NAVIGATION_INDEX]: (state[NAVIGATION_INDEX] ?? 0) + 1
+			[HISTORY_METADATA]: {
+				historyIndex: (metadata.historyIndex ?? 0) + 1,
+				navigationIndex: (metadata.navigationIndex ?? 0) + 1,
+				// an empty page state, serialized the way SvelteKit serializes it
+				state: '[{}]',
+				persistState: false,
+				resetIndex: (metadata.resetIndex ?? 0) + 1
+			}
 		};
 		// call the original method so that SvelteKit does not warn about direct usage
 		History.prototype.pushState.call(history, placeholderState, '', url);
@@ -137,19 +177,24 @@
 	function removePlaceholderEntry() {
 		return new Promise<void>((resolve) => {
 			const done = () => {
+				removingPlaceholder = false;
 				clearTimeout(timeout);
 				removeEventListener('popstate', done);
 				resolve();
 			};
 			const timeout = setTimeout(done, 500);
 			addEventListener('popstate', done, { once: true });
+			removingPlaceholder = true;
 			history.back();
 		});
 	}
 
 	async function navigateToStory(target: URL) {
-		if (pending) replacePlaceholderEntry(target);
-		else pushPlaceholderEntry(target);
+		const replace = !!pending;
+		withNativeIndicator(() => {
+			if (replace) replacePlaceholderEntry(target);
+			else pushPlaceholderEntry(target);
+		});
 		const current = (pending = { href: target.href });
 		waiting = true;
 
@@ -162,6 +207,7 @@
 		}
 
 		pending = undefined;
+		stopNativeIndicator();
 		if (location.href === target.href) await removePlaceholderEntry();
 		await go(target);
 	}
@@ -178,6 +224,17 @@
 		}
 	}
 
+	// SvelteKit ignores going back from the placeholder entry (it never knew about it, so it
+	// sees no change), so stop waiting for the story here
+	function onpopstate() {
+		if (!pending || location.href === pending.href) return;
+		pending = undefined;
+		waiting = false;
+		stopNativeIndicator();
+		traversal?.release();
+		disposeStaleStories(location.pathname);
+	}
+
 	// Story pages take a while to load, so change the URL right away and keep showing the
 	// current page until the story is ready. SvelteKit would otherwise only change the URL
 	// when the new page is shown.
@@ -189,7 +246,15 @@
 			// the user went elsewhere, so stop waiting for the story
 			pending = undefined;
 			waiting = false;
+			stopNativeIndicator();
 			if (to) disposeStaleStories(to.url.pathname);
+
+			// keep the browser's indicator showing until the page is shown
+			const current = traversal;
+			if (navigation.type === 'popstate' && current) {
+				current.claimed = true;
+				navigation.complete.then(current.release, current.release);
+			}
 			return;
 		}
 		if (navigation.type !== 'link' && navigation.type !== 'goto') return;
@@ -210,6 +275,7 @@
 			const abandoned = pending;
 			pending = undefined;
 			waiting = false;
+			stopNativeIndicator();
 			if (abandoned && location.href === abandoned.href) await removePlaceholderEntry();
 			disposeStaleStories(to.url.pathname);
 			go(to.url);
@@ -223,7 +289,6 @@
 			showTimeout = undefined;
 			visible = true;
 			progress = 0.08;
-			startNativeIndicator();
 			// ease toward the maximum, since the real progress of a story is not known
 			tickInterval = setInterval(() => {
 				progress += (MAX_PENDING_PROGRESS - progress) * 0.05;
@@ -257,6 +322,8 @@
 		stopNativeIndicator();
 	});
 </script>
+
+<svelte:window {onpopstate} />
 
 <div
 	class="navigation-progress"
