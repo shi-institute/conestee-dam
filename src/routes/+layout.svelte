@@ -35,7 +35,7 @@
 </svelte:head>
 
 <aside
-	style="position: fixed; bottom: 0; font-size: 16px; line-height: 1.5; padding: 0.5rem 1rem; background-color: light-dark(#f8f8f8d0, #363636d0); border-top: 1px solid light-dark(#ccc, #555); font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; text-align: center; backdrop-filter: blur(14px); z-index: 1000; width: 100%; box-sizing: border-box;"
+	style="position: fixed; bottom: 0; font-size: 14px; line-height: 1.5; padding: 0.5rem 1rem; background-color: light-dark(#f8f8f8d0, #363636d0); font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; backdrop-filter: blur(14px); z-index: 1000; border-radius: 0 0.25rem  0 0;"
 >
 	<b style="color: light-dark(#cb0000, yellow);">This page is under construction.</b>
 	<a href="https://lakeconesteedam.org">Go to main website</a>
