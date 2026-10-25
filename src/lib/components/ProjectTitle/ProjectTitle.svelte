@@ -13,18 +13,18 @@
 	}
 
 	.title-main {
-		font-size: clamp(3rem, 11vw, 7.5rem);
+		font-size: var(--project-title-size, clamp(3rem, 11vw, 7.5rem));
 		font-weight: 800;
 		line-height: 0.95;
 		letter-spacing: -0.03em;
-		text-shadow: 0 2px 24px rgba(0 0 0 / 35%);
+		text-shadow: var(--project-title-shadow, 0 2px 24px rgba(0 0 0 / 35%));
 	}
 
 	.title-sub {
 		display: flex;
 		align-items: center;
 		gap: 1rem;
-		font-size: clamp(1rem, 2.6vw, 1.5rem);
+		font-size: var(--project-subtitle-size, clamp(1rem, 2.6vw, 1.5rem));
 		font-weight: 600;
 		letter-spacing: 0.14em;
 		text-transform: uppercase;

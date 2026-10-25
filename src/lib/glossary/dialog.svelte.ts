@@ -9,8 +9,26 @@ export const glossaryDialog = $state<{
 	glossary: Glossary | null;
 }>({ open: false, termId: '', glossary: null });
 
-/** Opens the glossary popup, scrolled to the term with the given id. */
+/** Shows a term in the glossary that is pinned to the page, if there is one. */
+let showPinnedTerm: ((termId: string) => void) | null = null;
+
+/**
+ * Shows terms in a glossary that is pinned to the page (such as the sidebar on video pages)
+ * instead of in the popup, until the returned function is called.
+ */
+export function pinGlossary(showTerm: (termId: string) => void) {
+	showPinnedTerm = showTerm;
+	return () => {
+		if (showPinnedTerm === showTerm) showPinnedTerm = null;
+	};
+}
+
+/** Opens the glossary popup (or the pinned glossary), scrolled to the term with the given id. */
 export function openGlossaryTerm(glossary: Glossary, termId: string) {
+	if (showPinnedTerm) {
+		showPinnedTerm(termId);
+		return;
+	}
 	glossaryDialog.glossary = glossary;
 	glossaryDialog.termId = termId;
 	glossaryDialog.open = true;

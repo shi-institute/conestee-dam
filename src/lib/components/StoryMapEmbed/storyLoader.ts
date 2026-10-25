@@ -239,6 +239,9 @@ export function disposeStaleStories(currentPathname: string | null = wantedPathn
  * page load, it does not wait. If the URL does not match, the story is started later,
  * when the page adopts it.
  *
+ * Pass `{ wait: false }` to show the page right away and let the story load in place
+ * (such as when the story is not the main content of the page).
+ *
  * @example
  * ```ts
  * // +page.ts
@@ -247,7 +250,11 @@ export function disposeStaleStories(currentPathname: string | null = wantedPathn
  * });
  * ```
  */
-export async function loadStory(storyId: string, url: URL): Promise<StoryLoad | null> {
+export async function loadStory(
+	storyId: string,
+	url: URL,
+	{ wait = true }: { wait?: boolean } = {}
+): Promise<StoryLoad | null> {
 	if (!browser) return null;
 
 	disposeStaleStories(url.pathname);
@@ -261,7 +268,7 @@ export async function loadStory(storyId: string, url: URL): Promise<StoryLoad | 
 	const matchesUrl = normalizePathname(location.pathname) === normalizePathname(url.pathname);
 	if (matchesUrl) {
 		load.start();
-		if (hydrated) {
+		if (hydrated && wait) {
 			await Promise.race([
 				load.ready,
 				new Promise((resolve) => setTimeout(resolve, NAVIGATION_WAIT_MS))

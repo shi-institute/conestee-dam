@@ -1,0 +1,14 @@
+[
+	{
+		"id": 1,
+		"codes": ["containment"],
+		"youtube_id": "_6TjJ4OzMiQ",
+		"title": "Containment",
+		"title_caption": "The Conestee Dam Story",
+		"document_title": "Documentary",
+		"document_description": "Watch \"Containment: The Conestee Dam Story\"",
+		"storymap_id": "b3daea8f94a14558b386108914d9d3b9",
+		"next_episode_path": "/story/pollution",
+		"next_episode_type": "story"
+	}
+]

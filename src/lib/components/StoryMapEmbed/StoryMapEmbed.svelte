@@ -12,6 +12,7 @@
 		story,
 		onStoryLoaded,
 		loadingHeight,
+		loadingName = 'story',
 		navigation = false,
 		heading = true,
 		class: className
@@ -35,6 +36,12 @@
 		 * story once it has loaded.
 		 */
 		loadingHeight?: string;
+
+		/**
+		 * What the story is called in the loading message ("Please wait while the story loads.").
+		 * Defaults to `story`.
+		 */
+		loadingName?: string;
 
 		/**
 		 * Whether to show a pane that lists the story's headings and jumps to them.
@@ -236,7 +243,7 @@
 	{#if !loaded}
 		<div class="loading-message">
 			<ProgressRing></ProgressRing>
-			<span>Please wait while the story loads.</span>
+			<span>Please wait while the {loadingName} loads.</span>
 			<span>This may take a few seconds.</span>
 		</div>
 	{/if}

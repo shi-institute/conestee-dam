@@ -2,40 +2,10 @@
 	import { afterNavigate } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import { ProjectTitle, wrapImagesInLightbox } from '$lib/components';
+	import { stories } from '$lib/stories';
 	import newDam from './new-dam.webp?enhanced';
 	import oldDam from './old-dam.webp?enhanced';
 	import historicMap from './story/pollution/Sanborn-ConesteeMills-1920.png?enhanced';
-
-	const stories = [
-		{
-			href: '/story/pollution',
-			label: 'Pollution history',
-			description:
-				'Textile mills, power plants, sewage, and more: how many kinds of pollution reached the Reedy River.'
-		},
-		{
-			href: '/story/sediment',
-			label: 'Sediment aggradation',
-			description: 'An exploration of how sediment has reduced the size of Lake Conestee over time.'
-		},
-		{
-			href: '/story/watershed',
-			label: 'About the watershed',
-			description:
-				'What a watershed is and how it works, the Reedy River watershed, and the challenges of an aging dam.'
-		},
-		{
-			href: '/story/timeline',
-			label: 'Timeline',
-			description:
-				'A chronological timeline of the dam, the mills, and the river since the 19ᵗʰ century.'
-		},
-		{
-			href: '/story/dam',
-			label: 'The new dam',
-			description: 'Completed in 2025, a containment barrier built just downstream of the old dam.'
-		}
-	] as const;
 
 	let exploreDialog: HTMLDialogElement | null = null;
 	let exploreButton: HTMLButtonElement | null = null;
