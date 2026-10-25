@@ -48,6 +48,12 @@
 {@render children()}
 
 <style>
+	/* the ArcGIS Maps SDK (loaded by stories with maps) sets `:root { view-transition-name: none }`,
+	which would disable the page transition for every later navigation */
+	:global(html:root) {
+		view-transition-name: root;
+	}
+
 	/* the page content fades out, then the new page fades in while rising slightly */
 	:global(::view-transition-old(root)) {
 		animation: page-out 120ms cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
