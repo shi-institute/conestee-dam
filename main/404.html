@@ -4,17 +4,22 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="text-scale" content="scale" />
-		<link href="/conestee-dam/_app/immutable/entry/start.CZLDhfcf.js" rel="modulepreload">
-		<link href="/conestee-dam/_app/immutable/chunks/OS7RVJiD.js" rel="modulepreload">
-		<link href="/conestee-dam/_app/immutable/chunks/pG59HNNM.js" rel="modulepreload">
-		<link href="/conestee-dam/_app/immutable/entry/app.B7pLLlR0.js" rel="modulepreload">
-		<link href="/conestee-dam/_app/immutable/chunks/DYl5dUZ5.js" rel="modulepreload">
-		<link href="/conestee-dam/_app/immutable/chunks/xihTtKlq.js" rel="modulepreload">
-		<link href="/conestee-dam/_app/immutable/nodes/0.D0UaO0WV.js" rel="modulepreload">
-		<link href="/conestee-dam/_app/immutable/chunks/5hEjOGgE.js" rel="modulepreload">
-		<link href="/conestee-dam/_app/immutable/chunks/CFccTQCD.js" rel="modulepreload">
+		<link href="/conestee-dam/_app/immutable/entry/start.hu5koi13.js" rel="modulepreload">
+		<link href="/conestee-dam/_app/immutable/entry/payload.DSmR2FwN.js" rel="modulepreload">
+		<link href="/conestee-dam/_app/immutable/chunks/CRzLMJPS.js" rel="modulepreload">
+		<link href="/conestee-dam/_app/immutable/chunks/B0fJ7cs2.js" rel="modulepreload">
+		<link href="/conestee-dam/_app/immutable/chunks/D6F54z5v.js" rel="modulepreload">
+		<link href="/conestee-dam/_app/immutable/chunks/DaGUJUZi.js" rel="modulepreload">
+		<link href="/conestee-dam/_app/immutable/chunks/BwzE1QNS.js" rel="modulepreload">
+		<link href="/conestee-dam/_app/immutable/entry/app.BjsjrDl5.js" rel="modulepreload">
+		<link href="/conestee-dam/_app/immutable/nodes/0.DSFCDYfs.js" rel="modulepreload">
+		<link href="/conestee-dam/_app/immutable/chunks/DK3Fl9T5.js" rel="modulepreload">
+		<link href="/conestee-dam/_app/immutable/chunks/vcjinKYS.js" rel="modulepreload">
+		<link href="/conestee-dam/_app/immutable/chunks/BLdv8uex.js" rel="modulepreload">
+		<link href="/conestee-dam/_app/immutable/chunks/ixv7Xavk.js" rel="modulepreload">
 		
-		<link href="/conestee-dam/_app/immutable/assets/components.BoeqDg-Y.css" rel="stylesheet">
+		<link href="/conestee-dam/_app/immutable/assets/glossary.CZ36qQE9.css" rel="stylesheet">
+		<link href="/conestee-dam/_app/immutable/assets/components.D6iMUaSB.css" rel="stylesheet">
 		<link href="/conestee-dam/_app/immutable/assets/0.8noEz9S5.css" rel="stylesheet">
 		<link rel="stylesheet" href="https://use.typekit.net/izw5ghp.css" />
 	</head>
@@ -48,17 +53,17 @@
 		<div style="display: contents">
 			<script>
 				{
-					__sveltekit_1739wk4 = {
+					__sveltekit_1t8wnr = {
 						base: "/conestee-dam",
+						version: "1792897302293",
 						assets: "/conestee-dam"
 					};
 
 					const element = document.currentScript.parentElement;
 
-					Promise.all([
-						import("/conestee-dam/_app/immutable/entry/start.CZLDhfcf.js"),
-						import("/conestee-dam/_app/immutable/entry/app.B7pLLlR0.js")
-					]).then(([kit, app]) => {
+					import("/conestee-dam/_app/immutable/entry/start.hu5koi13.js").then(async (kit) => {
+						kit.init(__sveltekit_1t8wnr);
+						const app = await import("/conestee-dam/_app/immutable/entry/app.BjsjrDl5.js");
 						kit.start(app, element);
 					});
 
@@ -70,7 +75,7 @@
 						);
 						const sanitised = policy?.createScriptURL(script_url) ?? script_url;
 						addEventListener('load', function () {
-							navigator.serviceWorker.register(sanitised);
+							navigator.serviceWorker.register(sanitised, { type: 'module' });
 						});
 					}
 				}
