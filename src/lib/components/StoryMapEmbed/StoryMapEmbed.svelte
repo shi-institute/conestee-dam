@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+	import { resolve } from '$app/paths';
 	import ProgressRing from '$components/ProgressRing/ProgressRing.svelte';
 	import type { StoryLoad } from './storyLoader';
 
@@ -39,6 +41,27 @@
 
 	let loaded = $state(false);
 
+	// convert https://link.local links to links that are for the current host
+	function convertLocalLinks(node: HTMLElement) {
+		const links = node.querySelectorAll<HTMLAnchorElement>('a[href^="https://link.local"]');
+		for (const link of links) {
+			const url = new URL(link.href);
+			url.host = location.host;
+			link.href = resolve(url.toString().slice(url.origin.length)); // make it relative to the current host
+			link.target = '_self'; // open in the same tab, not a new one
+
+			// navigate with the SvelteKit router instead of reloading the page
+			// (the story's own click handlers would otherwise run first and may bypass it)
+			link.addEventListener('click', (event) => {
+				const isModified = event.metaKey || event.ctrlKey || event.shiftKey || event.altKey;
+				if (event.button !== 0 || isModified) return; // let the browser open new tabs/windows
+				event.preventDefault();
+				event.stopPropagation();
+				goto(link.href);
+			});
+		}
+	}
+
 	// move the story from the off-screen container into this page
 	function adopt(slot: HTMLDivElement) {
 		if (!story) return;
@@ -53,6 +76,7 @@
 		const markLoaded = (article: HTMLElement | null) => {
 			if (cancelled || !article) return;
 			loaded = true;
+			convertLocalLinks(article);
 			onStoryLoaded?.(article);
 		};
 		if (story.article) markLoaded(story.article);
@@ -175,5 +199,12 @@
 	}
 	:global(.storymap-embed) :global(.immersive.categorized .places-section) {
 		grid-row: 1 !important;
+	}
+
+	:global(#storymaps-root) {
+		--sm-story-theme-spacing-xxs: calc(
+			var(--sm-story-theme-spacing-xxs-raw) * var(--storymaps-spacing-scale, 1)
+		);
+		--sm-story-theme-spacing-xxs-raw: 1.6rem;
 	}
 </style>
