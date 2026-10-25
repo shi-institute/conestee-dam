@@ -33,6 +33,7 @@
 <StoryMapEmbed
 	story={data.story}
 	loadingHeight="calc(100dvh - var(--header-height))"
+	navigation
 	onStoryLoaded={(article) => {
 		replaceTimelinePlaceholder(article);
 	}}

@@ -4,11 +4,13 @@
 	import ProgressRing from '$components/ProgressRing/ProgressRing.svelte';
 	import { fetchGlossary, linkGlossaryTerms } from '$lib/glossary';
 	import type { StoryLoad } from './storyLoader';
+	import StoryNavigation from './StoryNavigation.svelte';
 
 	const {
 		story,
 		onStoryLoaded,
 		loadingHeight,
+		navigation = false,
 		class: className
 	} = $props<{
 		/**
@@ -32,6 +34,14 @@
 		loadingHeight?: string;
 
 		/**
+		 * Whether to show a pane that lists the story's headings and jumps to them.
+		 *
+		 * The headings are read from the story when it loads (and whenever it changes),
+		 * so the pane always matches the story's content in StoryMaps.
+		 */
+		navigation?: boolean;
+
+		/**
 		 * Optional class to apply to the root element of the component.
 		 *
 		 * It is rendered into the prerendered HTML, so it can be used for styles
@@ -41,6 +51,7 @@
 	}>();
 
 	let loaded = $state(false);
+	let article = $state<HTMLElement | null>(null);
 
 	// convert https://link.local links to links that are for the current host
 	function convertLocalLinks(node: HTMLElement) {
@@ -75,17 +86,18 @@
 
 		let cancelled = false;
 		let stopLinkingGlossaryTerms: (() => void) | undefined;
-		const markLoaded = (article: HTMLElement | null) => {
-			if (cancelled || !article) return;
+		const markLoaded = (storyArticle: HTMLElement | null) => {
+			if (cancelled || !storyArticle) return;
 			loaded = true;
-			convertLocalLinks(article);
-			onStoryLoaded?.(article);
+			article = storyArticle;
+			convertLocalLinks(storyArticle);
+			onStoryLoaded?.(storyArticle);
 
 			// link glossary terms in the story, including any content injected by `onStoryLoaded`
 			fetchGlossary()
 				.then((glossary) => {
 					if (cancelled) return;
-					stopLinkingGlossaryTerms = linkGlossaryTerms(article, glossary);
+					stopLinkingGlossaryTerms = linkGlossaryTerms(storyArticle, glossary);
 				})
 				.catch((error) => console.error('Glossary terms could not be linked:', error));
 		};
@@ -110,6 +122,9 @@
 	style:min-height={loaded ? undefined : (loadingHeight ?? '100dvh')}
 >
 	<div class="storymap-slot" {@attach adopt}></div>
+	{#if navigation && article}
+		<StoryNavigation {article} />
+	{/if}
 	{#if !loaded}
 		<div class="loading-message">
 			<ProgressRing></ProgressRing>
