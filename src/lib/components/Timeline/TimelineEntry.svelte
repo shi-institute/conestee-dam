@@ -11,7 +11,7 @@
 		children,
 		icon,
 		date
-	} = $props<{
+	}: {
 		headingLevel?: `h${1 | 2 | 3 | 4 | 5 | 6}`;
 		/**
 		 * The snippet that appears as the heading for the timeline entry.
@@ -36,7 +36,7 @@
 		 * along the track at reasonable intervals.
 		 */
 		date?: TimelineDate;
-	}>();
+	} = $props();
 
 	const track = getTimelineTrackContext();
 	const registration = track?.register(untrack(() => date));

@@ -68,7 +68,7 @@ export function linkGlossaryTerms(root: HTMLElement, glossary: Glossary) {
 
 	function createLink(text: string, id: string) {
 		const link = document.createElement('a');
-		link.href = resolve(`/glossary/#${id}`);
+		link.href = resolve(`glossary/#${id}`);
 		link.className = 'glossary-term';
 		link.dataset.glossaryTerm = id;
 		link.textContent = text;

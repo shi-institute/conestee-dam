@@ -3,12 +3,12 @@
 /// <reference lib="esnext" />
 /// <reference lib="webworker" />
 
-import { base } from '$service-worker';
+import { resolve } from '$app/paths';
 
 const sw = self as unknown as ServiceWorkerGlobalScope;
 
 // requests under this path are proxied to the archive of the original site
-const ARCHIVE_PREFIX = `${base}/archive`;
+const ARCHIVE_PREFIX = resolve('archive');
 const ARCHIVE_ORIGIN = 'https://shi-institute.github.io/conestee-dam-archive';
 
 // take control of open pages immediately so the archive route can reload into the proxy

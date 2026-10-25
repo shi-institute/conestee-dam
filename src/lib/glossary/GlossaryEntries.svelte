@@ -8,7 +8,7 @@
 		idPrefix = '',
 		headingLevel = 'h2',
 		linksInNewTab = false
-	} = $props<{
+	}: {
 		/** The entries to show, sorted alphabetically. */
 		entries: GlossaryEntry[];
 		/** The id of the term to highlight. */
@@ -21,7 +21,7 @@
 		headingLevel?: `h${2 | 3 | 4 | 5 | 6}`;
 		/** Whether links to terms open in a new tab, such as when the entries are in a popup. */
 		linksInNewTab?: boolean;
-	}>();
+	} = $props();
 
 	const groups = $derived(groupByLetter(entries));
 </script>
@@ -52,7 +52,7 @@
 							{@html entry.termHtml}
 							<a
 								class="anchor"
-								href={resolve(`/glossary/#${entry.id}`)}
+								href={resolve(`glossary/#${entry.id}`)}
 								target={linksInNewTab ? '_blank' : undefined}
 								rel={linksInNewTab ? 'noopener' : undefined}
 								aria-label="Link to this term">#</a

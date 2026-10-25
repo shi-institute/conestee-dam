@@ -2,10 +2,10 @@
 	import { cubicOut } from 'svelte/easing';
 	import { scale, slide } from 'svelte/transition';
 
-	const { article } = $props<{
+	const { article }: {
 		/** The story article in which we should search for headings. */
 		article: HTMLElement;
-	}>();
+	} = $props();
 
 	interface StoryHeading {
 		element: HTMLElement;

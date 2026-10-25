@@ -3,10 +3,10 @@
 	import { setTimelineTrackContext, type TimelineDate } from './context';
 	import TimelineYear from './TimelineYear.svelte';
 
-	const { children } = $props<{
+	const { children }: {
 		/** The Timeline.Entry components to render inside the track. */
 		children: Snippet;
-	}>();
+	} = $props();
 
 	let nextId = 0;
 	let entries = $state<{ id: number; date: TimelineDate; order: number }[]>([]);

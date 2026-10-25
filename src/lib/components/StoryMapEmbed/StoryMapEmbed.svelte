@@ -15,7 +15,7 @@
 		navigation = false,
 		heading = true,
 		class: className
-	} = $props<{
+	}: {
 		/**
 		 * The story to show from `loadStory()`. It is `null` when the page is prerendered.
 		 */
@@ -60,7 +60,7 @@
 		 * (such as the color scheme) that must apply before the story loads.
 		 */
 		class?: string;
-	}>();
+	} = $props();
 
 	let loaded = $state(false);
 	let article = $state<HTMLElement | null>(null);
@@ -71,7 +71,8 @@
 		for (const link of links) {
 			const url = new URL(link.href);
 			url.host = location.host;
-			link.href = resolve(url.toString().slice(url.origin.length)); // make it relative to the current host
+			const pathname = url.toString().slice(url.origin.length + 1);
+			link.href = resolve(...([pathname] as Parameters<typeof resolve>)); // make it relative to the current host
 			link.target = '_self'; // open in the same tab, not a new one
 
 			// navigate with the SvelteKit router instead of reloading the page
@@ -204,6 +205,7 @@
 
 	// on Alt + Shift + E, launch the StoryMaps editor for the current StoryMap
 	function openEditor(event: KeyboardEvent) {
+		if (!story) return;
 		if (
 			event.altKey &&
 			event.shiftKey &&

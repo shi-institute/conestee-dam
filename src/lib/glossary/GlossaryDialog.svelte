@@ -54,7 +54,7 @@
 		<h2 id="glossary-dialog-title">Glossary</h2>
 		<a
 			class="page-link"
-			href={resolve(`/glossary/#${glossaryDialog.termId}`)}
+			href={resolve(`glossary/#${glossaryDialog.termId}`)}
 			target="_blank"
 			rel="noopener">Open glossary page</a
 		>

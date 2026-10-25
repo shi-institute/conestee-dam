@@ -1,7 +1,7 @@
 <script lang="ts">
-	const { year } = $props<{
+	const { year }: {
 		year: number | string;
-	}>();
+	} = $props();
 </script>
 
 <div class="timeline-year">

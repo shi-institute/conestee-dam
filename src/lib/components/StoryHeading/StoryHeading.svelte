@@ -1,5 +1,5 @@
 <script lang="ts">
-	const { title, summary, image } = $props<{
+	const { title, summary, image }: {
 		/** The title of the story. */
 		title: string;
 
@@ -13,7 +13,7 @@
 		 * story does not shift once the photo is available.
 		 */
 		image?: { src?: string; srcset?: string; alt: string };
-	}>();
+	} = $props();
 </script>
 
 <header class="story-heading" class:has-image={!!image} data-glossary-ignore>
