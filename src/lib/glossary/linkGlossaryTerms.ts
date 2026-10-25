@@ -30,7 +30,8 @@ const EXCLUDED_SELECTOR = [
 	'[role="switch"]',
 	'[role="checkbox"]',
 	'[role="radio"]',
-	'[aria-hidden="true"]'
+	'[aria-hidden="true"]',
+	'[data-glossary-ignore]'
 ].join(', ');
 
 /**

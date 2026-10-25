@@ -29,6 +29,7 @@
 	story={data.story}
 	loadingHeight="calc(100dvh - var(--header-height))"
 	class="documentary-storymap"
+	heading={false}
 	onStoryLoaded={(article) => {
 		replaceTitle(article);
 	}}

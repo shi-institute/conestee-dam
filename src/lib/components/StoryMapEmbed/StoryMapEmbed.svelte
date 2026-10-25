@@ -2,7 +2,9 @@
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import ProgressRing from '$components/ProgressRing/ProgressRing.svelte';
+	import StoryHeading from '$components/StoryHeading/StoryHeading.svelte';
 	import { fetchGlossary, linkGlossaryTerms } from '$lib/glossary';
+	import { mount, unmount } from 'svelte';
 	import type { StoryLoad } from './storyLoader';
 	import StoryNavigation from './StoryNavigation.svelte';
 
@@ -11,6 +13,7 @@
 		onStoryLoaded,
 		loadingHeight,
 		navigation = false,
+		heading = true,
 		class: className
 	} = $props<{
 		/**
@@ -40,6 +43,15 @@
 		 * so the pane always matches the story's content in StoryMaps.
 		 */
 		navigation?: boolean;
+
+		/**
+		 * Whether to replace the story's StoryMaps cover with our own heading.
+		 *
+		 * The heading shows the title, summary, and cover photo from the StoryMaps cover
+		 * (but not the byline or published date). Turn it off to use a custom cover
+		 * from `onStoryLoaded` instead.
+		 */
+		heading?: boolean;
 
 		/**
 		 * Optional class to apply to the root element of the component.
@@ -74,6 +86,76 @@
 		}
 	}
 
+	/**
+	 * Lists larger versions of a StoryMaps image, since StoryMaps
+	 * requests images at a fixed width with the `w` parameter.
+	 */
+	function createSrcset(src: string) {
+		const url = new URL(src);
+		if (!url.searchParams.has('w')) return undefined;
+		return [800, 1600, 2400]
+			.map((width) => {
+				url.searchParams.set('w', width.toString());
+				return `${url} ${width}w`;
+			})
+			.join(', ');
+	}
+
+	// replace the StoryMaps cover (the first block) with our own heading
+	function replaceCover(article: HTMLElement) {
+		const cover = article.firstElementChild as HTMLElement | null;
+		const title = cover?.querySelector('.sc-title')?.textContent?.trim();
+		if (!cover || !title) {
+			console.error('Story cover not found in the article.');
+			return;
+		}
+
+		const summary = cover.querySelector('.sc-summary')?.textContent?.trim() || undefined;
+		const img = cover.querySelector<HTMLImageElement>('.media-panel img');
+		const readImage = (img: HTMLImageElement) => {
+			const src = img.getAttribute('src') || undefined;
+			return { src, srcset: src && createSrcset(img.src), alt: img.alt };
+		};
+		const props = $state({ title, summary, image: img ? readImage(img) : undefined });
+
+		// StoryMaps only sets the source of the cover photo after the cover is laid out,
+		// so the original cover stays (hidden) in the page until the photo has a source
+		const original = Array.from(cover.children) as HTMLElement[];
+		const removeOriginal = () => {
+			observer.disconnect();
+			clearTimeout(timeout);
+			for (const element of original) element.remove();
+		};
+		for (const element of original) {
+			element.inert = true;
+			element.setAttribute('aria-hidden', 'true');
+			element.style.cssText +=
+				'position: absolute; inset: 0; visibility: hidden; pointer-events: none;';
+		}
+		const observer = new MutationObserver(() => {
+			if (!img?.getAttribute('src')) return;
+			props.image = readImage(img);
+			removeOriginal();
+		});
+		const timeout = setTimeout(() => {
+			if (!props.image?.src) props.image = undefined;
+			removeOriginal();
+		}, 10_000);
+		if (img && !props.image?.src) observer.observe(img, { attributeFilter: ['src'] });
+		else removeOriginal();
+
+		cover.style.position = 'relative';
+		const heading = mount(StoryHeading, {
+			target: cover,
+			anchor: cover.firstChild ?? undefined,
+			props
+		});
+		return () => {
+			removeOriginal();
+			unmount(heading);
+		};
+	}
+
 	// move the story from the off-screen container into this page
 	function adopt(slot: HTMLDivElement) {
 		if (!story) return;
@@ -86,10 +168,14 @@
 
 		let cancelled = false;
 		let stopLinkingGlossaryTerms: (() => void) | undefined;
+		let removeHeading: (() => void) | undefined;
 		const markLoaded = (storyArticle: HTMLElement | null) => {
 			if (cancelled || !storyArticle) return;
 			loaded = true;
 			article = storyArticle;
+			if (heading) {
+				removeHeading = replaceCover(storyArticle);
+			}
 			convertLocalLinks(storyArticle);
 			onStoryLoaded?.(storyArticle);
 
@@ -107,6 +193,7 @@
 		return () => {
 			cancelled = true;
 			stopLinkingGlossaryTerms?.();
+			removeHeading?.();
 			story.dispose();
 		};
 	}
@@ -168,8 +255,11 @@
 			opacity 210ms cubic-bezier(0.16, 1, 0.3, 1),
 			transform 210ms cubic-bezier(0.16, 1, 0.3, 1);
 	}
+	/* end at `none` since any transform would make it the containing block
+	for StoryMaps' fixed fullscreen maps, which would break the fullscreen
+	button functionality */
 	:global(.storymap-embed.loaded) :global(> *) {
-		transform: translateY(0);
+		transform: none;
 		opacity: 1;
 	}
 
