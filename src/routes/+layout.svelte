@@ -2,6 +2,7 @@
 	import { onNavigate } from '$app/navigation';
 	import favicon from '$lib/assets/favicon.svg';
 	import { markHydrated } from '$lib/components';
+	import { GlossaryDialog } from '$lib/glossary';
 	import { onMount } from 'svelte';
 	import HeaderMenu from './HeaderMenu.svelte';
 	import NavigationProgress from './NavigationProgress.svelte';
@@ -39,6 +40,7 @@
 
 <NavigationProgress />
 <HeaderMenu />
+<GlossaryDialog />
 
 {@render children()}
 

@@ -2,6 +2,7 @@
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import ProgressRing from '$components/ProgressRing/ProgressRing.svelte';
+	import { fetchGlossary, linkGlossaryTerms } from '$lib/glossary';
 	import type { StoryLoad } from './storyLoader';
 
 	const {
@@ -73,17 +74,27 @@
 		story.start();
 
 		let cancelled = false;
+		let stopLinkingGlossaryTerms: (() => void) | undefined;
 		const markLoaded = (article: HTMLElement | null) => {
 			if (cancelled || !article) return;
 			loaded = true;
 			convertLocalLinks(article);
 			onStoryLoaded?.(article);
+
+			// link glossary terms in the story, including any content injected by `onStoryLoaded`
+			fetchGlossary()
+				.then((glossary) => {
+					if (cancelled) return;
+					stopLinkingGlossaryTerms = linkGlossaryTerms(article, glossary);
+				})
+				.catch((error) => console.error('Glossary terms could not be linked:', error));
 		};
 		if (story.article) markLoaded(story.article);
 		else story.ready.then(markLoaded);
 
 		return () => {
 			cancelled = true;
+			stopLinkingGlossaryTerms?.();
 			story.dispose();
 		};
 	}
@@ -199,6 +210,22 @@
 	}
 	:global(.storymap-embed) :global(.immersive.categorized .places-section) {
 		grid-row: 1 !important;
+	}
+
+	/* glossary terms are subtle so that prose with many terms is still easy to read */
+	:global(.storymap-embed a.glossary-term) {
+		color: inherit;
+		font: inherit;
+		text-decoration-line: underline;
+		text-decoration-style: dotted;
+		text-decoration-thickness: 1.5px;
+		text-decoration-color: light-dark(#4868a9, #c5dbff);
+		text-underline-offset: 0.2em;
+		cursor: help;
+	}
+	:global(.storymap-embed a.glossary-term:hover) {
+		text-decoration-style: solid;
+		color: light-dark(#4868a9, #c5dbff);
 	}
 
 	:global(#storymaps-root) {
