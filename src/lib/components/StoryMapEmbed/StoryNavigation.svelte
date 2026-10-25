@@ -43,7 +43,8 @@
 	const topLevel = $derived(Math.min(...headings.map((heading) => heading.level)));
 
 	// collect the headings from the story, and collect them again whenever the story changes
-	// (such as when StoryMaps renders more of the story or content is injected into it)
+	// (such as when StoryMaps renders more of the story, content is injected into it,
+	// or its images load and change its layout)
 	$effect(() => {
 		let frame = 0;
 		const update = () => {
@@ -51,6 +52,7 @@
 			const next = collectHeadings(article);
 			if (!isSameHeadings(headings, next)) headings = next;
 			measureMargin();
+			updateWideElements();
 			updateActiveHeading();
 		};
 		update();
@@ -59,9 +61,20 @@
 			if (!frame) frame = requestAnimationFrame(update);
 		});
 		observer.observe(article, { childList: true, subtree: true, characterData: true });
+		const resizeObserver = new ResizeObserver(() => {
+			if (!frame) frame = requestAnimationFrame(update);
+		});
+		resizeObserver.observe(article);
+		// images (such as floated ones) can change size when they load without resizing the story
+		const onLoad = () => {
+			if (!frame) frame = requestAnimationFrame(update);
+		};
+		article.addEventListener('load', onLoad, true);
 
 		return () => {
 			observer.disconnect();
+			resizeObserver.disconnect();
+			article.removeEventListener('load', onLoad, true);
 			cancelAnimationFrame(frame);
 		};
 	});
@@ -88,6 +101,8 @@
 
 	function onResize() {
 		measureMargin();
+		updateWideElements();
+		viewportHeight = window.innerHeight;
 		onScroll();
 	}
 
@@ -108,6 +123,105 @@
 	/** The pane fills the margin, leaving a gap on either side of it. */
 	const paneWidth = $derived(Math.min(margin - 2 * rem, 16 * rem));
 	const fitsBeside = $derived(paneWidth >= 10 * rem);
+
+	let pane = $state<HTMLElement>();
+	let paneHeight = $state(0);
+	let viewportHeight = $state(window.innerHeight);
+
+	/** Elements in the story that reach under the pane, such as wide and full-width media. */
+	let wideElements = $state.raw<Element[]>([]);
+	const MEDIA = 'img, video, canvas, iframe, svg, picture';
+
+	/**
+	 * Finds the outermost visible elements in the story (including content injected into it)
+	 * that extend past the left edge of the pane.
+	 *
+	 * Wrappers that are wide but only contain narrow content (such as the story's text column)
+	 * are skipped, since nothing in them is under the pane. Wrappers that are wide and have
+	 * their own background (such as the sidecar in an injected infographic) are counted.
+	 *
+	 * Narrow elements are still searched, since their content can extend past them (such as
+	 * images floated into the margin or injected content that breaks out of the text column).
+	 * Content that is clipped by its container is handled by the intersection observer.
+	 */
+	function collectWideElements(): Element[] {
+		const edge = document.documentElement.clientWidth - rem - paneWidth;
+		const pageBackground = getBackdropColor(article);
+		const elements: Element[] = [];
+		const visit = (parent: Element) => {
+			for (const child of parent.children) {
+				const rect = child.getBoundingClientRect();
+				const isWide = rect.right > edge && rect.width > 0 && rect.height > 0;
+				if (isWide && !child.checkVisibility({ visibilityProperty: true })) continue;
+				if (isWide && (child.matches(MEDIA) || hasBackground(child, pageBackground))) {
+					elements.push(child);
+				} else if (child.childElementCount > 0) visit(child);
+				else if (isWide && child.textContent?.trim()) elements.push(child);
+			}
+		};
+		visit(article);
+		return elements;
+	}
+
+	const TRANSPARENT = 'rgba(0, 0, 0, 0)';
+
+	/** The color behind an element, from the nearest element (or ancestor) that has a background color. */
+	function getBackdropColor(element: Element) {
+		for (let current: Element | null = element; current; current = current.parentElement) {
+			const color = getComputedStyle(current).backgroundColor;
+			if (color !== TRANSPARENT) return color;
+		}
+		return TRANSPARENT;
+	}
+
+	/** Whether an element has a background that stands out from the page behind the story. */
+	function hasBackground(element: Element, pageBackground: string) {
+		const style = getComputedStyle(element);
+		return (
+			style.backgroundImage !== 'none' ||
+			(style.backgroundColor !== TRANSPARENT && style.backgroundColor !== pageBackground)
+		);
+	}
+
+	function updateWideElements() {
+		if (!fitsBeside) {
+			if (wideElements.length > 0) wideElements = [];
+			return;
+		}
+		const next = collectWideElements();
+		const isSame =
+			next.length === wideElements.length &&
+			next.every((element, index) => element === wideElements[index]);
+		if (!isSame) wideElements = next;
+	}
+
+	/** Whether any wide elements are under the pane, which is when it fades so they can be seen. */
+	let overlapping = $state(false);
+
+	// watch for wide elements in the band of the viewport that the pane covers
+	$effect(() => {
+		void paneHeight;
+		void viewportHeight;
+		const rect = pane?.getBoundingClientRect();
+		if (!rect || rect.height === 0 || wideElements.length === 0) {
+			overlapping = false;
+			return;
+		}
+
+		const intersecting = new Set<Element>();
+		const observer = new IntersectionObserver(
+			(entries) => {
+				for (const entry of entries) {
+					if (entry.isIntersecting) intersecting.add(entry.target);
+					else intersecting.delete(entry.target);
+				}
+				overlapping = intersecting.size > 0;
+			},
+			{ rootMargin: `${-rect.top}px 0px ${-(viewportHeight - rect.bottom)}px 0px` }
+		);
+		for (const element of wideElements) observer.observe(element);
+		return () => observer.disconnect();
+	});
 
 	let popover = $state<HTMLElement>();
 
@@ -179,7 +293,10 @@
 		class="story-navigation pane"
 		class:collapsed
 		class:toggled
+		class:overlapping
 		aria-label="Story sections"
+		bind:this={pane}
+		bind:offsetHeight={paneHeight}
 		style:width="{collapsed ? collapsedWidth : paneWidth}px"
 		style:--duration="{PANE_DURATION}ms"
 	>
@@ -324,11 +441,26 @@
 	.pane.collapsed {
 		padding: 0.25rem 0;
 	}
+	/* fade the pane when it covers wide content, unless it is being used */
+	.pane.overlapping:not(:hover, :focus-within) {
+		background-color: light-dark(#ffffff1a, #2121211a);
+		backdrop-filter: none;
+	}
+	.pane.overlapping:not(:hover, :focus-within) .pane-list {
+		opacity: 0.1;
+	}
 	@media (prefers-reduced-motion: no-preference) {
+		.pane {
+			transition: background-color 200ms cubic-bezier(0.215, 0.61, 0.355, 1);
+		}
+		.pane-list {
+			transition: opacity 200ms cubic-bezier(0.215, 0.61, 0.355, 1);
+		}
 		.pane.toggled {
 			transition:
 				width var(--duration) cubic-bezier(0.215, 0.61, 0.355, 1),
-				padding var(--duration) cubic-bezier(0.215, 0.61, 0.355, 1);
+				padding var(--duration) cubic-bezier(0.215, 0.61, 0.355, 1),
+				background-color 200ms cubic-bezier(0.215, 0.61, 0.355, 1);
 		}
 	}
 
