@@ -4,16 +4,16 @@
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="text-scale" content="scale" />
-		<link href="/conestee-dam/_app/immutable/entry/start.B8aacNnM.js" rel="modulepreload">
-		<link href="/conestee-dam/_app/immutable/chunks/cyDapAqt.js" rel="modulepreload">
+		<link href="/conestee-dam/_app/immutable/entry/start.DMJescPN.js" rel="modulepreload">
+		<link href="/conestee-dam/_app/immutable/chunks/9ZMPpCCV.js" rel="modulepreload">
 		<link href="/conestee-dam/_app/immutable/chunks/pG59HNNM.js" rel="modulepreload">
-		<link href="/conestee-dam/_app/immutable/entry/app.sC3DoXHC.js" rel="modulepreload">
+		<link href="/conestee-dam/_app/immutable/entry/app.B2K71MSu.js" rel="modulepreload">
 		<link href="/conestee-dam/_app/immutable/chunks/DYl5dUZ5.js" rel="modulepreload">
 		<link href="/conestee-dam/_app/immutable/chunks/xihTtKlq.js" rel="modulepreload">
-		<link href="/conestee-dam/_app/immutable/nodes/0.OeCeoREc.js" rel="modulepreload">
-		<link href="/conestee-dam/_app/immutable/chunks/RkqO5O3T.js" rel="modulepreload">
+		<link href="/conestee-dam/_app/immutable/nodes/0.B6oeJ-GV.js" rel="modulepreload">
+		<link href="/conestee-dam/_app/immutable/chunks/ZuOEJQ1n.js" rel="modulepreload">
 		<link href="/conestee-dam/_app/immutable/chunks/CEv3Z4kk.js" rel="modulepreload">
-		<link href="/conestee-dam/_app/immutable/chunks/B_ddomsK.js" rel="modulepreload">
+		<link href="/conestee-dam/_app/immutable/chunks/DaHzC-W9.js" rel="modulepreload">
 		
 		<link href="/conestee-dam/_app/immutable/assets/components.CPkSQtFI.css" rel="stylesheet">
 		<link href="/conestee-dam/_app/immutable/assets/0.8noEz9S5.css" rel="stylesheet">
@@ -49,7 +49,7 @@
 		<div style="display: contents">
 			<script>
 				{
-					__sveltekit_f66m37 = {
+					__sveltekit_1lvp0v3 = {
 						base: "/conestee-dam",
 						assets: "/conestee-dam"
 					};
@@ -57,11 +57,23 @@
 					const element = document.currentScript.parentElement;
 
 					Promise.all([
-						import("/conestee-dam/_app/immutable/entry/start.B8aacNnM.js"),
-						import("/conestee-dam/_app/immutable/entry/app.sC3DoXHC.js")
+						import("/conestee-dam/_app/immutable/entry/start.DMJescPN.js"),
+						import("/conestee-dam/_app/immutable/entry/app.B2K71MSu.js")
 					]).then(([kit, app]) => {
 						kit.start(app, element);
 					});
+
+					if ('serviceWorker' in navigator) {
+						const script_url = '/conestee-dam/service-worker.js';
+						const policy = globalThis?.window?.trustedTypes?.createPolicy(
+							'sveltekit-trusted-url',
+							{ createScriptURL(url) { return url; } }
+						);
+						const sanitised = policy?.createScriptURL(script_url) ?? script_url;
+						addEventListener('load', function () {
+							navigator.serviceWorker.register(sanitised);
+						});
+					}
 				}
 			</script>
 		</div>
