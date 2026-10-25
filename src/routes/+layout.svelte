@@ -1,5 +1,6 @@
 <script lang="ts">
 	import { onNavigate } from '$app/navigation';
+	import { asset } from '$app/paths';
 	import favicon from '$lib/assets/favicon.svg';
 	import { markHydrated } from '$lib/components';
 	import { GlossaryDialog } from '$lib/glossary';
@@ -29,6 +30,8 @@
 
 <svelte:head>
 	<link rel="icon" href={favicon} />
+	<link rel="apple-touch-icon" href={asset('apple-touch-icon.png')} />
+	<link rel="manifest" href={asset('manifest.webmanifest')} />
 </svelte:head>
 
 <aside
