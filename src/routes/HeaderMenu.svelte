@@ -252,7 +252,7 @@
 		position: sticky;
 		top: 0;
 		z-index: 100;
-		background-color: light-dark(white, #212121);
+		background-color: var(--color-surface);
 
 		display: flex;
 		align-items: center;
@@ -260,7 +260,7 @@
 
 		height: var(--header-height);
 		padding: 0 1rem 0 0.5rem;
-		box-shadow: 0 1px 0 light-dark(#ccc, #333);
+		box-shadow: 0 1px 0 var(--color-border);
 		transition:
 			background-color var(--fade-duration) ease,
 			box-shadow var(--fade-duration) ease;
@@ -279,7 +279,7 @@
 		right: 0;
 		bottom: -1px;
 		height: 3px;
-		background-color: light-dark(#4868a9, #c5dbff);
+		background-color: var(--color-accent);
 		transform-origin: left;
 		pointer-events: none;
 	}
@@ -365,7 +365,7 @@
 		font-weight: 600;
 		text-box: trim-both cap alphabetic;
 		margin: 0;
-		color: light-dark(#4868a9, #c5dbff);
+		color: var(--color-accent);
 	}
 
 	nav {
@@ -393,11 +393,11 @@
 	a {
 		text-decoration: none;
 		cursor: default;
-		color: light-dark(#4868a9, #c5dbff);
+		color: var(--color-accent);
 		font-weight: 500;
 		padding: 0.5rem 0.5rem;
 		transition: background-color 80ms ease-in-out;
-		border-radius: 0.25rem;
+		border-radius: var(--radius-button);
 		display: flex;
 		align-items: center;
 		gap: 0.25rem;
@@ -410,10 +410,10 @@
 		white-space: nowrap;
 	}
 	a:hover {
-		background-color: light-dark(#ecf3ff, #303030);
+		background-color: var(--color-accent-bg);
 	}
 	a:active {
-		background-color: light-dark(#d6e2ff, #3a3a3a);
+		background-color: var(--color-accent-bg-active);
 	}
 
 	svg {

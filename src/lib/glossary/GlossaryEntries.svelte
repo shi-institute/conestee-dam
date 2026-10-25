@@ -71,13 +71,8 @@
 
 <style>
 	.glossary-entries {
-		--accent: light-dark(#4868a9, #c5dbff);
-		--accent-bg: light-dark(#ecf3ff, #303030);
-		--border: light-dark(#ccc, #333);
-		--muted: light-dark(#555, #b5b5b5);
-
 		container-type: inline-size;
-		color: light-dark(#1a1a1a, #f0f0f0);
+		color: var(--color-text);
 		line-height: 1.55;
 	}
 
@@ -85,7 +80,7 @@
 		display: grid;
 		grid-template-columns: 1fr;
 		padding-block: 2rem;
-		border-bottom: 1px solid var(--border);
+		border-bottom: 1px solid var(--color-border);
 		scroll-margin-top: var(--sticky-height, 0px);
 	}
 
@@ -124,7 +119,7 @@
 		font-size: 2.5rem;
 		font-weight: 800;
 		line-height: 1;
-		color: var(--accent);
+		color: var(--color-accent);
 	}
 
 	@container (min-width: 640px) {
@@ -146,7 +141,7 @@
 	.entry {
 		margin-inline: -1rem;
 		padding: 0.875rem 1rem;
-		border-radius: 0.25rem;
+		border-radius: var(--radius-surface);
 		scroll-margin-top: calc(var(--sticky-height, 0px) + 0.5rem);
 		transition: background-color 400ms ease-in-out;
 	}
@@ -159,8 +154,8 @@
 	/* highlight a term when a link takes the reader to it */
 	.entry:target,
 	.entry.targeted {
-		background-color: var(--accent-bg);
-		box-shadow: inset 3px 0 0 var(--accent);
+		background-color: var(--color-accent-bg);
+		box-shadow: inset 3px 0 0 var(--color-accent);
 	}
 
 	dt {
@@ -172,8 +167,8 @@
 	.anchor {
 		margin-left: 0.25rem;
 		padding: 0 0.25rem;
-		border-radius: 0.25rem;
-		color: var(--muted);
+		border-radius: var(--radius-button);
+		color: var(--color-muted);
 		font-weight: 500;
 		text-decoration: none;
 		opacity: 0;
@@ -188,8 +183,8 @@
 	}
 
 	.anchor:hover {
-		background-color: var(--accent-bg);
-		color: var(--accent);
+		background-color: var(--color-accent-bg);
+		color: var(--color-accent);
 	}
 
 	@media (hover: none) {
@@ -211,7 +206,7 @@
 	}
 
 	dd :global(a) {
-		color: var(--accent);
+		color: var(--color-accent);
 		text-underline-offset: 0.15em;
 	}
 
@@ -221,7 +216,7 @@
 
 	a:focus-visible,
 	dd :global(a:focus-visible) {
-		outline: 3px solid var(--accent);
+		outline: 3px solid var(--color-accent);
 		outline-offset: 2px;
 	}
 </style>

@@ -245,12 +245,8 @@
 	}
 
 	.home {
-		--accent: light-dark(#4868a9, #c5dbff);
-		--accent-bg: light-dark(#ecf3ff, #303030);
-		--border: light-dark(#ccc, #333);
-		--muted: light-dark(#555, #b5b5b5);
 		--content-width: 68rem;
-		color: light-dark(#1a1a1a, #f0f0f0);
+		color: var(--color-text);
 		line-height: 1.55;
 		/* slide the content up beneath the (sticky) header */
 		margin-top: calc(-1 * var(--header-height));
@@ -274,11 +270,11 @@
 	/* hero */
 	.hero {
 		/* the photo is the same in light and dark mode, so the hero uses light text on a scrim */
-		--accent: #c5dbff;
+		--color-accent: #c5dbff;
 		position: relative;
 		isolation: isolate;
 		color: white;
-		background-color: #1f2c47;
+		background-color: var(--color-accent-dark);
 		padding-block: clamp(5rem, 22vh, 12rem);
 		padding-top: calc(clamp(5rem, 22vh, 12rem) + var(--header-height));
 	}
@@ -350,9 +346,9 @@
 		font: inherit;
 		cursor: default;
 		padding: 0.7rem 1.25rem;
-		border: 1px solid var(--accent);
-		border-radius: 0.25rem;
-		color: var(--accent);
+		border: 1px solid var(--color-accent);
+		border-radius: var(--radius-button);
+		color: var(--color-accent);
 		font-weight: 600;
 		text-decoration: none;
 		transition: background-color 80ms ease-in-out;
@@ -365,7 +361,7 @@
 	}
 
 	.button:hover {
-		background-color: light-dark(#d6e2ff, #3a3a3a);
+		background-color: var(--color-accent-bg-active);
 	}
 
 	.button:active {
@@ -373,7 +369,7 @@
 	}
 
 	.button.primary {
-		background-color: light-dark(#4868a9, #c5dbff);
+		background-color: var(--color-accent);
 		color: light-dark(white, #1a1a1a);
 	}
 
@@ -401,7 +397,7 @@
 
 	.hero .button.primary {
 		background-color: white;
-		color: #1f2c47;
+		color: var(--color-accent-dark);
 	}
 
 	.hero .button.primary:hover {
@@ -414,7 +410,7 @@
 
 	a:focus-visible,
 	button:focus-visible {
-		outline: 3px solid var(--accent);
+		outline: 3px solid var(--color-accent);
 		outline-offset: 2px;
 	}
 
@@ -432,12 +428,12 @@
 
 	dl div {
 		padding-top: 1rem;
-		border-top: 3px solid var(--accent);
+		border-top: 3px solid var(--color-accent);
 		transition: border-color 80ms ease-in-out;
 	}
 
 	dl div:not(.selected) {
-		border-top-color: var(--border);
+		border-top-color: var(--color-border);
 	}
 
 	dt {
@@ -448,35 +444,35 @@
 		margin: 0 0 0 -0.5rem;
 		padding: 0.25rem 0.5rem;
 		border: none;
-		border-radius: 0.5rem;
+		border-radius: var(--radius-button);
 		background-color: transparent;
 		cursor: pointer;
 		font: inherit;
 		font-size: 2.75rem;
 		font-weight: 800;
 		line-height: 1;
-		color: var(--muted);
+		color: var(--color-muted);
 		transition:
 			background-color 80ms ease-in-out,
 			color 80ms ease-in-out;
 	}
 
 	.selected .year {
-		color: var(--accent);
+		color: var(--color-accent);
 	}
 
 	.year:hover {
-		background-color: var(--accent-bg);
-		color: var(--accent);
+		background-color: var(--color-accent-bg);
+		color: var(--color-accent);
 	}
 
 	.year:active {
-		background-color: light-dark(#d6e2ff, #3a3a3a);
+		background-color: var(--color-accent-bg-active);
 	}
 
 	dd {
 		margin: 0.4rem 0 0;
-		color: var(--muted);
+		color: var(--color-muted);
 	}
 
 	/* about */
@@ -518,8 +514,8 @@
 		display: block;
 		width: 100%;
 		height: auto;
-		border: 1px solid var(--border);
-		border-radius: 0.25rem;
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-surface);
 	}
 
 	figure :global(img[data-lightbox-enhanced]) {
@@ -529,7 +525,7 @@
 	}
 
 	figure :global(img[data-lightbox-enhanced]:hover) {
-		border-color: var(--accent);
+		border-color: var(--color-accent);
 	}
 
 	figure :global(img[data-lightbox-enhanced]:active) {
@@ -539,12 +535,12 @@
 	figcaption {
 		margin-top: 0.5rem;
 		font-size: 0.85rem;
-		color: var(--muted);
+		color: var(--color-muted);
 	}
 
 	/* explore */
 	.explore {
-		background-color: var(--accent-bg);
+		background-color: var(--color-accent-bg);
 	}
 
 	.explore-dialog {
@@ -556,10 +552,10 @@
 		margin: 0 auto;
 		padding: 0;
 		overflow: hidden;
-		border: 1px solid var(--border);
-		border-radius: 0.25rem;
-		background-color: light-dark(white, #212121);
-		color: light-dark(#1a1a1a, #f0f0f0);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-surface);
+		background-color: var(--color-surface);
+		color: var(--color-text);
 		box-shadow:
 			0 32px 64px rgba(0 0 0 / 25%),
 			0 2px 21px rgba(0 0 0 / 20%);
@@ -649,18 +645,18 @@
 		height: 2.25rem;
 		padding: 0.4rem;
 		border: none;
-		border-radius: 0.25rem;
+		border-radius: var(--radius-button);
 		background-color: transparent;
-		color: var(--accent);
+		color: var(--color-accent);
 		transition: background-color 80ms ease-in-out;
 	}
 
 	.close:hover {
-		background-color: light-dark(#ecf3ff, #303030);
+		background-color: var(--color-accent-bg);
 	}
 
 	.close:active {
-		background-color: light-dark(#d6e2ff, #3a3a3a);
+		background-color: var(--color-accent-bg-active);
 	}
 
 	.cards {
@@ -679,9 +675,9 @@
 		height: 100%;
 		box-sizing: border-box;
 		padding: 1.25rem;
-		background-color: light-dark(white, #212121);
-		border: 1px solid var(--border);
-		border-radius: 0.25rem;
+		background-color: var(--color-surface);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-surface);
 		color: inherit;
 		text-decoration: none;
 		cursor: pointer;
@@ -693,7 +689,7 @@
 	}
 
 	.cards a:hover {
-		border-color: var(--accent);
+		border-color: var(--color-accent);
 		transform: translateY(-2px);
 		box-shadow: 0 4px 12px rgba(0 0 0 / 12%);
 	}
@@ -701,7 +697,7 @@
 	.cards a:active {
 		transform: translateY(0);
 		box-shadow: none;
-		background-color: var(--accent-bg);
+		background-color: var(--color-accent-bg);
 	}
 
 	.cards a:hover .more {
@@ -710,19 +706,19 @@
 
 	h3 {
 		font-size: 1.25rem;
-		color: var(--accent);
+		color: var(--color-accent);
 	}
 
 	.cards p {
 		margin: 0;
-		color: var(--muted);
+		color: var(--color-muted);
 	}
 
 	.more {
 		margin-top: auto;
 		padding-top: 0.5rem;
 		font-weight: 600;
-		color: var(--accent);
+		color: var(--color-accent);
 	}
 
 	.glossary-note {
@@ -730,7 +726,7 @@
 	}
 
 	.glossary-note a {
-		color: var(--accent);
+		color: var(--color-accent);
 	}
 
 	.glossary-note a:hover {
@@ -764,9 +760,9 @@
 		width: 6rem;
 		height: 6rem;
 		border-radius: 50%;
-		background-color: var(--accent-bg);
-		border: 1px solid var(--border);
-		color: var(--accent);
+		background-color: var(--color-accent-bg);
+		border: 1px solid var(--color-border);
+		color: var(--color-accent);
 	}
 
 	.photo svg {
@@ -781,7 +777,7 @@
 
 	.role {
 		margin: 0.25rem 0 0;
-		color: var(--muted);
+		color: var(--color-muted);
 	}
 
 	@media (prefers-reduced-motion: reduce) {

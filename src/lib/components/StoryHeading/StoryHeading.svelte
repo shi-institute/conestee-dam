@@ -40,7 +40,6 @@
 <style>
 	.story-heading {
 		--gutter: 1rem;
-		--accent: light-dark(#4868a9, #c5dbff);
 		box-sizing: border-box;
 		width: 100%;
 		max-width: calc(52rem + 2 * var(--gutter));
@@ -63,7 +62,7 @@
 
 	.text {
 		/* padding-left: clamp(1rem, 2.5vw, 1.5rem);
-		border-left: 4px solid var(--accent); */
+		border-left: 4px solid var(--color-accent); */
 	}
 
 	h1 {
@@ -89,7 +88,7 @@
 		width: 100%;
 		aspect-ratio: 16 / 9;
 		object-fit: cover;
-		border-radius: 0.5rem;
+		border-radius: var(--radius-surface);
 		background-color: light-dark(#e8eef8, #2c2f36);
 		box-shadow: inset 0 0 0 1px rgba(0 0 0 / 15%);
 	}

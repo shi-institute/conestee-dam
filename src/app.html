@@ -22,10 +22,26 @@
 				'Open Sans',
 				'Helvetica Neue',
 				sans-serif;
+
+			/* theme colors */
+			--color-accent: light-dark(#4868a9, #c5dbff);
+			--color-accent-dark: #1f2c47;
+			--color-accent-bg: light-dark(#ecf3ff, #303030);
+			--color-accent-bg-active: light-dark(#d6e2ff, #3a3a3a);
+			--color-text: light-dark(#1a1a1a, #f0f0f0);
+			--color-muted: light-dark(#555, #b5b5b5);
+			--color-border: light-dark(#ccc, #333);
+			--color-surface: light-dark(white, #212121);
+
+			/* corner radii */
+			--radius-button: 0.1875rem;
+			--radius-button: 0;
+			--radius-surface: 0.25rem;
+			--radius-surface: 0;
 		}
 
 		html {
-			background-color: light-dark(white, #212121);
+			background-color: var(--color-surface);
 		}
 
 		body {

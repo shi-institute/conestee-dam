@@ -158,7 +158,7 @@
 		inline-size: 3rem;
 		background-color: var(--color, aquamarine);
 		border: none;
-		border-radius: 0.25rem;
+		border-radius: var(--radius-surface);
 		margin-right: 0.5rem;
 		transition: 120ms ease;
 		object-fit: cover;
@@ -176,7 +176,7 @@
 	.timeline-entry-summary-content {
 		flex-grow: 1;
 		align-self: stretch;
-		border-radius: 0.25rem;
+		border-radius: var(--radius-surface);
 		transition: 120ms ease;
 		border: 0px solid transparent;
 		display: flex;
@@ -185,7 +185,7 @@
 		padding: 0.25rem 1.5rem 0.25rem 0.5rem;
 	}
 	details[open] .timeline-entry-summary-content {
-		border-radius: 0.25rem 0.25rem 0 0;
+		border-radius: var(--radius-surface) var(--radius-surface) 0 0;
 	}
 	:is(details[open], summary:hover, summary:focus-visible) .timeline-entry-summary-content {
 		border: 1px solid #dedede;
@@ -244,7 +244,7 @@
 		content-visibility: visible;
 		border: 1px solid #dedede;
 		border-top: 0;
-		border-radius: 0 0 0.25rem 0.25rem;
+		border-radius: 0 0 var(--radius-surface) var(--radius-surface);
 	}
 	@starting-style {
 		details[open]::details-content {

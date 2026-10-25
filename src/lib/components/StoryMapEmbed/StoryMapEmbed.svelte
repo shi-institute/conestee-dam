@@ -318,7 +318,7 @@
 	) {
 		--sm-web-theme-spacing-xxs: calc(var(--storymaps-spacing-scale, 1) * 1.6rem);
 		--sm-web-theme-spacing-xxxs: calc(var(--storymaps-spacing-scale, 1) * 0.8rem);
-		--sm-web-theme-border-radius-regular: 2px;
+		--sm-web-theme-border-radius-regular: var(--radius-button);
 	}
 
 	/* the header of a categorized map tour (shown after choosing a category) should stick below the titlebar */
@@ -345,13 +345,13 @@
 		text-decoration-line: underline;
 		text-decoration-style: dotted;
 		text-decoration-thickness: 1.5px;
-		text-decoration-color: light-dark(#4868a9, #c5dbff);
+		text-decoration-color: var(--color-accent);
 		text-underline-offset: 0.2em;
 		cursor: help;
 	}
 	:global(.storymap-embed a.glossary-term:hover) {
 		text-decoration-style: solid;
-		color: light-dark(#4868a9, #c5dbff);
+		color: var(--color-accent);
 	}
 
 	:global(#storymaps-root) {

@@ -28,7 +28,7 @@
 		font-weight: 600;
 		letter-spacing: 0.14em;
 		text-transform: uppercase;
-		color: light-dark(#4868a9, #c5dbff);
+		color: var(--color-accent);
 	}
 
 	.title-sub::before {

@@ -345,7 +345,7 @@
 		right: 0;
 		z-index: 1000;
 		height: 3px;
-		background-color: light-dark(#4868a9, #c5dbff);
+		background-color: var(--color-accent);
 		transform-origin: left;
 		opacity: 0;
 		pointer-events: none;

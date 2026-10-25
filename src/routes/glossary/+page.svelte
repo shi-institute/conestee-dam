@@ -80,16 +80,12 @@
 	}
 
 	.glossary {
-		--accent: light-dark(#4868a9, #c5dbff);
-		--accent-bg: light-dark(#ecf3ff, #303030);
-		--border: light-dark(#ccc, #333);
-		--muted: light-dark(#555, #b5b5b5);
 		--content-width: 52rem;
 		--letters-height: 2.75rem;
 		/* the space covered by the sticky site header and letter navigation */
 		--sticky-height: calc(var(--header-height) + var(--letters-height));
 
-		color: light-dark(#1a1a1a, #f0f0f0);
+		color: var(--color-text);
 		line-height: 1.55;
 		/* leave room for the under construction banner */
 		padding-bottom: 6rem;
@@ -118,7 +114,7 @@
 	.lead {
 		max-width: 40rem;
 		font-size: 1.15rem;
-		color: var(--muted);
+		color: var(--color-muted);
 	}
 
 	.lead :global(p) {
@@ -139,7 +135,7 @@
 		width: 1.25rem;
 		height: 1.25rem;
 		transform: translateY(-50%);
-		color: var(--muted);
+		color: var(--color-muted);
 		pointer-events: none;
 	}
 
@@ -147,8 +143,8 @@
 		box-sizing: border-box;
 		width: 100%;
 		padding: 0.65rem 0.75rem 0.65rem 2.5rem;
-		border: 1px solid var(--border);
-		border-radius: 0.25rem;
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-button);
 		background-color: light-dark(white, #2a2a2a);
 		color: inherit;
 		font: inherit;
@@ -156,13 +152,13 @@
 	}
 
 	.search input:hover {
-		border-color: var(--muted);
+		border-color: var(--color-muted);
 	}
 
 	.search input:focus-visible {
-		outline: 2px solid var(--accent);
+		outline: 2px solid var(--color-accent);
 		outline-offset: -1px;
-		border-color: var(--accent);
+		border-color: var(--color-accent);
 	}
 
 	/* letter navigation, which sticks below the site header */
@@ -170,8 +166,8 @@
 		position: sticky;
 		top: var(--header-height);
 		z-index: 10;
-		background-color: light-dark(white, #212121);
-		box-shadow: 0 1px 0 var(--border);
+		background-color: var(--color-surface);
+		box-shadow: 0 1px 0 var(--color-border);
 	}
 
 	.letters ul {
@@ -197,23 +193,23 @@
 		display: inline-block;
 		min-width: 1.75rem;
 		padding: 0.25rem 0.125rem;
-		border-radius: 0.25rem;
+		border-radius: var(--radius-button);
 		font-weight: 600;
 		line-height: 1.25;
 	}
 
 	.letters a {
-		color: var(--accent);
+		color: var(--color-accent);
 		text-decoration: none;
 		transition: background-color 80ms ease-in-out;
 	}
 
 	.letters a:hover {
-		background-color: var(--accent-bg);
+		background-color: var(--color-accent-bg);
 	}
 
 	.letters a:active {
-		background-color: light-dark(#d6e2ff, #3a3a3a);
+		background-color: var(--color-accent-bg-active);
 	}
 
 	.letters span {
@@ -227,13 +223,13 @@
 
 	a:focus-visible,
 	button:focus-visible {
-		outline: 3px solid var(--accent);
+		outline: 3px solid var(--color-accent);
 		outline-offset: 2px;
 	}
 
 	.empty {
 		padding-block: 3rem;
-		color: var(--muted);
+		color: var(--color-muted);
 		text-align: center;
 	}
 
@@ -242,7 +238,7 @@
 		padding: 0;
 		border: none;
 		background: none;
-		color: var(--accent);
+		color: var(--color-accent);
 		font: inherit;
 		font-weight: 600;
 		text-decoration: underline;

@@ -83,9 +83,6 @@
 
 <style>
 	.glossary-dialog {
-		--accent: light-dark(#4868a9, #c5dbff);
-		--accent-bg: light-dark(#ecf3ff, #303030);
-		--border: light-dark(#ccc, #333);
 		--dialog-height: min(100dvh - 2rem, 40rem);
 		--header-size: 3.25rem;
 
@@ -96,10 +93,10 @@
 		margin: auto;
 		padding: 0;
 		overflow: hidden;
-		border: 1px solid var(--border);
-		border-radius: 0.25rem;
-		background-color: light-dark(white, #212121);
-		color: light-dark(#1a1a1a, #f0f0f0);
+		border: 1px solid var(--color-border);
+		border-radius: var(--radius-surface);
+		background-color: var(--color-surface);
+		color: var(--color-text);
 		color-scheme: light dark;
 		font-family: inherit;
 		box-shadow:
@@ -141,7 +138,7 @@
 		align-items: center;
 		gap: 0.5rem;
 		padding: 0 0.5rem 0 1.5rem;
-		border-bottom: 1px solid var(--border);
+		border-bottom: 1px solid var(--color-border);
 	}
 
 	h2 {
@@ -149,13 +146,13 @@
 		margin: 0;
 		font-size: 1.125rem;
 		font-weight: 700;
-		color: var(--accent);
+		color: var(--color-accent);
 	}
 
 	.page-link {
 		padding: 0.4rem 0.5rem;
-		border-radius: 0.25rem;
-		color: var(--accent);
+		border-radius: var(--radius-button);
+		color: var(--color-accent);
 		font-weight: 600;
 		text-decoration: none;
 		transition: background-color 80ms ease-in-out;
@@ -163,12 +160,12 @@
 
 	.page-link:hover,
 	.close:hover {
-		background-color: var(--accent-bg);
+		background-color: var(--color-accent-bg);
 	}
 
 	.page-link:active,
 	.close:active {
-		background-color: light-dark(#d6e2ff, #3a3a3a);
+		background-color: var(--color-accent-bg-active);
 	}
 
 	.close {
@@ -178,15 +175,15 @@
 		height: 2.25rem;
 		padding: 0.4rem;
 		border: none;
-		border-radius: 0.25rem;
+		border-radius: var(--radius-button);
 		background-color: transparent;
-		color: var(--accent);
+		color: var(--color-accent);
 		transition: background-color 80ms ease-in-out;
 	}
 
 	.page-link:focus-visible,
 	.close:focus-visible {
-		outline: 3px solid var(--accent);
+		outline: 3px solid var(--color-accent);
 		outline-offset: -3px;
 	}
 

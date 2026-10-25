@@ -255,11 +255,10 @@
 
 <style>
 	.story-navigation {
-		--accent: light-dark(#4868a9, #c5dbff);
 		box-sizing: border-box;
 		background-color: light-dark(#ffffffe8, #212121e8);
 		backdrop-filter: blur(14px);
-		border-radius: 0.5rem;
+		border-radius: var(--radius-surface);
 		color: light-dark(#222, #eee);
 		font-family: greycliff-cf, sans-serif;
 		overflow-y: auto;
@@ -293,16 +292,16 @@
 		text-decoration: none;
 	}
 	a:hover {
-		color: var(--accent);
+		color: var(--color-accent);
 		text-decoration: underline;
 	}
 	a[aria-current] {
-		color: var(--accent);
-		border-left-color: var(--accent);
+		color: var(--color-accent);
+		border-left-color: var(--color-accent);
 		font-weight: 700;
 	}
 	a:focus-visible {
-		outline: 2px solid var(--accent);
+		outline: 2px solid var(--color-accent);
 		outline-offset: -2px;
 	}
 
@@ -350,12 +349,12 @@
 		cursor: pointer;
 	}
 	.collapse:hover {
-		color: var(--accent);
+		color: var(--color-accent);
 	}
 	.collapse:focus-visible {
-		outline: 2px solid var(--accent);
+		outline: 2px solid var(--color-accent);
 		outline-offset: 2px;
-		border-radius: 2px;
+		border-radius: var(--radius-button);
 	}
 	.collapse svg {
 		width: 1rem;
@@ -376,7 +375,7 @@
 		background-color: light-dark(#f5f9ffe8, #212121e8);
 		backdrop-filter: blur(14px);
 		box-shadow: 0 2px 8px rgb(0 0 0 / 0.15);
-		color: light-dark(#4868a9, #c5dbff);
+		color: var(--color-accent);
 		font:
 			600 0.875rem greycliff-cf,
 			sans-serif;
