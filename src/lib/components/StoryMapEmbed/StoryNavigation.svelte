@@ -2,7 +2,9 @@
 	import { cubicOut } from 'svelte/easing';
 	import { scale, slide } from 'svelte/transition';
 
-	const { article }: {
+	const {
+		article
+	}: {
 		/** The story article in which we should search for headings. */
 		article: HTMLElement;
 	} = $props();
@@ -89,7 +91,7 @@
 		onScroll();
 	}
 
-	/** The width of the margin to the left of the story's text column, in pixels. */
+	/** The width of the margin to the right of the story's text column, in pixels. */
 	let margin = $state(0);
 	let rem = $state(16);
 
@@ -97,7 +99,9 @@
 	// so the margin is measured instead of assumed
 	function measureMargin() {
 		const column = article.querySelector('.text-container') ?? headings[0]?.element;
-		margin = column?.getBoundingClientRect().left ?? 0;
+		margin = column
+			? document.documentElement.clientWidth - column.getBoundingClientRect().right
+			: 0;
 		rem = parseFloat(getComputedStyle(document.documentElement).fontSize) || 16;
 	}
 
@@ -201,7 +205,7 @@
 					>
 						{#if collapsed}
 							<path
-								d="M8.47 4.22a.75.75 0 0 1 1.06 0l7.25 7.25a.75.75 0 0 1 0 1.06l-7.25 7.25a.75.75 0 0 1-1.06-1.06L15.19 12 8.47 5.28a.75.75 0 0 1 0-1.06Z"
+								d="M15.53 4.22a.75.75 0 0 0-1.06 0l-7.25 7.25a.75.75 0 0 0 0 1.06l7.25 7.25a.75.75 0 0 0 1.06-1.06L8.81 12l6.72-6.72a.75.75 0 0 0 0-1.06Z"
 								fill="currentColor"
 							/>
 						{:else}
@@ -302,11 +306,11 @@
 		outline-offset: -2px;
 	}
 
-	/* the pane sits in the margin to the left of the story's text column */
+	/* the pane sits in the margin to the right of the story's text column */
 	.pane {
 		position: fixed;
 		top: calc(var(--header-height) + 1.5rem);
-		left: 1rem;
+		right: 1rem;
 		z-index: 3;
 		max-height: calc(100dvh - var(--header-height) - 3rem);
 		padding: 0.75rem 0;
@@ -360,8 +364,8 @@
 
 	.toggle {
 		position: fixed;
-		top: calc(var(--header-height) + 0.75rem);
-		left: 1rem;
+		right: 1rem;
+		bottom: calc(1rem + env(safe-area-inset-bottom));
 		z-index: 3;
 		display: inline-flex;
 		align-items: center;
@@ -385,9 +389,9 @@
 
 	.popover {
 		position: fixed;
-		inset: calc(var(--header-height) + 3.5rem) auto auto 1rem;
+		inset: auto 1rem calc(4rem + env(safe-area-inset-bottom)) auto;
 		width: min(20rem, calc(100vw - 2rem));
-		max-height: calc(100dvh - var(--header-height) - 6rem);
+		max-height: calc(100dvh - var(--header-height) - 5rem - env(safe-area-inset-bottom));
 		margin: 0;
 		padding: 0.75rem 0;
 		box-shadow: 0 4px 16px rgb(0 0 0 / 0.2);
@@ -396,7 +400,7 @@
 	}
 	@media (prefers-reduced-motion: no-preference) {
 		.popover {
-			transform-origin: top left;
+			transform-origin: bottom right;
 			transition:
 				opacity 167ms cubic-bezier(0.215, 0.61, 0.355, 1),
 				transform 167ms cubic-bezier(0.215, 0.61, 0.355, 1),
@@ -405,12 +409,12 @@
 		}
 		.popover:not(:popover-open) {
 			opacity: 0;
-			transform: scale(0.95) translateY(-0.5rem);
+			transform: scale(0.95) translateY(0.5rem);
 		}
 		@starting-style {
 			.popover:popover-open {
 				opacity: 0;
-				transform: scale(0.95) translateY(-0.5rem);
+				transform: scale(0.95) translateY(0.5rem);
 			}
 		}
 	}
