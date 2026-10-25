@@ -8,6 +8,9 @@ import { browser } from '$app/environment';
  * once the page is shown.
  */
 export interface StoryLoad {
+	/** The ID of the story in StoryMaps. */
+	storyId: string;
+
 	/** The element that StoryMaps renders the story into. */
 	host: HTMLDivElement;
 
@@ -125,6 +128,7 @@ function createStoryLoad(storyId: string, pathname: string): StoryLoad {
 	const injectedNodes: Node[] = [];
 
 	const load: StoryLoad = {
+		storyId,
 		host,
 		pathname,
 		adopted: false,

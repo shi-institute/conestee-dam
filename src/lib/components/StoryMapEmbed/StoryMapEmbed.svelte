@@ -201,7 +201,26 @@
 	$effect(() => {
 		story?.host.classList.toggle('loaded', loaded);
 	});
+
+	// on Alt + Shift + E, launch the StoryMaps editor for the current StoryMap
+	function openEditor(event: KeyboardEvent) {
+		if (
+			event.altKey &&
+			event.shiftKey &&
+			(event.key.toLowerCase() === 'e' || event.code === 'KeyE')
+		) {
+			event.preventDefault();
+			window.open(
+				`https://storymaps.arcgis.com/stories/${story.storyId}/edit`,
+				`storymap-editor-${story.storyId}`,
+				`popup,width=1600,height=1000`
+			);
+			window.open(`/.api/editor${window.location.pathname}`, '_blank', 'width=1600,height=1000');
+		}
+	}
 </script>
+
+<svelte:window onkeydown={openEditor} />
 
 <!-- reserve the loading height up front, since the story is only added to the page after it mounts -->
 <div
