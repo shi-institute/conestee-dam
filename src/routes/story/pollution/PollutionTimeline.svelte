@@ -1,5 +1,14 @@
 <script lang="ts">
 	import { Timeline } from '$lib/components';
+
+	import photo18901915TextileMillsBuilt from './timeline-photos/1890-1915-textile-mills-built.webp?enhanced&w=112&aspect=1';
+	import photo1892DamBuilt from './timeline-photos/1892-dam-built.webp?enhanced&w=112&aspect=1';
+	import photo1923ConditionsAtTheirWorst from './timeline-photos/1923-conditions-at-their-worst.webp?enhanced&w=112&aspect=1';
+	import photo1931Settlement from './timeline-photos/1931-settlement.webp?enhanced&w=112&aspect=1';
+	import photo1999FoundationChartered from './timeline-photos/1999-foundation-chartered.webp?enhanced&w=112&aspect=1';
+	import photo2000FoundationAcquires from './timeline-photos/2000-foundation-acquires.webp?enhanced&w=112&aspect=1';
+	import photo2025NewDamCompleted from './timeline-photos/2025-new-dam-completed.webp?enhanced&w=112&aspect=1';
+	import photo2027TakeOwnership from './timeline-photos/2027-take-ownership.webp?enhanced&w=112&aspect=1';
 </script>
 
 <Timeline.Track>
@@ -42,7 +51,10 @@
 		<p>A village is developed around the mills at the Reedy River.</p>
 	</Timeline.Entry>
 
-	<Timeline.Entry date={{ start: 1890, end: 1915 }}>
+	<Timeline.Entry
+		date={{ start: 1890, end: 1915 }}
+		icon={{ src: photo18901915TextileMillsBuilt, alt: '' }}
+	>
 		{#snippet heading()}
 			Major textile mills are built along the Reedy River
 		{/snippet}
@@ -51,6 +63,11 @@
 		{/snippet}
 
 		<p>Construction of ~12 major textile mills along the Reedy River.</p>
+
+		<enhanced:img
+			src="./timeline-photos/1890-1915-textile-mills-built.webp"
+			alt="Monaghan Mills, American Spinning Company, and F.W. Poe Manufacturing Company, viewed from Woodside Mill, circa 1905"
+		/>
 	</Timeline.Entry>
 
 	<Timeline.Entry date={1892}>
@@ -68,7 +85,7 @@
 		</p>
 	</Timeline.Entry>
 
-	<Timeline.Entry date={1892}>
+	<Timeline.Entry date={1892} icon={{ src: photo1892DamBuilt, alt: '' }}>
 		{#snippet heading()}
 			Reedy River Manufacturing Company builds the Lake Conestee Dam
 		{/snippet}
@@ -90,6 +107,11 @@
 			provides a ‘containment barrier’ to keep the massive amount of contaminated sediment behind it
 			from being released if the old dam were to fail.)
 		</p>
+
+		<enhanced:img
+			src="./timeline-photos/1892-dam-built.webp"
+			alt="1893 Sanborn fire insurance map of the Reedy River Manufacturing Company cotton mills"
+		/>
 	</Timeline.Entry>
 
 	<Timeline.Entry date={1915}>
@@ -118,7 +140,7 @@
 		<p>Cattle in pastures died from drinking water from the Reedy River.</p>
 	</Timeline.Entry>
 
-	<Timeline.Entry date={1923}>
+	<Timeline.Entry date={1923} icon={{ src: photo1923ConditionsAtTheirWorst, alt: '' }}>
 		{#snippet heading()}
 			City determines need for a sewage disposal plant
 		{/snippet}
@@ -202,7 +224,7 @@
 		</p>
 	</Timeline.Entry>
 
-	<Timeline.Entry date={1931}>
+	<Timeline.Entry date={1931} icon={{ src: photo1931Settlement, alt: '' }}>
 		{#snippet heading()}
 			Conestee Mills v. City of Greenville is settled
 		{/snippet}
@@ -247,7 +269,7 @@
 		</p>
 	</Timeline.Entry>
 
-	<Timeline.Entry date={1999}>
+	<Timeline.Entry date={1999} icon={{ src: photo1999FoundationChartered, alt: '' }}>
 		{#snippet heading()}
 			Conestee Foundation is chartered
 		{/snippet}
@@ -258,7 +280,7 @@
 		<p>Conestee Foundation is chartered as a 501(c)3 public nonprofit organization.</p>
 	</Timeline.Entry>
 
-	<Timeline.Entry date={2000}>
+	<Timeline.Entry date={2000} icon={{ src: photo2000FoundationAcquires, alt: '' }}>
 		{#snippet heading()}
 			Conestee Foundation acquires the Lake Conestee Dam and Reservoir
 		{/snippet}
@@ -271,9 +293,14 @@
 			assessments, studies, design, and permitting, and enters a Voluntary Cleanup Contract to
 			establish a long-term management plan for the Lake Conestee Site.
 		</p>
+
+		<enhanced:img
+			src="./timeline-photos/2000-foundation-acquires.webp"
+			alt="Water flowing over the 1892 Lake Conestee Dam"
+		/>
 	</Timeline.Entry>
 
-	<Timeline.Entry date={2025}>
+	<Timeline.Entry date={2025} icon={{ src: photo2025NewDamCompleted, alt: '' }}>
 		{#snippet heading()}
 			New Lake Conestee Dam is completed
 		{/snippet}
@@ -287,9 +314,14 @@
 			Conestee Dam no longer presents a risk of physical failure and the catastrophic release of
 			massive quantities of contaminated sediments downstream.
 		</p>
+
+		<enhanced:img
+			src="./timeline-photos/2025-new-dam-completed.webp"
+			alt="Aerial photograph of water flowing over the completed new Lake Conestee Dam in October 2025"
+		/>
 	</Timeline.Entry>
 
-	<Timeline.Entry date={2027}>
+	<Timeline.Entry date={2027} icon={{ src: photo2027TakeOwnership, alt: '' }}>
 		{#snippet heading()}
 			Lake Conestee Dam Authority expected to take ownership
 		{/snippet}
@@ -304,6 +336,11 @@
 			maintenance and monitoring of the dam. The agency will be overseen by appointed
 			representatives from Greenville, Laurens, and Greenwood Counties.
 		</p>
+
+		<enhanced:img
+			src="./timeline-photos/2027-take-ownership.webp"
+			alt="Aerial photograph of the completed new Lake Conestee Dam and the Conestee Mill buildings in October 2025"
+		/>
 	</Timeline.Entry>
 </Timeline.Track>
 

@@ -1,5 +1,22 @@
 <script lang="ts">
 	import { Timeline } from '$lib/components';
+
+	import photo1831TimberDam from './timeline-photos/1831-timber-dam.webp?enhanced&w=112&aspect=1';
+	import photo1885WoodenDam from './timeline-photos/1885-wooden-dam.webp?enhanced&w=112&aspect=1';
+	import photo1892StoneDamCompleted from './timeline-photos/1892-stone-dam-completed.webp?enhanced&w=112&aspect=1';
+	import photo1950s1960sFirstLandfill from './timeline-photos/1950s-1960s-first-landfill.webp?enhanced&w=112&aspect=1';
+	import photo1960s1970sSecondLandfill from './timeline-photos/1960s-1970s-second-landfill.webp?enhanced&w=112&aspect=1';
+	import photo20002001ConesteeCanyon from './timeline-photos/2000-2001-conestee-canyon.webp?enhanced&w=112&aspect=1';
+	import photo20002003Sampling from './timeline-photos/2000-2003-sampling.webp?enhanced&w=112&aspect=1';
+	import photo2000FoundationEstablished from './timeline-photos/2000-foundation-established.webp?enhanced&w=112&aspect=1';
+	import photo2000sContamination from './timeline-photos/2000s-contamination.webp?enhanced&w=112&aspect=1';
+	import photo2008DamAtRisk from './timeline-photos/2008-dam-at-risk.webp?enhanced&w=112&aspect=1';
+	import photo2012EngineeringStudies from './timeline-photos/2012-engineering-studies.webp?enhanced&w=112&aspect=1';
+	import photo2016Inspection from './timeline-photos/2016-inspection.webp?enhanced&w=112&aspect=1';
+	import photo2019FinalFeasibilityStudy from './timeline-photos/2019-final-feasibility-study.webp?enhanced&w=112&aspect=1';
+	import photo2022ReservoirShrinks from './timeline-photos/2022-reservoir-shrinks.webp?enhanced&w=112&aspect=1';
+	import photo2025ConstructionBegins from './timeline-photos/2025-construction-begins.webp?enhanced&w=112&aspect=1';
+	import photo2025WaterFlowsOverNewDam from './timeline-photos/2025-water-flows-over-new-dam.webp?enhanced&w=112&aspect=1';
 </script>
 
 <Timeline.Track>
@@ -32,7 +49,7 @@
 		</p>
 	</Timeline.Entry>
 
-	<Timeline.Entry date={1831}>
+	<Timeline.Entry date={1831} icon={{ src: photo1831TimberDam, alt: '' }}>
 		{#snippet heading()}
 			Vardry McBee builds the earliest documented dam at the Conestee Mill site
 		{/snippet}
@@ -46,9 +63,14 @@
 			crib-and-plank structure. A grist and sawmill was operating just upstream as early as the
 			1790s, but site conditions suggest a dam did not power it.
 		</p>
+
+		<enhanced:img
+			src="./timeline-photos/1831-timber-dam.webp"
+			alt="Remains of a timber frame-and-plank dam at Glendale, similar to the type of dam McBee likely built"
+		/>
 	</Timeline.Entry>
 
-	<Timeline.Entry date={1885}>
+	<Timeline.Entry date={1885} icon={{ src: photo1885WoodenDam, alt: '' }}>
 		{#snippet heading()}
 			Federal water power census confirms wooden dams on the Reedy River
 		{/snippet}
@@ -61,9 +83,14 @@
 			River Manufacturing Company site. Another wooden dam was still present at the location of the
 			old Carruth’s Armory, one mile upstream.
 		</p>
+
+		<enhanced:img
+			src="./timeline-photos/1885-wooden-dam.webp"
+			alt="1884 Sanborn fire insurance map of the Reedy River Manufacturing Company"
+		/>
 	</Timeline.Entry>
 
-	<Timeline.Entry date={1892}>
+	<Timeline.Entry date={1892} icon={{ src: photo1892StoneDamCompleted, alt: '' }}>
 		{#snippet heading()}
 			The stone-masonry Lake Conestee Dam is completed
 		{/snippet}
@@ -77,6 +104,11 @@
 			This structure was a remarkable feat of engineering and construction for its time. It created
 			a large reservoir of roughly 130 acres.
 		</p>
+
+		<enhanced:img
+			src="./timeline-photos/1892-stone-dam-completed.webp"
+			alt="Early photograph of the Conestee Mill and the stone-masonry dam, circa 1910s"
+		/>
 	</Timeline.Entry>
 
 	<Timeline.Entry date={1908}>
@@ -125,7 +157,10 @@
 		</p>
 	</Timeline.Entry>
 
-	<Timeline.Entry date={{ start: 1950, end: 1969 }}>
+	<Timeline.Entry
+		date={{ start: 1950, end: 1969 }}
+		icon={{ src: photo1950s1960sFirstLandfill, alt: '' }}
+	>
 		{#snippet heading()}
 			First municipal landfill operates along the Reedy River
 		{/snippet}
@@ -137,6 +172,11 @@
 			First municipal landfill is constructed and in operation along the banks of the Reedy River.
 			The Greenville Technical College campus is now located at this site.
 		</p>
+
+		<enhanced:img
+			src="./timeline-photos/1950s-1960s-first-landfill.webp"
+			alt="Aerial photograph marking the former city landfill, now the Greenville Technical College campus"
+		/>
 	</Timeline.Entry>
 
 	<Timeline.Entry date={{ start: 1959, end: 1964 }}>
@@ -153,7 +193,10 @@
 		</p>
 	</Timeline.Entry>
 
-	<Timeline.Entry date={{ start: 1960, end: 1979 }}>
+	<Timeline.Entry
+		date={{ start: 1960, end: 1979 }}
+		icon={{ src: photo1960s1970sSecondLandfill, alt: '' }}
+	>
 		{#snippet heading()}
 			Second municipal landfill operates along the Reedy River
 		{/snippet}
@@ -165,6 +208,11 @@
 			Second municipal landfill is constructed and is in operation along the banks of the Reedy
 			River. This landfill was closed in the early 1990s.
 		</p>
+
+		<enhanced:img
+			src="./timeline-photos/1960s-1970s-second-landfill.webp"
+			alt="Map marking the former city landfill along the Reedy River, in operation from the 1960s to the 1980s"
+		/>
 	</Timeline.Entry>
 
 	<Timeline.Entry date={{ start: 1963, end: 1984 }}>
@@ -237,7 +285,7 @@
 		</p>
 	</Timeline.Entry>
 
-	<Timeline.Entry date={2000}>
+	<Timeline.Entry date={2000} icon={{ src: photo2000FoundationEstablished, alt: '' }}>
 		{#snippet heading()}
 			The Conestee Foundation is established and signs a Voluntary Cleanup Contract
 		{/snippet}
@@ -252,15 +300,16 @@
 		</p>
 	</Timeline.Entry>
 
-	<Timeline.Entry date={{ start: 2000, end: 2001 }}>
+	<Timeline.Entry
+		date={{ start: 2000, end: 2001 }}
+		icon={{ src: photo20002001ConesteeCanyon, alt: '' }}
+	>
 		{#snippet heading()}
 			A penstock blockage fails, carving the “Conestee Canyon”
 		{/snippet}
 		{#snippet caption()}
 			2000–2001
 		{/snippet}
-
-		<!-- TODO: insert canyon photo -->
 
 		<p>
 			A blockage upstream of the penstock gate spontaneously failed, allowing the entire Reedy River
@@ -270,9 +319,14 @@
 			were released through the dam into the downstream Reedy. In June 2001, temporary gate repairs
 			were completed to halt the erosion and restore containment.
 		</p>
+
+		<enhanced:img
+			src="./timeline-photos/2000-2001-conestee-canyon.webp"
+			alt="The Reedy River cutting through exposed reservoir sediments in November 2000"
+		/>
 	</Timeline.Entry>
 
-	<Timeline.Entry date={{ start: 2000, end: 2003 }}>
+	<Timeline.Entry date={{ start: 2000, end: 2003 }} icon={{ src: photo20002003Sampling, alt: '' }}>
 		{#snippet heading()}
 			Extensive sampling of the former reservoir
 		{/snippet}
@@ -284,9 +338,14 @@
 			An extensive program of sampling of sediment, surface water, and groundwater was conducted
 			over the entirety of the former reservoir area.
 		</p>
+
+		<enhanced:img
+			src="./timeline-photos/2000-2003-sampling.webp"
+			alt="Field crew collecting samples in the former reservoir"
+		/>
 	</Timeline.Entry>
 
-	<Timeline.Entry date={2000}>
+	<Timeline.Entry date={2000} icon={{ src: photo2000sContamination, alt: '' }}>
 		{#snippet heading()}
 			Investigations reveal widespread contamination
 		{/snippet}
@@ -302,6 +361,11 @@
 			broad array of 20th-century toxins, at concentrations exceeding applicable human health and
 			ecological screening criteria.
 		</p>
+
+		<enhanced:img
+			src="./timeline-photos/2000s-contamination.webp"
+			alt="Map from the Lake Conestee Ecological Risk Assessment showing contaminant concentrations across the former reservoir"
+		/>
 	</Timeline.Entry>
 
 	<Timeline.Entry date={2004}>
@@ -352,7 +416,7 @@
 		</p>
 	</Timeline.Entry>
 
-	<Timeline.Entry date={2008}>
+	<Timeline.Entry date={2008} icon={{ src: photo2008DamAtRisk, alt: '' }}>
 		{#snippet heading()}
 			First engineering feasibility study finds the dam at risk of failure
 		{/snippet}
@@ -366,7 +430,7 @@
 		</p>
 	</Timeline.Entry>
 
-	<Timeline.Entry date={2012}>
+	<Timeline.Entry date={2012} icon={{ src: photo2012EngineeringStudies, alt: '' }}>
 		{#snippet heading()}
 			Engineering studies examine alternatives for the deteriorating dam
 		{/snippet}
@@ -378,9 +442,14 @@
 			Engineering studies examined the deteriorating dam and alternatives for addressing its
 			structural risks without mobilizing contaminated sediment.
 		</p>
+
+		<enhanced:img
+			src="./timeline-photos/2012-engineering-studies.webp"
+			alt="The 1892 Lake Conestee Dam in October 2012"
+		/>
 	</Timeline.Entry>
 
-	<Timeline.Entry date={2016}>
+	<Timeline.Entry date={2016} icon={{ src: photo2016Inspection, alt: '' }}>
 		{#snippet heading()}
 			Dam inspection confirms significant structural concerns
 		{/snippet}
@@ -392,9 +461,14 @@
 			A dam inspection confirmed significant structural concerns, including deterioration and
 			seepage, heightening the need for a long-term solution.
 		</p>
+
+		<enhanced:img
+			src="./timeline-photos/2016-inspection.webp"
+			alt="The stone-masonry wall of the 1892 Lake Conestee Dam in December 2016"
+		/>
 	</Timeline.Entry>
 
-	<Timeline.Entry date={2019}>
+	<Timeline.Entry date={2019} icon={{ src: photo2019FinalFeasibilityStudy, alt: '' }}>
 		{#snippet heading()}
 			Final feasibility study recommends a new downstream dam
 		{/snippet}
@@ -408,9 +482,14 @@
 			the 1892 dam. This study identified the Recommended Alternative to be a new concrete dam to be
 			constructed downstream of the old one.
 		</p>
+
+		<enhanced:img
+			src="./timeline-photos/2019-final-feasibility-study.webp"
+			alt="The 1892 Lake Conestee Dam and its headrace in April 2019"
+		/>
 	</Timeline.Entry>
 
-	<Timeline.Entry date={2022}>
+	<Timeline.Entry date={2022} icon={{ src: photo2022ReservoirShrinks, alt: '' }}>
 		{#snippet heading()}
 			The reservoir shrinks to about 12 acres
 		{/snippet}
@@ -422,6 +501,11 @@
 			The reservoir is reported to have shrunk from approximately 135 acres to about 12 acres, with
 			an estimated 3.25 million cubic yards of sediment accumulated behind the dam.
 		</p>
+
+		<enhanced:img
+			src="./timeline-photos/2022-reservoir-shrinks.webp"
+			alt="Aerial view of the 1892 Lake Conestee Dam and the sediment-filled reservoir behind it in 2022"
+		/>
 	</Timeline.Entry>
 
 	<Timeline.Entry date={{ start: 2022, end: 2023 }}>
@@ -451,7 +535,7 @@
 		<p>Property acquisition, planning, and site preparation for the new dam began.</p>
 	</Timeline.Entry>
 
-	<Timeline.Entry date={2025}>
+	<Timeline.Entry date={2025} icon={{ src: photo2025ConstructionBegins, alt: '' }}>
 		{#snippet heading()}
 			Construction of the replacement dam begins
 		{/snippet}
@@ -460,9 +544,14 @@
 		{/snippet}
 
 		<p>Construction of the replacement dam began.</p>
+
+		<enhanced:img
+			src="./timeline-photos/2025-construction-begins.webp"
+			alt="Aerial photograph of construction of the new dam downstream of the 1892 dam in June 2025"
+		/>
 	</Timeline.Entry>
 
-	<Timeline.Entry date={2025}>
+	<Timeline.Entry date={2025} icon={{ src: photo2025WaterFlowsOverNewDam, alt: '' }}>
 		{#snippet heading()}
 			Water begins flowing over the new dam
 		{/snippet}
@@ -475,6 +564,11 @@
 			the risk of failure of the then 133-year-old dam, never intended to provide a waste
 			repository, or to even last for more than 50 years. An imminent risk was eliminated.
 		</p>
+
+		<enhanced:img
+			src="./timeline-photos/2025-water-flows-over-new-dam.webp"
+			alt="Water flowing over the newly constructed Lake Conestee Dam in August 2025"
+		/>
 	</Timeline.Entry>
 </Timeline.Track>
 
