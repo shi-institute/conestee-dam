@@ -1,4 +1,6 @@
 <script lang="ts">
+	import { wrapImagesInLightbox } from '$components/Lightbox';
+
 	const { title, summary, image }: {
 		/** The title of the story. */
 		title: string;
@@ -16,7 +18,12 @@
 	} = $props();
 </script>
 
-<header class="story-heading" class:has-image={!!image} data-glossary-ignore>
+<header
+	class="story-heading"
+	class:has-image={!!image}
+	data-glossary-ignore
+	{@attach wrapImagesInLightbox}
+>
 	<div class="text">
 		<h1>{title}</h1>
 		{#if summary}
@@ -95,6 +102,10 @@
 
 	img.image {
 		animation: fade-in 300ms cubic-bezier(0.16, 1, 0.3, 1);
+		transition: opacity 80ms ease-in-out;
+	}
+	img.image:active {
+		opacity: 0.85;
 	}
 
 	@keyframes fade-in {
