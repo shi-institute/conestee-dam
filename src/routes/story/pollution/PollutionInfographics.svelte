@@ -200,9 +200,6 @@
 	}
 
 	.sidecar {
-		/* break out of the story's text column so the sidecar spans the page, like a StoryMaps sidecar */
-		width: 100vw;
-		margin-inline: calc(50% - 50vw);
 		display: grid;
 		grid-template-columns: minmax(20rem, 1fr) 2fr;
 		font-family:
@@ -221,7 +218,7 @@
 		grid-column: 1;
 		grid-row: 1;
 		background-color: var(--color-surface);
-		border-inline-end: 1px solid var(--color-border);
+		/* border-inline-end: 1px solid var(--color-border); */
 	}
 
 	.slide {
