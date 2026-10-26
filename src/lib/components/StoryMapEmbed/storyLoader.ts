@@ -157,21 +157,13 @@ function createStoryLoad(storyId: string, pathname: string): StoryLoad {
 							release();
 						};
 
-						observer = new MutationObserver((mutations) => {
-							for (const mutation of mutations) {
-								for (const node of mutation.addedNodes) {
-									if (
-										node instanceof HTMLElement &&
-										node.tagName === 'ARTICLE' &&
-										node.classList.contains('story') &&
-										node.querySelector('.sc-title')
-									) {
-										finish(node);
-										return;
-									}
-								}
+						observer = new MutationObserver(() => {
+							const article = host.querySelector<HTMLElement>('article.story');
+							if (article?.querySelector('.sc-title')) {
+								finish(article);
 							}
 						});
+            
 						// a story that was already moved into the page loads where it is
 						if (!host.isConnected) getStagingElement().appendChild(host);
 						observer.observe(host, { childList: true, subtree: true });

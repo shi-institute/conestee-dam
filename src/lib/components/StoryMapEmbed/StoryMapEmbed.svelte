@@ -4,7 +4,7 @@
 	import ProgressRing from '$components/ProgressRing/ProgressRing.svelte';
 	import StoryHeading from '$components/StoryHeading/StoryHeading.svelte';
 	import { fetchGlossary, linkGlossaryTerms } from '$lib/glossary';
-	import { mount, unmount } from 'svelte';
+	import { mount, unmount, type Component } from 'svelte';
 	import type { StoryLoad } from './storyLoader';
 	import StoryNavigation from './StoryNavigation.svelte';
 
@@ -15,6 +15,7 @@
 		loadingName = 'story',
 		navigation = false,
 		heading = true,
+		components = {},
 		class: className
 	}: {
 		/**
@@ -61,6 +62,15 @@
 		heading?: boolean;
 
 		/**
+		 * Components to mount in place of placeholder code blocks in the story.
+		 *
+		 * A code block in StoryMaps that contains `{ "type": "mount", "component": "Name" }`
+		 * is replaced with the component named `Name`. Placeholders are replaced whenever they
+		 * appear, so blocks that StoryMaps renders (or re-renders) after the story loads are included.
+		 */
+		components?: Record<string, Component>;
+
+		/**
 		 * Optional class to apply to the root element of the component.
 		 *
 		 * It is rendered into the prerendered HTML, so it can be used for styles
@@ -72,26 +82,140 @@
 	let loaded = $state(false);
 	let article = $state<HTMLElement | null>(null);
 
+	/**
+	 * Removes the origin from an href value.
+	 */
+	function removeOriginFromHref(href: string) {
+		const url = new URL(href, 'https://link.local');
+		url.host = location.host;
+		const pathname = url.toString().slice(url.origin.length + 1);
+		return resolve(...([pathname] as Parameters<typeof resolve>));
+	}
+
 	// convert https://link.local links to links that are for the current host
 	function convertLocalLinks(node: HTMLElement) {
 		const links = node.querySelectorAll<HTMLAnchorElement>('a[href^="https://link.local"]');
 		for (const link of links) {
-			const url = new URL(link.href);
-			url.host = location.host;
-			const pathname = url.toString().slice(url.origin.length + 1);
-			link.href = resolve(...([pathname] as Parameters<typeof resolve>)); // make it relative to the current host
+			link.href = removeOriginFromHref(link.href);
 			link.target = '_self'; // open in the same tab, not a new one
-
-			// navigate with the SvelteKit router instead of reloading the page
-			// (the story's own click handlers would otherwise run first and may bypass it)
-			link.addEventListener('click', (event) => {
-				const isModified = event.metaKey || event.ctrlKey || event.shiftKey || event.altKey;
-				if (event.button !== 0 || isModified) return; // let the browser open new tabs/windows
-				event.preventDefault();
-				event.stopPropagation();
-				goto(link.href);
-			});
+			link.dataset.localLink = '';
 		}
+	}
+
+	// navigate with the SvelteKit router instead of reloading the page
+	// (it listens during capture so that the story's own click handlers, which may bypass it, do not run)
+	function handleLocalLinkClick(event: MouseEvent) {
+		const link = event.target instanceof Element ? event.target.closest('a') : null;
+		if (!link) {
+			return;
+		}
+
+		// local links may be clicked before the observer has converted them
+		const isPendingLocalLink = link.href.startsWith('https://link.local');
+		const isConvertedLocalLink = 'localLink' in link.dataset;
+		const isLocalLink = isPendingLocalLink || isConvertedLocalLink;
+		if (!isLocalLink) {
+			return; // let other links behave normally
+		}
+
+		const isModified = event.metaKey || event.ctrlKey || event.shiftKey || event.altKey;
+		if (event.button !== 0 || isModified) return; // let the browser open new tabs/windows
+		event.preventDefault();
+		event.stopPropagation();
+		goto(isPendingLocalLink ? removeOriginFromHref(link.href) : link.getAttribute('href')!);
+	}
+
+	/**
+	 * Returns the component name from the text content of a code block element.
+	 * @param code A StoryMap code block element.
+	 */
+	function readPlaceholder(code: Element) {
+		const text = code.textContent?.trim();
+		if (!text?.startsWith('{')) return undefined;
+		try {
+			const placeholder = JSON.parse(text);
+			if (placeholder?.type === 'mount' && typeof placeholder.component === 'string') {
+				return placeholder.component as string;
+			}
+		} catch {
+			// it is an ordinary code block
+		}
+		return undefined;
+	}
+
+	/**
+	 * Replaces placeholder code blocks with their components.
+	 */
+	function mountComponents(
+		article: HTMLElement,
+		mounted: Map<HTMLElement, ReturnType<typeof mount>>
+	) {
+		// unmount components whose block was removed
+		for (const [target, instance] of mounted) {
+			if (target.isConnected) {
+				continue;
+			}
+			unmount(instance);
+			mounted.delete(target);
+		}
+
+		// mount provided components into matching code blocks
+		// embedded in the story
+		for (const code of article.querySelectorAll('pre > code')) {
+			const name = readPlaceholder(code);
+			const container = code.parentElement?.parentElement;
+			if (!name || !container || container === article) {
+				continue;
+			}
+
+			const component = components[name];
+			if (!component) {
+				console.error(`No component named ${name} was provided to mount in the story.`);
+				continue;
+			}
+
+			const target = document.createElement('div');
+			target.style.margin = '0 auto';
+			container.replaceChildren(target);
+			mounted.set(target, mount(component, { target }));
+		}
+	}
+
+	/**
+	 * Converts links and mounts components in the story, including in content
+	 * that StoryMaps renders or re-renders later. To make this possible, this
+	 * function registers mutation observers on the story.
+	 */
+	function enhanceStory(article: HTMLElement) {
+		const mounted = new Map<HTMLElement, ReturnType<typeof mount>>();
+		const enhance = () => {
+			convertLocalLinks(article);
+			mountComponents(article, mounted);
+		};
+		enhance();
+
+		// enhance at most once per frame, since our own changes are also observed
+		let frame: number | undefined;
+		const observer = new MutationObserver(() => {
+			frame ??= requestAnimationFrame(() => {
+				frame = undefined;
+				enhance();
+			});
+		});
+		observer.observe(article, {
+			childList: true,
+			subtree: true,
+			attributes: true,
+			attributeFilter: ['href']
+		});
+		article.addEventListener('click', handleLocalLinkClick, true);
+
+		return () => {
+			observer.disconnect();
+			if (frame !== undefined) cancelAnimationFrame(frame);
+			article.removeEventListener('click', handleLocalLinkClick, true);
+			for (const instance of mounted.values()) unmount(instance);
+		};
 	}
 
 	/**
@@ -177,6 +301,7 @@
 		let cancelled = false;
 		let stopLinkingGlossaryTerms: (() => void) | undefined;
 		let removeHeading: (() => void) | undefined;
+		let stopEnhancing: (() => void) | undefined;
 		const markLoaded = (storyArticle: HTMLElement | null) => {
 			if (cancelled || !storyArticle) return;
 			loaded = true;
@@ -184,7 +309,7 @@
 			if (heading) {
 				removeHeading = replaceCover(storyArticle);
 			}
-			convertLocalLinks(storyArticle);
+			stopEnhancing = enhanceStory(storyArticle);
 			onStoryLoaded?.(storyArticle);
 
 			// link glossary terms in the story, including any content injected by `onStoryLoaded`
@@ -201,6 +326,7 @@
 		return () => {
 			cancelled = true;
 			stopLinkingGlossaryTerms?.();
+			stopEnhancing?.();
 			removeHeading?.();
 			story.dispose();
 		};
