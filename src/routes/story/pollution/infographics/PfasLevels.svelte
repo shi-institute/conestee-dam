@@ -1,10 +1,6 @@
 <script lang="ts">
 	import SampleIcon from './SampleIcon.svelte';
 
-	/** The largest multiple of the Saluda Basin average shown on the range scale. */
-	const rangeMax = 20;
-	const rangePosition = (multiple: number) => `${(multiple / rangeMax) * 100}%`;
-
 	/**
 	 * How much higher the average levels in Lake Conestee fish are than the next-highest
 	 * average in the state (Broad River just above Columbia), in percent.
@@ -22,31 +18,15 @@
 	<div class="layout">
 		<section class="range-card">
 			<div class="hero">
-				<p class="hero-value">
-					~2<span class="times">×</span>–18<span class="times">×</span>
-				</p>
-				<p>the Saluda Basin average</p>
+				<p class="hero-value">2–18<span class="times">×</span></p>
+				<p>the Saluda Basin’s average PFAS level</p>
 			</div>
 			<div>
-				<h3>Sum of PFAS-26 at every sampled location</h3>
-				<p>in Lake Conestee and the Marrow Bone tributary</p>
-				<div class="range" aria-hidden="true">
-					<span class="range-label base-label" style:left={rangePosition(1)}>
-						Basin average (1<span class="times">×</span>)
-					</span>
-					<span class="range-track"></span>
-					<span
-						class="range-band"
-						style:left={rangePosition(2)}
-						style:right="calc(100% - {rangePosition(18)})"
-					></span>
-					<span class="range-base" style:left={rangePosition(1)}></span>
-					{#each [0, 5, 10, 15, 20] as tick (tick)}
-						<span class="range-tick" style:left={rangePosition(tick)}>
-							{tick}<span class="times">×</span>
-						</span>
-					{/each}
-				</div>
+				<h3>PFAS levels are elevated at every sampled site</h3>
+				<p>
+					Depending on the site, PFAS levels in Lake Conestee and the Marrow Bone tributary were
+					about 2 to 18 times the Saluda Basin average.
+				</p>
 			</div>
 		</section>
 
@@ -75,20 +55,20 @@
 			<p>Lake Conestee freshwater fish (n=5) vs. the next-highest average in South Carolina</p>
 			{#each fishComparisons as { name, increase } (name)}
 				<p class="metric">{name}</p>
-				<div class="fish-row">
-					<span class="fish-name">Lake Conestee</span>
-					<span class="fish-track">
-						<span class="fish-bar conestee" style:width="{((100 + increase) / fishScaleMax) * 100}%"
+				<div class="bar-row">
+					<span class="bar-name">Lake Conestee</span>
+					<span class="bar-track">
+						<span class="bar accent" style:width="{((100 + increase) / fishScaleMax) * 100}%"
 						></span>
 					</span>
-					<span class="fish-value">+{increase}%</span>
+					<span class="bar-value">+{increase}%</span>
 				</div>
-				<div class="fish-row">
-					<span class="fish-name">Broad River <small>above Columbia</small></span>
-					<span class="fish-track">
-						<span class="fish-bar" style:width="{(100 / fishScaleMax) * 100}%"></span>
+				<div class="bar-row">
+					<span class="bar-name">Broad River <small>above Columbia</small></span>
+					<span class="bar-track">
+						<span class="bar" style:width="{(100 / fishScaleMax) * 100}%"></span>
 					</span>
-					<span class="fish-value baseline">baseline</span>
+					<span class="bar-value baseline">baseline</span>
 				</div>
 			{/each}
 		</section>
@@ -160,52 +140,6 @@
 		margin: 0 0.05em;
 	}
 
-	.range {
-		position: relative;
-		height: 5.5em;
-		margin: 0.5em 0.75em 0 0;
-	}
-	.range-track,
-	.range-band {
-		position: absolute;
-		top: 2.25em;
-		height: 0.75em;
-		border-radius: 4px;
-	}
-	.range-track {
-		left: 0;
-		right: 0;
-		background-color: light-dark(#eef1f6, #333);
-	}
-	.range-band {
-		background-color: var(--color-accent);
-	}
-	.range-base {
-		position: absolute;
-		top: 1.6em;
-		width: 3px;
-		height: 2em;
-		margin-left: -1.5px;
-		background-color: var(--color-text);
-	}
-	.range-label {
-		position: absolute;
-		font-size: 0.875em;
-		font-weight: 600;
-		white-space: nowrap;
-	}
-	.range-label.base-label {
-		top: 0;
-		transform: translateX(-0.75em);
-	}
-	.range-tick {
-		position: absolute;
-		top: 3.5em;
-		font-size: 0.8125em;
-		color: var(--color-muted);
-		transform: translateX(-50%);
-	}
-
 	.facts {
 		list-style: none;
 		margin: 0.75em 0 0;
@@ -238,38 +172,39 @@
 		text-transform: uppercase;
 		color: var(--color-text);
 	}
-	.fish-row {
+
+	.bar-row {
 		display: grid;
 		grid-template-columns: 8.5em minmax(0, 1fr) 4.5em;
 		align-items: center;
 		column-gap: 0.75em;
 		margin-top: 0.375em;
 	}
-	.fish-name {
+	.bar-name {
 		font-weight: 600;
 		line-height: 1.15;
 	}
-	.fish-name small {
+	.bar-name small {
 		display: block;
 		font-size: 0.8125em;
 		font-weight: 500;
 		color: var(--color-muted);
 	}
-	.fish-bar {
+	.bar {
 		display: block;
 		height: 1em;
 		border-radius: 0 4px 4px 0;
 		background-color: light-dark(#a9b0bd, #6b7280);
 	}
-	.fish-bar.conestee {
+	.bar.accent {
 		background-color: var(--color-accent);
 	}
-	.fish-value {
+	.bar-value {
 		text-align: right;
 		font-size: 1.375em;
 		font-weight: 700;
 	}
-	.fish-value.baseline {
+	.bar-value.baseline {
 		font-size: 0.875em;
 		font-weight: 600;
 		color: var(--color-muted);
@@ -299,11 +234,11 @@
 		.hero-value {
 			font-size: 2.5em;
 		}
-		.fish-row {
+		.bar-row {
 			grid-template-columns: 6.5em minmax(0, 1fr) 3.5em;
 			column-gap: 0.5em;
 		}
-		.fish-value {
+		.bar-value {
 			font-size: 1.125em;
 		}
 	}
