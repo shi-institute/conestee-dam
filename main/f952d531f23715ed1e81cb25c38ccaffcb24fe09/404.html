@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="text-scale" content="scale" />
+		<link href="/conestee-dam/_app/immutable/entry/start.Cuta3Ot4.js" rel="modulepreload">
+		<link href="/conestee-dam/_app/immutable/entry/payload.DSmR2FwN.js" rel="modulepreload">
+		<link href="/conestee-dam/_app/immutable/chunks/CRzLMJPS.js" rel="modulepreload">
+		<link href="/conestee-dam/_app/immutable/chunks/BYmyF19G.js" rel="modulepreload">
+		<link href="/conestee-dam/_app/immutable/chunks/CiUM4KcT.js" rel="modulepreload">
+		<link href="/conestee-dam/_app/immutable/chunks/De5mmaRF.js" rel="modulepreload">
+		<link href="/conestee-dam/_app/immutable/chunks/DeB9lVTp.js" rel="modulepreload">
+		<link href="/conestee-dam/_app/immutable/entry/app.Do5yHunv.js" rel="modulepreload">
+		<link href="/conestee-dam/_app/immutable/nodes/0.DYlCDlM7.js" rel="modulepreload">
+		<link href="/conestee-dam/_app/immutable/chunks/DK3Fl9T5.js" rel="modulepreload">
+		<link href="/conestee-dam/_app/immutable/chunks/DYOX_C_c.js" rel="modulepreload">
+		<link href="/conestee-dam/_app/immutable/chunks/CJPKxMmX.js" rel="modulepreload">
+		<link href="/conestee-dam/_app/immutable/chunks/3YZygSbG.js" rel="modulepreload">
+		<link href="/conestee-dam/_app/immutable/chunks/BO-45lWi.js" rel="modulepreload">
+		
+		<link href="/conestee-dam/_app/immutable/assets/glossary.RetJFul9.css" rel="stylesheet">
+		<link href="/conestee-dam/_app/immutable/assets/components.sqqFYtgR.css" rel="stylesheet">
+		<link href="/conestee-dam/_app/immutable/assets/0.B_E93BY_.css" rel="stylesheet">
+		<link rel="stylesheet" href="https://use.typekit.net/izw5ghp.css" />
+	</head>
+	<style>
+		:root {
+			font-family:
+				greycliff-cf,
+				system-ui,
+				-apple-system,
+				BlinkMacSystemFont,
+				'Segoe UI',
+				Roboto,
+				Oxygen,
+				Ubuntu,
+				Cantarell,
+				'Open Sans',
+				'Helvetica Neue',
+				sans-serif;
+
+			/* theme colors */
+			--color-accent: light-dark(#4868a9, #c5dbff);
+			--color-accent-dark: #1f2c47;
+			--color-accent-bg: light-dark(#ecf3ff, #303030);
+			--color-accent-bg-active: light-dark(#d6e2ff, #3a3a3a);
+			--color-text: light-dark(#1a1a1a, #f0f0f0);
+			--color-muted: light-dark(#555, #b5b5b5);
+			--color-border: light-dark(#ccc, #333);
+			--color-surface: light-dark(white, #212121);
+
+			/* corner radii */
+			--radius-button: 0.1875rem;
+			--radius-button: 0;
+			--radius-surface: 0.25rem;
+			--radius-surface: 0;
+		}
+
+		html {
+			background-color: var(--color-surface);
+		}
+
+		body {
+			margin: 0;
+			background-color: transparent !important;
+		}
+	</style>
+	<body data-sveltekit-preload-data="false">
+		<div style="display: contents">
+			<script>
+				{
+					__sveltekit_1lh54d8 = {
+						base: "/conestee-dam",
+						version: "1793067996992",
+						assets: "/conestee-dam"
+					};
+
+					const element = document.currentScript.parentElement;
+
+					import("/conestee-dam/_app/immutable/entry/start.Cuta3Ot4.js").then(async (kit) => {
+						kit.init(__sveltekit_1lh54d8);
+						const app = await import("/conestee-dam/_app/immutable/entry/app.Do5yHunv.js");
+						kit.start(app, element);
+					});
+
+					if ('serviceWorker' in navigator) {
+						const script_url = '/conestee-dam/service-worker.js';
+						const policy = globalThis?.window?.trustedTypes?.createPolicy(
+							'sveltekit-trusted-url',
+							{ createScriptURL(url) { return url; } }
+						);
+						const sanitised = policy?.createScriptURL(script_url) ?? script_url;
+						addEventListener('load', function () {
+							navigator.serviceWorker.register(sanitised, { type: 'module' });
+						});
+					}
+				}
+			</script>
+		</div>
+	</body>
+</html>
