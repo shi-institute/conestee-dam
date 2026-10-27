@@ -193,7 +193,7 @@
 	.bar {
 		display: block;
 		height: 1em;
-		border-radius: 0 4px 4px 0;
+		border-radius: 0 var(--radius-button) var(--radius-button) 0;
 		background-color: light-dark(#a9b0bd, #6b7280);
 	}
 	.bar.accent {

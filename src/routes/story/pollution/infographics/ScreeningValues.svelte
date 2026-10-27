@@ -93,7 +93,7 @@
 		width: 0.7em;
 		height: 0.7em;
 		margin-right: 0.35em;
-		border-radius: 2px;
+		border-radius: var(--radius-button);
 		background-color: var(--chart-color);
 	}
 
@@ -135,7 +135,7 @@
 		grid-area: track;
 		position: relative;
 		height: 1.1em;
-		border-radius: 4px;
+		border-radius: var(--radius-button);
 		overflow: hidden;
 		/* faint gridlines at 25%, 50%, and 75% */
 		background:
@@ -165,7 +165,7 @@
 	.fill {
 		position: absolute;
 		inset: 0 auto 0 0;
-		border-radius: 0 4px 4px 0;
+		border-radius: 0 var(--radius-button) var(--radius-button) 0;
 		background-color: var(--chart-color);
 	}
 
