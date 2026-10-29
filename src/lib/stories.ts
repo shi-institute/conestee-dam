@@ -18,10 +18,10 @@ export const stories = [
 			'What a watershed is and how it works, the Reedy River watershed, and the challenges of an aging dam.'
 	},
 	{
-		href: '/story/timeline',
+		href: '/timeline',
 		label: 'Timeline',
 		description:
-			'A chronological timeline of the dam, the mills, and the river since the 19ᵗʰ century.'
+			'A chronological timeline of the dam, the mills, and the river since the 18ᵗʰ century.'
 	},
 	{
 		href: '/story/dam',
