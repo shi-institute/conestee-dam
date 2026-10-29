@@ -1,6 +1,6 @@
 <script lang="ts">
-	import type { PageProps } from './$types';
 	import { StoryMapEmbed } from '$lib/components';
+	import type { PageProps } from './$types';
 
 	let { data }: PageProps = $props();
 </script>
@@ -9,4 +9,4 @@
 	<title>About the Watershed - Lake Conestee Dam</title>
 </svelte:head>
 
-<StoryMapEmbed story={data.story} loadingHeight="calc(100dvh - var(--header-height))" />
+<StoryMapEmbed story={data.story} navigation loadingHeight="calc(100dvh - var(--header-height))" />
