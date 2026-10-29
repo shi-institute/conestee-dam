@@ -1,5 +1,7 @@
 <script lang="ts">
-	const { year }: {
+	const {
+		year
+	}: {
 		year: number | string;
 	} = $props();
 </script>
@@ -23,9 +25,9 @@
 		align-items: center;
 		justify-content: center;
 		border-radius: 20rem;
-		background-color: #eaeaea;
+		background-color: light-dark(#eaeaea, #2c2c2c);
 		padding: 0.5rem;
-		border: 1px solid #dedede;
+		border: 1px solid light-dark(#dedede, #3a3a3a);
 	}
 
 	.timeline-year-label {
@@ -33,7 +35,7 @@
 		font-size: 1.25rem;
 		font-weight: 600;
 		letter-spacing: 0.06em;
-		color: #111;
+		color: light-dark(#111, #eee);
 		text-box: trim-both cap alphabetic;
 	}
 </style>

@@ -3,7 +3,9 @@
 	import { setTimelineTrackContext, type TimelineDate } from './context';
 	import TimelineYear from './TimelineYear.svelte';
 
-	const { children }: {
+	const {
+		children
+	}: {
 		/** The Timeline.Entry components to render inside the track. */
 		children: Snippet;
 	} = $props();
@@ -84,8 +86,8 @@
 		width: 3rem;
 		background-image: repeating-linear-gradient(
 			to bottom,
-			#d0d0d0 0,
-			#d0d0d0 2px,
+			light-dark(#d0d0d0, #4a4a4a) 0,
+			light-dark(#d0d0d0, #4a4a4a) 2px,
 			transparent 2px,
 			transparent 10px
 		);

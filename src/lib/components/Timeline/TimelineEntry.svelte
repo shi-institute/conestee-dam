@@ -141,7 +141,7 @@
 	.timeline-entry-line .line {
 		width: calc(var(--tl-line-width) / 2);
 		height: 100%;
-		background-color: black;
+		background-color: light-dark(black, #e0e0e0);
 		transition: width 120ms ease;
 	}
 	:is(details:hover, details:focus-within) .timeline-entry-line .line {
@@ -166,7 +166,7 @@
 		flex-shrink: 0;
 	}
 	div.timeline-entry-icon {
-		box-shadow: inset 0 0 0px 1px rgba(0, 0, 0, 0.1);
+		box-shadow: inset 0 0 0px 1px light-dark(rgba(0, 0, 0, 0.1), rgba(255, 255, 255, 0.1));
 	}
 	:is(details[open], summary:hover, summary:focus-visible) .timeline-entry-icon {
 		block-size: 3.5rem;
@@ -188,12 +188,12 @@
 		border-radius: var(--radius-surface) var(--radius-surface) 0 0;
 	}
 	:is(details[open], summary:hover, summary:focus-visible) .timeline-entry-summary-content {
-		border: 1px solid #dedede;
+		border: 1px solid light-dark(#dedede, #3a3a3a);
 		padding-right: 1rem;
 		padding-left: 1rem;
 	}
 	:is(summary:hover, summary:focus-visible) .timeline-entry-summary-content {
-		box-shadow: 0 0 0.5rem rgba(0, 0, 0, 0.1);
+		box-shadow: 0 0 0.5rem light-dark(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.5));
 	}
 
 	.timeline-entry-heading {
@@ -242,7 +242,7 @@
 	details[open]::details-content {
 		height: auto;
 		content-visibility: visible;
-		border: 1px solid #dedede;
+		border: 1px solid light-dark(#dedede, #3a3a3a);
 		border-top: 0;
 		border-radius: 0 0 var(--radius-surface) var(--radius-surface);
 	}
