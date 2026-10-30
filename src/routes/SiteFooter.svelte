@@ -83,6 +83,11 @@
 		line-height: 1.5;
 	}
 
+	/* a loading story fills the viewport and cannot be scrolled, so the footer waits for it */
+	:global(body:has(.storymap-embed-wrapper.loading)) footer {
+		display: none;
+	}
+
 	/* the video page fills the viewport on wide screens */
 	@media (min-width: 1000px) {
 		footer.video-page {
