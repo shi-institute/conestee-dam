@@ -1,7 +1,9 @@
 <script lang="ts">
 	import { afterNavigate } from '$app/navigation';
 	import { resolve } from '$app/paths';
+	import logo from '$lib/assets/favicon.svg';
 	import { ProjectTitle, wrapImagesInLightbox } from '$lib/components';
+	import { contributors } from '$lib/contributors';
 	import { stories } from '$lib/stories';
 	import newDam from './new-dam.webp?enhanced';
 	import oldDam from './old-dam.webp?enhanced';
@@ -34,12 +36,6 @@
 	function handleExploreDialogClick(event: MouseEvent) {
 		if (event.target === exploreDialog) exploreDialog?.close();
 	}
-
-	/** Placeholder contributors. Replace with real names, roles, and photos. */
-	const contributors = Array.from({ length: 10 }, () => ({
-		name: 'Name',
-		role: 'Role'
-	}));
 
 	const facts = [
 		{ era: 'old', value: '1892', label: 'Year the original stone-masonry dam was built' },
@@ -189,15 +185,14 @@
 	<section class="credits" aria-labelledby="credits-heading">
 		<h2 id="credits-heading">Contributors</h2>
 		<ul class="contributors">
-			{#each contributors as contributor, i (i)}
+			{#each contributors as contributor (contributor.name)}
 				<li>
 					<div class="photo" aria-hidden="true">
-						<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-							<path
-								d="M17.754 14a2.249 2.249 0 0 1 2.25 2.249v.575c0 .894-.32 1.76-.901 2.438C17.534 20.1 15.145 21 12 21s-5.532-.9-7.1-2.74a3.75 3.75 0 0 1-.896-2.434v-.577A2.249 2.249 0 0 1 6.253 14h11.5Zm0 1.5h-11.5a.749.749 0 0 0-.75.749v.577c0 .536.192 1.054.54 1.461C7.5 19.5 9.436 20.5 12 20.5s4.5-1 5.96-2.213c.35-.407.543-.925.543-1.462v-.576a.749.749 0 0 0-.75-.749ZM12 2.004a5 5 0 1 1 0 10 5 5 0 0 1 0-10Zm0 1.5a3.5 3.5 0 1 0 0 7 3.5 3.5 0 0 0 0-7Z"
-								fill="currentColor"
-							/>
-						</svg>
+						{#if contributor.picture}
+							<enhanced:img src={contributor.picture} alt="" sizes="6rem" />
+						{:else}
+							<img src={logo} alt="" />
+						{/if}
 					</div>
 					<div class="details">
 						<h3>{contributor.name}</h3>
@@ -725,19 +720,22 @@
 
 	.photo {
 		flex: none;
-		display: grid;
-		place-items: center;
 		width: 6rem;
 		height: 6rem;
+		overflow: hidden;
 		border-radius: 50%;
-		background-color: var(--color-accent-bg);
 		border: 1px solid var(--color-border);
-		color: var(--color-accent);
 	}
 
-	.photo svg {
-		width: 3rem;
-		height: 3rem;
+	.photo :global(picture) {
+		display: contents;
+	}
+
+	.photo :global(img) {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
 	}
 
 	.contributors h3 {

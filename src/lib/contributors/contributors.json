@@ -1,0 +1,51 @@
+[
+	{
+		"name": "Avery Thompson",
+		"role": "Role",
+		"photo": "avery-thompson.jpg"
+	},
+	{
+		"name": "Jordan Ellis",
+		"role": "Role",
+		"photo": "jordan-ellis.jpg"
+	},
+	{
+		"name": "Morgan Reyes",
+		"role": "Role",
+		"photo": "morgan-reyes.jpg"
+	},
+	{
+		"name": "Riley Chen",
+		"role": "Role",
+		"photo": "riley-chen.jpg"
+	},
+	{
+		"name": "Casey Patel",
+		"role": "Role",
+		"photo": "casey-patel.jpg"
+	},
+	{
+		"name": "Taylor Brooks",
+		"role": "Role",
+		"photo": "taylor-brooks.jpg"
+	},
+	{
+		"name": "Quinn Alvarez",
+		"role": "Role",
+		"photo": "quinn-alvarez.jpg"
+	},
+	{
+		"name": "Sam Okafor",
+		"role": "Role",
+		"photo": "sam-okafor.jpg"
+	},
+	{
+		"name": "Jamie Novak",
+		"role": "Role"
+	},
+	{
+		"name": "Drew Larsen",
+		"role": "Role",
+		"photo": "drew-larsen.jpg"
+	}
+]
