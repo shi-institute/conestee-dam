@@ -4,6 +4,8 @@
 	import photo1831TimberDam from './timeline-photos/1831-timber-dam.webp?enhanced&w=112&aspect=1';
 	import photo1885WoodenDam from './timeline-photos/1885-wooden-dam.webp?enhanced&w=112&aspect=1';
 	import photo1892StoneDamCompleted from './timeline-photos/1892-stone-dam-completed.webp?enhanced&w=112&aspect=1';
+	import photo1908RecordFlood from './timeline-photos/1908-record-flood.webp?enhanced&w=112&aspect=1';
+	import photo1943ArmyBaseBuilt from './timeline-photos/1943-army-base-built.webp?enhanced&w=112&aspect=1';
 	import photo1950s1960sFirstLandfill from './timeline-photos/1950s-1960s-first-landfill.webp?enhanced&w=112&aspect=1';
 	import photo1960s1970sSecondLandfill from './timeline-photos/1960s-1970s-second-landfill.webp?enhanced&w=112&aspect=1';
 	import photo20002001ConesteeCanyon from './timeline-photos/2000-2001-conestee-canyon.webp?enhanced&w=112&aspect=1';
@@ -14,7 +16,9 @@
 	import photo2012EngineeringStudies from './timeline-photos/2012-engineering-studies.webp?enhanced&w=112&aspect=1';
 	import photo2016Inspection from './timeline-photos/2016-inspection.webp?enhanced&w=112&aspect=1';
 	import photo2019FinalFeasibilityStudy from './timeline-photos/2019-final-feasibility-study.webp?enhanced&w=112&aspect=1';
+	import photo20222023SouthCarolinaAppropriates from './timeline-photos/2022-2023-south-carolina-appropriates.webp?enhanced&w=112&aspect=1';
 	import photo2022ReservoirShrinks from './timeline-photos/2022-reservoir-shrinks.webp?enhanced&w=112&aspect=1';
+	import photo2024SitePreparationBegins from './timeline-photos/2024-site-preparation-begins.webp?enhanced&w=112&aspect=1';
 	import photo2025ConstructionBegins from './timeline-photos/2025-construction-begins.webp?enhanced&w=112&aspect=1';
 	import photo2025WaterFlowsOverNewDam from './timeline-photos/2025-water-flows-over-new-dam.webp?enhanced&w=112&aspect=1';
 </script>
@@ -111,7 +115,7 @@
 		/>
 	</Timeline.Entry>
 
-	<Timeline.Entry date={1908}>
+	<Timeline.Entry date={1908} icon={{ src: photo1908RecordFlood, alt: '' }}>
 		{#snippet heading()}
 			Flood ‘of Biblical proportion’
 		{/snippet}
@@ -125,6 +129,11 @@
 			operational floors were severely flooded. This flood destroyed many bridges, roads, and other
 			structures.
 		</p>
+
+		<enhanced:img
+			src="./timeline-photos/1908-record-flood.webp"
+			alt="August 26, 1908 Lexington Dispatch article reporting flood damage at the Reedy River factory near Greenville"
+		/>
 	</Timeline.Entry>
 
 	<Timeline.Entry date={1928}>
@@ -142,7 +151,7 @@
 		</p>
 	</Timeline.Entry>
 
-	<Timeline.Entry date={1943}>
+	<Timeline.Entry date={1943} icon={{ src: photo1943ArmyBaseBuilt, alt: '' }}>
 		{#snippet heading()}
 			Greenville Army Air Base is constructed
 		{/snippet}
@@ -155,6 +164,11 @@
 			associated with development and runoff from the northern portion of the installation may have
 			contributed to sediment loading in Marrow Bone Creek, a tributary of the Reedy River.
 		</p>
+
+		<enhanced:img
+			src="./timeline-photos/1943-army-base-built.webp"
+			alt="April 1955 aerial photograph showing the runways of the former Greenville Army Air Base, then Donaldson Air Force Base"
+		/>
 	</Timeline.Entry>
 
 	<Timeline.Entry
@@ -508,7 +522,10 @@
 		/>
 	</Timeline.Entry>
 
-	<Timeline.Entry date={{ start: 2022, end: 2023 }}>
+	<Timeline.Entry
+		date={{ start: 2022, end: 2023 }}
+		icon={{ src: photo20222023SouthCarolinaAppropriates, alt: '' }}
+	>
 		{#snippet heading()}
 			South Carolina appropriates $39 million for a new dam
 		{/snippet}
@@ -524,7 +541,7 @@
 		</p>
 	</Timeline.Entry>
 
-	<Timeline.Entry date={2024}>
+	<Timeline.Entry date={2024} icon={{ src: photo2024SitePreparationBegins, alt: '' }}>
 		{#snippet heading()}
 			Property acquisition and site preparation begin
 		{/snippet}
@@ -533,6 +550,11 @@
 		{/snippet}
 
 		<p>Property acquisition, planning, and site preparation for the new dam began.</p>
+
+		<enhanced:img
+			src="./timeline-photos/2024-site-preparation-begins.webp"
+			alt="Excavator with a mulching head clearing trees for the new dam"
+		/>
 	</Timeline.Entry>
 
 	<Timeline.Entry date={2025} icon={{ src: photo2025ConstructionBegins, alt: '' }}>

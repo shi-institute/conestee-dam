@@ -4,6 +4,7 @@
 	import photo18901915TextileMillsBuilt from './timeline-photos/1890-1915-textile-mills-built.webp?enhanced&w=112&aspect=1';
 	import photo1892DamBuilt from './timeline-photos/1892-dam-built.webp?enhanced&w=112&aspect=1';
 	import photo1923ConditionsAtTheirWorst from './timeline-photos/1923-conditions-at-their-worst.webp?enhanced&w=112&aspect=1';
+	import photo1925ConesteeSues from './timeline-photos/1925-conestee-sues.webp?enhanced&w=112&aspect=1';
 	import photo1931Settlement from './timeline-photos/1931-settlement.webp?enhanced&w=112&aspect=1';
 	import photo1999FoundationChartered from './timeline-photos/1999-foundation-chartered.webp?enhanced&w=112&aspect=1';
 	import photo2000FoundationAcquires from './timeline-photos/2000-foundation-acquires.webp?enhanced&w=112&aspect=1';
@@ -154,7 +155,7 @@
 		</p>
 	</Timeline.Entry>
 
-	<Timeline.Entry date={1925}>
+	<Timeline.Entry date={1925} icon={{ src: photo1925ConesteeSues, alt: '' }}>
 		{#snippet heading()}
 			Conestee Mills sues the City of Greenville due to raw sewage
 		{/snippet}
@@ -168,6 +169,11 @@
 			to be a source of disease and constant peril to the health and lives of the operatives of
 			Conestee Mills.” (Conestee Mills v. City of Greenville, amended complaint 1929).
 		</p>
+
+		<enhanced:img
+			src="./timeline-photos/1925-conestee-sues.webp"
+			alt="First page of the South Carolina Supreme Court opinion in Conestee Mills v. City of Greenville"
+		/>
 	</Timeline.Entry>
 
 	<Timeline.Entry date={1926}>

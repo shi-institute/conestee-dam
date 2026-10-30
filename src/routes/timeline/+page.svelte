@@ -6,6 +6,7 @@
 
 	import photo18901915TextileMillsBuilt from '../story/pollution/timeline-photos/1890-1915-textile-mills-built.webp?enhanced&w=112&aspect=1';
 	import photo1923ConditionsAtTheirWorst from '../story/pollution/timeline-photos/1923-conditions-at-their-worst.webp?enhanced&w=112&aspect=1';
+	import photo1925ConesteeSues from '../story/pollution/timeline-photos/1925-conestee-sues.webp?enhanced&w=112&aspect=1';
 	import photo1931Settlement from '../story/pollution/timeline-photos/1931-settlement.webp?enhanced&w=112&aspect=1';
 	import photo1999FoundationChartered from '../story/pollution/timeline-photos/1999-foundation-chartered.webp?enhanced&w=112&aspect=1';
 	import photo2000FoundationAcquires from '../story/pollution/timeline-photos/2000-foundation-acquires.webp?enhanced&w=112&aspect=1';
@@ -14,6 +15,8 @@
 	import photo1831TimberDam from '../story/sediment/timeline-photos/1831-timber-dam.webp?enhanced&w=112&aspect=1';
 	import photo1885WoodenDam from '../story/sediment/timeline-photos/1885-wooden-dam.webp?enhanced&w=112&aspect=1';
 	import photo1892StoneDamCompleted from '../story/sediment/timeline-photos/1892-stone-dam-completed.webp?enhanced&w=112&aspect=1';
+	import photo1908RecordFlood from '../story/sediment/timeline-photos/1908-record-flood.webp?enhanced&w=112&aspect=1';
+	import photo1943ArmyBaseBuilt from '../story/sediment/timeline-photos/1943-army-base-built.webp?enhanced&w=112&aspect=1';
 	import photo1950s1960sFirstLandfill from '../story/sediment/timeline-photos/1950s-1960s-first-landfill.webp?enhanced&w=112&aspect=1';
 	import photo1960s1970sSecondLandfill from '../story/sediment/timeline-photos/1960s-1970s-second-landfill.webp?enhanced&w=112&aspect=1';
 	import photo20002001ConesteeCanyon from '../story/sediment/timeline-photos/2000-2001-conestee-canyon.webp?enhanced&w=112&aspect=1';
@@ -22,8 +25,13 @@
 	import photo2012EngineeringStudies from '../story/sediment/timeline-photos/2012-engineering-studies.webp?enhanced&w=112&aspect=1';
 	import photo2016Inspection from '../story/sediment/timeline-photos/2016-inspection.webp?enhanced&w=112&aspect=1';
 	import photo2019FinalFeasibilityStudy from '../story/sediment/timeline-photos/2019-final-feasibility-study.webp?enhanced&w=112&aspect=1';
+	import photo20222023SouthCarolinaAppropriates from '../story/sediment/timeline-photos/2022-2023-south-carolina-appropriates.webp?enhanced&w=112&aspect=1';
 	import photo2022ReservoirShrinks from '../story/sediment/timeline-photos/2022-reservoir-shrinks.webp?enhanced&w=112&aspect=1';
+	import photo2024SitePreparationBegins from '../story/sediment/timeline-photos/2024-site-preparation-begins.webp?enhanced&w=112&aspect=1';
 	import photo2025ConstructionBegins from '../story/sediment/timeline-photos/2025-construction-begins.webp?enhanced&w=112&aspect=1';
+	import photo1863VardryMcBeeDies from './timeline-photos/1863-vardry-mcbee-dies.webp?enhanced&w=112&aspect=1';
+	import photo2023ConesteeSellsProperty from './timeline-photos/2023-conestee-sells-property.webp?enhanced&w=112&aspect=1';
+	import photo2026HistoricalKioskConstructed from './timeline-photos/2026-historical-kiosk-constructed.webp?enhanced&w=112&aspect=1';
 
 	const story = stories.find((story) => story.href === '/story/timeline');
 
@@ -192,7 +200,7 @@
 			</p>
 		</Timeline.Entry>
 
-		<Timeline.Entry date={1863}>
+		<Timeline.Entry date={1863} icon={{ src: photo1863VardryMcBeeDies, alt: '' }}>
 			{#snippet heading()}
 				Vardry McBee dies
 			{/snippet}
@@ -201,6 +209,11 @@
 			{/snippet}
 
 			<p>Death of Vardry McBee.</p>
+
+			<enhanced:img
+				src="./timeline-photos/1863-vardry-mcbee-dies.webp"
+				alt="Portrait of Vardry McBee by William Garl Browne Jr."
+			/>
 		</Timeline.Entry>
 
 		<Timeline.Entry date={{ start: 1875, end: 1877 }}>
@@ -329,7 +342,7 @@
 			/>
 		</Timeline.Entry>
 
-		<Timeline.Entry date={1908}>
+		<Timeline.Entry date={1908} icon={{ src: photo1908RecordFlood, alt: '' }}>
 			{#snippet heading()}
 				Flood ‘of Biblical proportion’
 			{/snippet}
@@ -343,6 +356,11 @@
 				operational floors were severely flooded. This flood destroyed many bridges, roads, and
 				other structures.
 			</p>
+
+			<enhanced:img
+				src="../story/sediment/timeline-photos/1908-record-flood.webp"
+				alt="August 26, 1908 Lexington Dispatch article reporting flood damage at the Reedy River factory near Greenville"
+			/>
 		</Timeline.Entry>
 
 		<Timeline.Entry date={1909}>
@@ -411,7 +429,7 @@
 			</p>
 		</Timeline.Entry>
 
-		<Timeline.Entry date={1925}>
+		<Timeline.Entry date={1925} icon={{ src: photo1925ConesteeSues, alt: '' }}>
 			{#snippet heading()}
 				Conestee Mills sues the City of Greenville due to raw sewage
 			{/snippet}
@@ -425,6 +443,11 @@
 				as to be a source of disease and constant peril to the health and lives of the operatives of
 				Conestee Mills.” (Conestee Mills v. City of Greenville, amended complaint 1929).
 			</p>
+
+			<enhanced:img
+				src="../story/pollution/timeline-photos/1925-conestee-sues.webp"
+				alt="First page of the South Carolina Supreme Court opinion in Conestee Mills v. City of Greenville"
+			/>
 		</Timeline.Entry>
 
 		<Timeline.Entry date={1926}>
@@ -526,7 +549,7 @@
 			</p>
 		</Timeline.Entry>
 
-		<Timeline.Entry date={1943}>
+		<Timeline.Entry date={1943} icon={{ src: photo1943ArmyBaseBuilt, alt: '' }}>
 			{#snippet heading()}
 				Greenville Army Air Base is constructed
 			{/snippet}
@@ -540,6 +563,11 @@
 				installation may have contributed to sediment loading in Marrow Bone Creek, a tributary of
 				the Reedy River.
 			</p>
+
+			<enhanced:img
+				src="../story/sediment/timeline-photos/1943-army-base-built.webp"
+				alt="April 1955 aerial photograph showing the runways of the former Greenville Army Air Base, then Donaldson Air Force Base"
+			/>
 		</Timeline.Entry>
 
 		<Timeline.Entry
@@ -912,7 +940,10 @@
 			/>
 		</Timeline.Entry>
 
-		<Timeline.Entry date={{ start: 2022, end: 2023 }}>
+		<Timeline.Entry
+			date={{ start: 2022, end: 2023 }}
+			icon={{ src: photo20222023SouthCarolinaAppropriates, alt: '' }}
+		>
 			{#snippet heading()}
 				South Carolina appropriates $39 million for a new dam
 			{/snippet}
@@ -928,7 +959,7 @@
 			</p>
 		</Timeline.Entry>
 
-		<Timeline.Entry date={2023}>
+		<Timeline.Entry date={2023} icon={{ src: photo2023ConesteeSellsProperty, alt: '' }}>
 			{#snippet heading()}
 				Conestee Foundation sells the dam to the Lake Conestee Dam Rehabilitation Project
 			{/snippet}
@@ -940,9 +971,14 @@
 				Conestee Foundation sold the dam and adjacent property to the Lake Conestee Dam
 				Rehabilitation Project (LCDRP).
 			</p>
+
+			<enhanced:img
+				src="./timeline-photos/2023-conestee-sells-property.webp"
+				alt="Lake Conestee Dam Restoration Project sign at the dam site"
+			/>
 		</Timeline.Entry>
 
-		<Timeline.Entry date={2024}>
+		<Timeline.Entry date={2024} icon={{ src: photo2024SitePreparationBegins, alt: '' }}>
 			{#snippet heading()}
 				Property acquisition and site preparation begin
 			{/snippet}
@@ -951,6 +987,11 @@
 			{/snippet}
 
 			<p>Property acquisition, planning, and site preparation for the new dam began.</p>
+
+			<enhanced:img
+				src="../story/sediment/timeline-photos/2024-site-preparation-begins.webp"
+				alt="Excavator with a mulching head clearing trees for the new dam"
+			/>
 		</Timeline.Entry>
 
 		<Timeline.Entry date={2025} icon={{ src: photo2025ConstructionBegins, alt: '' }}>
@@ -998,7 +1039,7 @@
 			/>
 		</Timeline.Entry>
 
-		<Timeline.Entry date={2026}>
+		<Timeline.Entry date={2026} icon={{ src: photo2026HistoricalKioskConstructed, alt: '' }}>
 			{#snippet heading()}
 				A historical kiosk is constructed on site
 			{/snippet}
@@ -1010,6 +1051,11 @@
 				A historical kiosk to acknowledge the past is constructed on site to educate visitors, as
 				well as fencing and other protective measures.
 			</p>
+
+			<enhanced:img
+				src="./timeline-photos/2026-historical-kiosk-constructed.webp"
+				alt="Covered historical kiosk beside a gravel path near the dam, with the Conestee Mill building in the background"
+			/>
 		</Timeline.Entry>
 
 		<Timeline.Entry date={2027} icon={{ src: photo2027TakeOwnership, alt: '' }}>
