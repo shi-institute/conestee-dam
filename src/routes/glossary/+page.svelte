@@ -219,6 +219,7 @@
 	/* entries */
 	.entries {
 		--scrollport-height: 100dvh;
+		--scroll-end-space: calc(6rem + var(--footer-height, 0px));
 	}
 
 	a:focus-visible,

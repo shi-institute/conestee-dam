@@ -30,6 +30,7 @@
 	The parent may set these custom properties:
 	--sticky-height: the height of anything stuck to the top of the scroll container
 	--scrollport-height: the height of the scroll container (defaults to the viewport)
+	--scroll-end-space: the height of anything after the entries in the scroll container
 -->
 <div class="glossary-entries">
 	{#each groups as group (group.letter)}
@@ -39,7 +40,7 @@
 			<svelte:element this={headingLevel} id="{letterId}-heading" class="letter">
 				{group.letter}
 			</svelte:element>
-			<dl>
+			<dl style:--entry-count={group.entries.length}>
 				{#each group.entries as entry (entry.id)}
 					<div
 						class="entry"
@@ -90,20 +91,26 @@
 
 	/*
 	 * Leave enough room below the last term that any letter or term can scroll to the top.
-	 * The space is an invisible, absolutely positioned box (which still extends how far the
-	 * container scrolls), so the last term does not grow taller than its definition.
 	 */
-	section:last-child .entry:last-child {
-		position: relative;
+	section:last-child dl {
+		display: grid;
+		align-items: start;
 	}
 
-	section:last-child .entry:last-child::after {
+	/* both are placed explicitly; otherwise, the last term is auto-placed in the next row */
+	section:last-child .entry:last-child,
+	section:last-child dl::after {
+		grid-row: var(--entry-count);
+		grid-column: 1;
+	}
+
+	section:last-child dl::after {
 		content: '';
-		position: absolute;
-		top: 0;
-		left: 0;
 		width: 1px;
-		height: calc(var(--scrollport-height, 100dvh) - var(--sticky-height, 0px) - 0.5rem);
+		height: calc(
+			var(--scrollport-height, 100dvh) - var(--sticky-height, 0px) - var(--scroll-end-space, 0px) -
+				0.5rem
+		);
 		pointer-events: none;
 	}
 

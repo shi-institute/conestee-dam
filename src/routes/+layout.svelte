@@ -7,6 +7,7 @@
 	import { onMount } from 'svelte';
 	import HeaderMenu from './HeaderMenu.svelte';
 	import NavigationProgress from './NavigationProgress.svelte';
+	import SiteFooter from './SiteFooter.svelte';
 
 	let { children } = $props();
 
@@ -46,6 +47,8 @@
 <GlossaryDialog />
 
 {@render children()}
+
+<SiteFooter />
 
 <style>
 	/* the ArcGIS Maps SDK (loaded by stories with maps) sets `:root { view-transition-name: none }`,
