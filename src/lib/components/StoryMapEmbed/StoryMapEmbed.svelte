@@ -421,7 +421,7 @@
 		</div>
 	{/if}
 	{#if navigation && wrapper && metadata}
-		<StoryNavigation container={wrapper} headings={metadata.headings} />
+		<StoryNavigation container={wrapper} title={metadata.title} headings={metadata.headings} />
 	{/if}
 </div>
 

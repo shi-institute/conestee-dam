@@ -8,6 +8,7 @@
 
 	const {
 		container,
+		title,
 		headings
 	}: {
 		/**
@@ -15,6 +16,9 @@
 		 * beside it and fades when wide content in it is under the pane.
 		 */
 		container: HTMLElement;
+
+		/** The title of the story, which links to the top of the page. */
+		title: string;
 
 		/** The headings that the story author added in StoryMaps, from `getStoryMetadata()`. */
 		headings: StoryHeading[];
@@ -284,12 +288,36 @@
 		}
 		if (popover?.matches(':popover-open')) popover.hidePopover();
 	}
+
+	/** The URL of the page without a heading in it. */
+	const topHref = $derived(page.url.pathname + page.url.search);
+
+	/** Scrolls to the top of the page and removes the heading from the URL. */
+	function jumpToTop(event: MouseEvent) {
+		const isModified = event.metaKey || event.ctrlKey || event.shiftKey || event.altKey;
+		if (event.button !== 0 || isModified) return;
+		event.preventDefault();
+		window.scrollTo({ top: 0, behavior: reduceMotion() ? 'auto' : 'smooth' });
+		if ((page.shallow?.url ?? page.url).hash) {
+			goto(topHref, { shallow: true, state: page.state });
+		}
+		if (popover?.matches(':popover-open')) popover.hidePopover();
+	}
 </script>
 
 <svelte:window onscroll={onScroll} onresize={onResize} />
 
 {#snippet list()}
 	<ol>
+		<li style:--depth={0}>
+			<a
+				href={topHref}
+				aria-current={activeIndex === -1 ? 'location' : undefined}
+				onclick={jumpToTop}
+			>
+				{title || '(top of page)'}
+			</a>
+		</li>
 		{#each headings as heading, index (heading.id)}
 			<li style:--depth={heading.level - topLevel}>
 				<a
