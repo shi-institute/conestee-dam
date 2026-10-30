@@ -13,8 +13,10 @@
 		 *
 		 * While `src` is missing, space is reserved for the photo so that the
 		 * story does not shift once the photo is available.
+		 *
+		 * `attribution` is HTML (it may contain links) that is shown below the photo.
 		 */
-		image?: { src?: string; srcset?: string; alt: string };
+		image?: { src?: string; srcset?: string; alt: string; attribution?: string };
 	} = $props();
 </script>
 
@@ -41,6 +43,9 @@
 		/>
 	{:else if image}
 		<div class="image" aria-hidden="true"></div>
+	{/if}
+	{#if image?.attribution}
+		<p class="attribution">{@html image.attribution}</p>
 	{/if}
 </header>
 
@@ -98,6 +103,21 @@
 		border-radius: var(--radius-surface);
 		background-color: light-dark(#e8eef8, #2c2f36);
 		box-shadow: inset 0 0 0 1px rgba(0 0 0 / 15%);
+	}
+
+	/* the attribution sits right below the photo */
+	.attribution {
+		margin: calc(-1 * clamp(1.5rem, 4vw, 2.25rem) + 0.5rem) 0 0;
+		font-size: 0.8125rem;
+		line-height: 1.4;
+		text-align: right;
+		color: var(--color-muted);
+	}
+	.attribution :global(a) {
+		color: inherit;
+	}
+	.attribution :global(a:hover) {
+		color: var(--color-accent);
 	}
 
 	img.image {

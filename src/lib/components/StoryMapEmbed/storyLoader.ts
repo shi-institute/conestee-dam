@@ -32,6 +32,12 @@ export interface StoryLoad {
 	 */
 	ready: Promise<HTMLElement | null>;
 
+	/**
+	 * Resolves with the story's title, snippet, cover image, and headings from `getStoryMetadata()`,
+	 * which are available long before the story itself has loaded.
+	 */
+	metadata: Promise<StoryMaps.StoryHeaderMetadata | null>;
+
 	/** Starts loading the story (it is queued behind any other story that is loading). */
 	start: () => void;
 
@@ -39,8 +45,8 @@ export interface StoryLoad {
 	dispose: () => void;
 }
 
-/** How long a navigation waits for a story before showing the page anyway. */
-const NAVIGATION_WAIT_MS = 20_000;
+/** How long a navigation waits for a story's metadata before showing the page anyway. */
+const NAVIGATION_WAIT_MS = 5_000;
 
 /** How long a story may take before the next story is allowed to start loading. */
 const QUEUE_RELEASE_MS = 30_000;
@@ -134,6 +140,7 @@ function createStoryLoad(storyId: string, pathname: string): StoryLoad {
 		adopted: false,
 		article: null,
 		ready: new Promise<HTMLElement | null>((resolve) => (resolveReady = resolve)),
+		metadata: getStoryMetadata(storyId),
 		start() {
 			if (started || disposed) return;
 			started = true;
@@ -163,7 +170,7 @@ function createStoryLoad(storyId: string, pathname: string): StoryLoad {
 								finish(article);
 							}
 						});
-            
+
 						// a story that was already moved into the page loads where it is
 						if (!host.isConnected) getStagingElement().appendChild(host);
 						observer.observe(host, { childList: true, subtree: true });
@@ -226,9 +233,10 @@ export function disposeStaleStories(currentPathname: string | null = wantedPathn
  * Prepares a story for the page at `url` and returns it. On the server, it returns `null`.
  *
  * The story only starts loading while the browser's URL is that of the page. During client-side
- * navigation, the returned promise then resolves once the story has loaded (or after a timeout),
- * so SvelteKit keeps the current page visible until the story is ready. During the initial
- * page load, it does not wait. If the URL does not match, the story is started later,
+ * navigation, the returned promise then resolves once the story's metadata (its title, snippet,
+ * and cover image) has loaded (or after a timeout), so SvelteKit keeps the current page visible
+ * until the page can show the story's heading. The story itself keeps loading in the page.
+ * During the initial page load, it does not wait. If the URL does not match, the story is started later,
  * when the page adopts it.
  *
  * Pass `{ wait: false }` to show the page right away and let the story load in place
@@ -262,11 +270,147 @@ export async function loadStory(
 		load.start();
 		if (hydrated && wait) {
 			await Promise.race([
-				load.ready,
+				load.metadata,
 				new Promise((resolve) => setTimeout(resolve, NAVIGATION_WAIT_MS))
 			]);
 		}
 	}
 
 	return load;
+}
+
+interface StoryNode {
+	type: string;
+	data?: {
+		image?: string;
+		attribution?: string;
+		alt?: string;
+		type?: string;
+		text?: string;
+		title?: string;
+		summary?: string;
+	};
+	children?: string[];
+}
+
+interface StoryData {
+	config?: { PORTAL_HOST?: string };
+	publishedData: {
+		root: string;
+		nodes: Record<string, StoryNode>;
+		resources: Record<
+			string,
+			{ type: string; data?: { resourceId?: string; width?: number; height?: number } }
+		>;
+	};
+}
+
+const HTML_ENTITIES: Record<string, string> = {
+	amp: '&',
+	lt: '<',
+	gt: '>',
+	quot: '"',
+	apos: "'",
+	nbsp: '\u00a0'
+};
+
+/** Converts the HTML of a StoryMaps text block to plain text. */
+function htmlToText(html: string) {
+	return html
+		.replace(/<[^>]*>/g, '')
+		.replace(/&(#x[\da-f]+|#\d+|\w+);/gi, (entity, name: string) => {
+			if (name[0] !== '#') return HTML_ENTITIES[name.toLowerCase()] ?? entity;
+			const code =
+				name[1].toLowerCase() === 'x' ? parseInt(name.slice(2), 16) : Number(name.slice(1));
+			return String.fromCodePoint(code);
+		})
+		.replace(/\s+/g, ' ')
+		.trim();
+}
+
+/** Lists the headings in the story, in the order they appear in the story. */
+function collectHeadings(
+	nodes: Record<string, StoryNode>,
+	id: string,
+	headings: StoryMaps.StoryHeaderMetadata['headings'] = []
+) {
+	const node = nodes[id];
+	const level = node?.type === 'text' && node.data?.type?.match(/^h([1-6])$/)?.[1];
+	const text = level && node.data?.text ? htmlToText(node.data.text) : '';
+	// StoryMaps gives the element that wraps each block the ID of its node
+	if (text) headings.push({ id, text, level: Number(level) });
+	for (const child of node?.children ?? []) collectHeadings(nodes, child, headings);
+	return headings;
+}
+
+const metadataRequests = new Map<string, Promise<StoryMaps.StoryHeaderMetadata | null>>();
+
+/**
+ * Gets the title, snippet, cover image, and headings of a story without loading the story itself.
+ *
+ * The title and snippet are the title and summary shown on the story cover (not those of
+ * the story's item, which may differ).
+ * `image` is `null` if the story cover has no image. It resolves with `null` if the story
+ * data could not be fetched. Successful requests are remembered, so asking for the
+ * same story again resolves right away.
+ *
+ * StoryMaps rejects requests without an `Origin` header, so this should be called in the browser.
+ *
+ * @example
+ * ```ts
+ * const metadata = await getStoryMetadata('b3daea8f94a14558b386108914d9d3b9');
+ * ```
+ */
+export function getStoryMetadata(
+	storyId: string,
+	fetch = globalThis.fetch
+): Promise<StoryMaps.StoryHeaderMetadata | null> {
+	let request = metadataRequests.get(storyId);
+	if (!request) {
+		request = fetchStoryMetadata(storyId, fetch);
+		metadataRequests.set(storyId, request);
+		// try again next time if it failed
+		request.then((metadata) => {
+			if (!metadata) metadataRequests.delete(storyId);
+		});
+	}
+	return request;
+}
+
+async function fetchStoryMetadata(
+	storyId: string,
+	fetch: typeof globalThis.fetch
+): Promise<StoryMaps.StoryHeaderMetadata | null> {
+	let data: StoryData;
+	try {
+		const response = await fetch(`https://storymaps.arcgis.com/embed/view/${storyId}/data`);
+		if (!response.ok) return null;
+		data = await response.json();
+	} catch {
+		return null;
+	}
+
+	const { root, nodes, resources } = data.publishedData;
+
+	// the cover image is the child of the storycover node
+	const cover = Object.values(nodes).find((node) => node.type === 'storycover');
+	const imageNode = cover?.children?.map((id) => nodes[id]).find((node) => node?.type === 'image');
+	const resource = imageNode?.data?.image ? resources[imageNode.data.image]?.data : undefined;
+
+	const portalHost = data.config?.PORTAL_HOST ?? 'www.arcgis.com';
+	const image = resource?.resourceId
+		? {
+				href: `https://${portalHost}/sharing/rest/content/items/${storyId}/resources/${resource.resourceId}`,
+				width: resource.width ?? null,
+				alt: imageNode?.data?.alt ?? '',
+				attribution: imageNode?.data?.attribution || null
+			}
+		: null;
+
+	return {
+		title: htmlToText(cover?.data?.title ?? ''),
+		snippet: htmlToText(cover?.data?.summary ?? ''),
+		image,
+		headings: collectHeadings(nodes, root)
+	};
 }

@@ -1,56 +1,39 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
+	import { page } from '$app/state';
 	import { cubicOut } from 'svelte/easing';
 	import { scale, slide } from 'svelte/transition';
 
+	type StoryHeading = StoryMaps.StoryHeaderMetadata['headings'][number];
+
 	const {
-		article
+		container,
+		headings
 	}: {
-		/** The story article in which we should search for headings. */
-		article: HTMLElement;
+		/**
+		 * The element that contains the story (and its heading). The pane is sized to fit
+		 * beside it and fades when wide content in it is under the pane.
+		 */
+		container: HTMLElement;
+
+		/** The headings that the story author added in StoryMaps, from `getStoryMetadata()`. */
+		headings: StoryHeading[];
 	} = $props();
 
-	interface StoryHeading {
-		element: HTMLElement;
-		text: string;
-		level: number;
-	}
-
-	/**
-	 * Collects the headings that the story author added in StoryMaps
-	 * (not the story title or mounted components).
-	 */
-	function collectHeadings(article: HTMLElement): StoryHeading[] {
-		return Array.from(article.querySelectorAll<HTMLElement>('[data-testid="Heading"]'))
-			.map((element) => ({
-				element,
-				text: element.textContent?.trim().replace(/\s+/g, ' ') ?? '',
-				level: Number(element.tagName.slice(1)) || 2
-			}))
-			.filter((heading) => heading.text && heading.element.getClientRects().length > 0);
-	}
-
-	function isSameHeadings(a: StoryHeading[], b: StoryHeading[]) {
-		return (
-			a.length === b.length &&
-			a.every(
-				(heading, index) => heading.element === b[index].element && heading.text === b[index].text
-			)
-		);
-	}
-
-	let headings = $state.raw<StoryHeading[]>([]);
 	let activeIndex = $state(-1);
 	const topLevel = $derived(Math.min(...headings.map((heading) => heading.level)));
 
-	// collect the headings from the story, and collect them again whenever the story changes
-	// (such as when StoryMaps renders more of the story, content is injected into it,
-	// or its images load and change its layout)
+	/** The block in the story that contains a heading, or `null` if the story has not loaded yet. */
+	function findHeadingElement(heading: StoryHeading) {
+		return container.querySelector(`#${CSS.escape(heading.id)}`);
+	}
+
+	// measure again whenever the story changes (such as when it loads, StoryMaps renders more
+	// of it, content is injected into it, or its images load and change its layout)
 	$effect(() => {
 		let frame = 0;
 		const update = () => {
 			frame = 0;
-			const next = collectHeadings(article);
-			if (!isSameHeadings(headings, next)) headings = next;
 			measureMargin();
 			updateWideElements();
 			updateActiveHeading();
@@ -60,21 +43,21 @@
 		const observer = new MutationObserver(() => {
 			if (!frame) frame = requestAnimationFrame(update);
 		});
-		observer.observe(article, { childList: true, subtree: true, characterData: true });
+		observer.observe(container, { childList: true, subtree: true, characterData: true });
 		const resizeObserver = new ResizeObserver(() => {
 			if (!frame) frame = requestAnimationFrame(update);
 		});
-		resizeObserver.observe(article);
+		resizeObserver.observe(container);
 		// images (such as floated ones) can change size when they load without resizing the story
 		const onLoad = () => {
 			if (!frame) frame = requestAnimationFrame(update);
 		};
-		article.addEventListener('load', onLoad, true);
+		container.addEventListener('load', onLoad, true);
 
 		return () => {
 			observer.disconnect();
 			resizeObserver.disconnect();
-			article.removeEventListener('load', onLoad, true);
+			container.removeEventListener('load', onLoad, true);
 			cancelAnimationFrame(frame);
 		};
 	});
@@ -84,7 +67,9 @@
 		const threshold = window.innerHeight * 0.35;
 		let index = -1;
 		for (let i = 0; i < headings.length; i++) {
-			if (headings[i].element.getBoundingClientRect().top > threshold) break;
+			const element = findHeadingElement(headings[i]);
+			if (!element) continue;
+			if (element.getBoundingClientRect().top > threshold) break;
 			index = i;
 		}
 		activeIndex = index;
@@ -100,6 +85,10 @@
 	}
 
 	function onResize() {
+		// follow the window as it is resized instead of animating behind it
+		animated = false;
+		clearTimeout(resizeTimeout);
+		resizeTimeout = setTimeout(() => (animated = true), 200);
 		measureMargin();
 		updateWideElements();
 		viewportHeight = window.innerHeight;
@@ -111,9 +100,12 @@
 	let rem = $state(16);
 
 	// StoryMaps sizes the text column itself (and it scales with the text size),
-	// so the margin is measured instead of assumed
+	// so the margin is measured instead of assumed (while the story loads, the
+	// text of its heading is measured instead)
 	function measureMargin() {
-		const column = article.querySelector('.text-container') ?? headings[0]?.element;
+		const column =
+			container.querySelector('.storymap-embed.loaded .text-container') ??
+			container.querySelector('.story-heading .text');
 		margin = column
 			? document.documentElement.clientWidth - column.getBoundingClientRect().right
 			: 0;
@@ -146,20 +138,24 @@
 	 */
 	function collectWideElements(): Element[] {
 		const edge = document.documentElement.clientWidth - rem - paneWidth;
-		const pageBackground = getBackdropColor(article);
+		const pageBackground = getBackdropColor(container);
 		const elements: Element[] = [];
 		const visit = (parent: Element) => {
 			for (const child of parent.children) {
 				const rect = child.getBoundingClientRect();
 				const isWide = rect.right > edge && rect.width > 0 && rect.height > 0;
-				if (isWide && !child.checkVisibility({ visibilityProperty: true })) continue;
+				// the story is invisible (but laid out) while it loads
+				// the pane is in the container, but it is never under itself
+				if (child.hasAttribute('data-story-navigation')) continue;
+				if (isWide && !child.checkVisibility({ visibilityProperty: true, opacityProperty: true }))
+					continue;
 				if (isWide && (child.matches(MEDIA) || hasBackground(child, pageBackground))) {
 					elements.push(child);
 				} else if (child.childElementCount > 0) visit(child);
 				else if (isWide && child.textContent?.trim()) elements.push(child);
 			}
 		};
-		visit(article);
+		visit(container);
 		return elements;
 	}
 
@@ -237,8 +233,22 @@
 		}
 	}
 
-	/** Whether the pane has been opened or closed since it was shown, which is when it animates. */
-	let toggled = $state(false);
+	/**
+	 * Whether changes to the size of the pane (such as when it is opened or closed, or when
+	 * the story loads and the margin changes) animate. They do not while the pane is first
+	 * laid out or while the window is resized.
+	 */
+	let animated = $state(false);
+	let resizeTimeout: ReturnType<typeof setTimeout> | undefined;
+	$effect(() => {
+		let frame = requestAnimationFrame(() => {
+			frame = requestAnimationFrame(() => (animated = true));
+		});
+		return () => {
+			cancelAnimationFrame(frame);
+			clearTimeout(resizeTimeout);
+		};
+	});
 
 	/** The width of the "Contents" label, so the closed pane can be sized (and animated) to fit it. */
 	let labelWidth = $state(0);
@@ -248,7 +258,6 @@
 	const PANE_DURATION = 250;
 
 	function toggleCollapsed() {
-		toggled = true;
 		collapsed = !collapsed;
 		try {
 			localStorage.setItem(COLLAPSED_KEY, String(collapsed));
@@ -257,14 +266,22 @@
 		}
 	}
 
+	/**
+	 * Scrolls to a heading and puts it in the URL. If the story has not loaded yet,
+	 * the story scrolls to the heading in the URL once it has.
+	 */
 	function jumpTo(event: MouseEvent, heading: StoryHeading) {
 		const isModified = event.metaKey || event.ctrlKey || event.shiftKey || event.altKey;
 		if (event.button !== 0 || isModified) return;
 		event.preventDefault();
-		heading.element.scrollIntoView({
+		findHeadingElement(heading)?.scrollIntoView({
 			behavior: reduceMotion() ? 'auto' : 'smooth',
 			block: 'start'
 		});
+		// a shallow navigation updates the URL without the browser jumping to the heading
+		if ((page.shallow?.url ?? page.url).hash !== `#${heading.id}`) {
+			goto(`#${heading.id}`, { shallow: true, state: page.state });
+		}
 		if (popover?.matches(':popover-open')) popover.hidePopover();
 	}
 </script>
@@ -273,10 +290,10 @@
 
 {#snippet list()}
 	<ol>
-		{#each headings as heading, index (heading.element)}
+		{#each headings as heading, index (heading.id)}
 			<li style:--depth={heading.level - topLevel}>
 				<a
-					href="#{heading.element.id}"
+					href="#{heading.id}"
 					aria-current={index === activeIndex ? 'location' : undefined}
 					onclick={(event) => jumpTo(event, heading)}
 				>
@@ -291,8 +308,9 @@
 	<!-- shown beside the story when there is room for it -->
 	<nav
 		class="story-navigation pane"
+		data-story-navigation
 		class:collapsed
-		class:toggled
+		class:animated
 		class:overlapping
 		aria-label="Story sections"
 		bind:this={pane}
@@ -349,7 +367,12 @@
 	</nav>
 {:else if headings.length > 0}
 	<!-- otherwise, shown in a popover -->
-	<button class="toggle" type="button" popovertarget="story-navigation-popover">
+	<button
+		class="toggle"
+		type="button"
+		popovertarget="story-navigation-popover"
+		data-story-navigation
+	>
 		<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 			<path
 				d="M3.75 5.5h16.5a.75.75 0 0 1 0 1.5H3.75a.75.75 0 0 1 0-1.5Zm4 6h12.5a.75.75 0 0 1 0 1.5H7.75a.75.75 0 0 1 0-1.5Zm0 6h12.5a.75.75 0 0 1 0 1.5H7.75a.75.75 0 0 1 0-1.5Z"
@@ -360,6 +383,7 @@
 	</button>
 	<nav
 		class="story-navigation popover"
+		data-story-navigation
 		id="story-navigation-popover"
 		aria-label="Story sections"
 		popover="auto"
@@ -456,7 +480,7 @@
 		.pane-list {
 			transition: opacity 200ms cubic-bezier(0.215, 0.61, 0.355, 1);
 		}
-		.pane.toggled {
+		.pane.animated {
 			transition:
 				width var(--duration) cubic-bezier(0.215, 0.61, 0.355, 1),
 				padding var(--duration) cubic-bezier(0.215, 0.61, 0.355, 1),
@@ -548,10 +572,5 @@
 				transform: scale(0.95) translateY(0.5rem);
 			}
 		}
-	}
-
-	/* leave room below the titlebar when jumping to a heading */
-	:global(.storymap-embed [data-testid='Heading']) {
-		scroll-margin-top: calc(var(--header-height) + 1.5rem);
 	}
 </style>

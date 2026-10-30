@@ -1,10 +1,13 @@
 <script lang="ts">
 	import { goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
+	import { page } from '$app/state';
 	import ProgressRing from '$components/ProgressRing/ProgressRing.svelte';
 	import StoryHeading from '$components/StoryHeading/StoryHeading.svelte';
 	import { fetchGlossary, linkGlossaryTerms } from '$lib/glossary';
-	import { mount, unmount, type Component } from 'svelte';
+	import { mount, tick, unmount, type Component } from 'svelte';
+	import { expoOut } from 'svelte/easing';
+	import { fade, fly } from 'svelte/transition';
 	import type { StoryLoad } from './storyLoader';
 	import StoryNavigation from './StoryNavigation.svelte';
 
@@ -47,16 +50,19 @@
 		/**
 		 * Whether to show a pane that lists the story's headings and jumps to them.
 		 *
-		 * The headings are read from the story when it loads (and whenever it changes),
-		 * so the pane always matches the story's content in StoryMaps.
+		 * The headings come from the story's metadata (see `getStoryMetadata()`), so the pane
+		 * always matches the story's content in StoryMaps. It is not shown if the metadata
+		 * could not be loaded.
 		 */
 		navigation?: boolean;
 
 		/**
 		 * Whether to replace the story's StoryMaps cover with our own heading.
 		 *
-		 * The heading shows the title, summary, and cover photo from the StoryMaps cover
-		 * (but not the byline or published date). Turn it off to use a custom cover
+		 * The heading shows the story's title, snippet, and cover photo (with its attribution)
+		 * from `getStoryMetadata()`, so it is shown while the rest of the story loads.
+		 * It does not show the byline or published date. If the metadata cannot be loaded,
+		 * the StoryMaps cover is shown instead. Turn it off to use a custom cover
 		 * from `onStoryLoaded` instead.
 		 */
 		heading?: boolean;
@@ -81,6 +87,43 @@
 
 	let loaded = $state(false);
 	let article = $state<HTMLElement | null>(null);
+	let wrapper = $state<HTMLDivElement>();
+	let metadata = $state<StoryMaps.StoryHeaderMetadata | null>(null);
+
+	$effect(() => {
+		let cancelled = false;
+		story?.metadata.then((result) => {
+			if (!cancelled) metadata = result;
+		});
+		return () => {
+			cancelled = true;
+		};
+	});
+
+	const showHeading = $derived(heading && !!metadata);
+
+	/** The URL's hash, including after a shallow navigation (such as from the navigation pane). */
+	const hash = $derived((page.shallow?.url ?? page.url).hash);
+
+	/** The section of the story that the URL links to, if it is one of the story's headings. */
+	const linkedHeading = $derived.by(() => {
+		const id = decodeHash(hash);
+		return id ? metadata?.headings.find((heading) => heading.id === id) : undefined;
+	});
+
+	/**
+	 * Returns the ID of the story block that a URL hash links to.
+	 * StoryMaps links to blocks as `#ref-<id>`, so that form is also accepted.
+	 */
+	function decodeHash(hash: string) {
+		let id = hash.slice(1);
+		try {
+			id = decodeURIComponent(id);
+		} catch {
+			// use the hash as it is
+		}
+		return id.replace(/^ref-(?=n-)/, '');
+	}
 
 	/**
 	 * Removes the origin from an href value.
@@ -219,73 +262,37 @@
 	}
 
 	/**
-	 * Lists larger versions of a StoryMaps image, since StoryMaps
-	 * requests images at a fixed width with the `w` parameter.
+	 * Lists smaller versions of a StoryMaps image resource, which can be requested
+	 * at a given width with the `w` parameter.
 	 */
-	function createSrcset(src: string) {
-		const url = new URL(src);
-		if (!url.searchParams.has('w')) return undefined;
-		return [800, 1600, 2400]
-			.map((width) => {
+	function createSrcset(image: NonNullable<StoryMaps.StoryHeaderMetadata['image']>) {
+		if (!image.width) return undefined;
+		const widths = [800, 1600, 2400].filter((width) => width < image.width!);
+		return [
+			...widths.map((width) => {
+				const url = new URL(image.href);
 				url.searchParams.set('w', width.toString());
 				return `${url} ${width}w`;
-			})
-			.join(', ');
+			}),
+			`${image.href} ${image.width}w`
+		].join(', ');
 	}
 
-	// replace the StoryMaps cover (the first block) with our own heading
-	function replaceCover(article: HTMLElement) {
-		const cover = article.firstElementChild as HTMLElement | null;
-		const title = cover?.querySelector('.sc-title')?.textContent?.trim();
-		if (!cover || !title) {
-			console.error('Story cover not found in the article.');
-			return;
-		}
-
-		const summary = cover.querySelector('.sc-summary')?.textContent?.trim() || undefined;
-		const img = cover.querySelector<HTMLImageElement>('.media-panel img');
-		const readImage = (img: HTMLImageElement) => {
-			const src = img.getAttribute('src') || undefined;
-			return { src, srcset: src && createSrcset(img.src), alt: img.alt };
+	/**
+	 * Scrolls to the element in the story that the URL hash links to (such as a heading).
+	 *
+	 * It scrolls again once the story has finished animating in, since that moves it.
+	 */
+	async function scrollToHash() {
+		const id = decodeHash(location.hash);
+		if (!id) return;
+		await tick();
+		const scroll = () => {
+			const target = article?.ownerDocument.getElementById(id);
+			if (target && article?.contains(target)) target.scrollIntoView({ block: 'start' });
 		};
-		const props = $state({ title, summary, image: img ? readImage(img) : undefined });
-
-		// StoryMaps only sets the source of the cover photo after the cover is laid out,
-		// so the original cover stays (hidden) in the page until the photo has a source
-		const original = Array.from(cover.children) as HTMLElement[];
-		const removeOriginal = () => {
-			observer.disconnect();
-			clearTimeout(timeout);
-			for (const element of original) element.remove();
-		};
-		for (const element of original) {
-			element.inert = true;
-			element.setAttribute('aria-hidden', 'true');
-			element.style.cssText +=
-				'position: absolute; inset: 0; visibility: hidden; pointer-events: none;';
-		}
-		const observer = new MutationObserver(() => {
-			if (!img?.getAttribute('src')) return;
-			props.image = readImage(img);
-			removeOriginal();
-		});
-		const timeout = setTimeout(() => {
-			if (!props.image?.src) props.image = undefined;
-			removeOriginal();
-		}, 10_000);
-		if (img && !props.image?.src) observer.observe(img, { attributeFilter: ['src'] });
-		else removeOriginal();
-
-		cover.style.position = 'relative';
-		const heading = mount(StoryHeading, {
-			target: cover,
-			anchor: cover.firstChild ?? undefined,
-			props
-		});
-		return () => {
-			removeOriginal();
-			unmount(heading);
-		};
+		requestAnimationFrame(scroll);
+		setTimeout(scroll, 250);
 	}
 
 	// move the story from the off-screen container into this page
@@ -300,17 +307,14 @@
 
 		let cancelled = false;
 		let stopLinkingGlossaryTerms: (() => void) | undefined;
-		let removeHeading: (() => void) | undefined;
 		let stopEnhancing: (() => void) | undefined;
 		const markLoaded = (storyArticle: HTMLElement | null) => {
 			if (cancelled || !storyArticle) return;
 			loaded = true;
 			article = storyArticle;
-			if (heading) {
-				removeHeading = replaceCover(storyArticle);
-			}
 			stopEnhancing = enhanceStory(storyArticle);
 			onStoryLoaded?.(storyArticle);
+			scrollToHash();
 
 			// link glossary terms in the story, including any content injected by `onStoryLoaded`
 			fetchGlossary()
@@ -327,7 +331,6 @@
 			cancelled = true;
 			stopLinkingGlossaryTerms?.();
 			stopEnhancing?.();
-			removeHeading?.();
 			story.dispose();
 		};
 	}
@@ -335,6 +338,21 @@
 	$effect(() => {
 		story?.host.classList.toggle('loaded', loaded);
 	});
+
+	// our heading replaces the StoryMaps cover
+	$effect(() => {
+		story?.host.classList.toggle('hide-cover', showHeading);
+	});
+
+	/**
+	 * Content flies into the page like the story does when it loads (see `.storymap-embed > *`).
+	 */
+	const ENTER_DURATION = 210;
+	const reduceMotion = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+	const flyIn = (node: Element) =>
+		fly(node, { y: 40, duration: reduceMotion() ? 0 : ENTER_DURATION, easing: expoOut });
+	const fadeOut = (node: Element) =>
+		fade(node, { duration: reduceMotion() ? 0 : ENTER_DURATION, easing: expoOut });
 
 	// on Alt + Shift + E, launch the StoryMaps editor for the current StoryMap
 	function openEditor(event: KeyboardEvent) {
@@ -357,21 +375,53 @@
 
 <svelte:window onkeydown={openEditor} />
 
-<!-- reserve the loading height up front, since the story is only added to the page after it mounts -->
-<div
-	class="storymap-embed-wrapper {className ?? ''}"
-	style:min-height={loaded ? undefined : (loadingHeight ?? '100dvh')}
->
-	<div class="storymap-slot" {@attach adopt}></div>
-	{#if navigation && article}
-		<StoryNavigation {article} />
+{#snippet loadingMessage()}
+	<ProgressRing></ProgressRing>
+	<span>Please wait while the {loadingName} loads.</span>
+	{#if linkedHeading}
+		<span>You will be brought to “{linkedHeading.text}” in a moment.</span>
+	{:else if hash.length > 1}
+		<span>You will be brought to the section in a moment.</span>
+	{:else}
+		<span>This may take a few seconds.</span>
 	{/if}
-	{#if !loaded}
-		<div class="loading-message">
-			<ProgressRing></ProgressRing>
-			<span>Please wait while the {loadingName} loads.</span>
-			<span>This may take a few seconds.</span>
+{/snippet}
+
+<div class="storymap-embed-wrapper {className ?? ''}" bind:this={wrapper}>
+	{#if showHeading && metadata}
+		<div in:flyIn>
+			<StoryHeading
+				title={metadata.title}
+				summary={metadata.snippet || undefined}
+				image={metadata.image
+					? {
+							src: metadata.image.href,
+							srcset: createSrcset(metadata.image),
+							alt: metadata.image.alt,
+							attribution: metadata.image.attribution ?? undefined
+						}
+					: undefined}
+			/>
 		</div>
+	{/if}
+	<!-- reserve the loading height up front, since the story is only added to the page after it mounts -->
+	<div class="storymap-area" style:min-height={loaded ? undefined : (loadingHeight ?? '100dvh')}>
+		<div class="storymap-slot" {@attach adopt}></div>
+		{#if !loaded && showHeading}
+			<!-- below the heading, the message is shown right away instead of in the middle of the space for the story -->
+			<div class="loading-message below-heading" in:flyIn>
+				{@render loadingMessage()}
+			</div>
+		{/if}
+	</div>
+	{#if !loaded && !showHeading}
+		<!-- it stays where it is (over the top of the page) while it fades out as the heading or story enters -->
+		<div class="loading-message centered" style:height={loadingHeight ?? '100dvh'} out:fadeOut>
+			{@render loadingMessage()}
+		</div>
+	{/if}
+	{#if navigation && wrapper && metadata}
+		<StoryNavigation container={wrapper} headings={metadata.headings} />
 	{/if}
 </div>
 
@@ -380,14 +430,30 @@
 		position: relative;
 	}
 
+	.storymap-area {
+		position: relative;
+	}
+
 	.loading-message {
 		position: absolute;
-		inset: 0;
-		background-color: light-dark(#f5f9ff, #212121);
 		display: flex;
 		flex-direction: column;
 		align-items: center;
 		justify-content: center;
+		text-align: center;
+		padding: 0 1rem;
+	}
+	.loading-message.centered {
+		top: 0;
+		left: 0;
+		right: 0;
+		background-color: light-dark(#f5f9ff, #212121);
+	}
+	.loading-message.below-heading {
+		inset: 0;
+		justify-content: flex-start;
+		padding-top: clamp(1.5rem, 4vw, 2.5rem);
+		background-color: var(--color-surface);
 	}
 
 	.loading-message > span:first-of-type {
@@ -400,6 +466,16 @@
 
 	:global(.storymap-embed:not(.loaded)) {
 		height: var(--loading-height, 100dvh);
+	}
+
+	:global(.storymap-embed.hide-cover article.story > :first-child) {
+		display: none;
+	}
+
+	/* leave room below the titlebar when jumping to a heading */
+	:global(.storymap-embed [data-testid='Heading']),
+	:global(.storymap-embed article.story [id^='n-']) {
+		scroll-margin-top: calc(var(--header-height) + 1.5rem);
 	}
 
 	:global(.storymap-embed) :global(> *) {
