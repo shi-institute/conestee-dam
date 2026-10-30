@@ -5,9 +5,12 @@
 	import { ProjectTitle, wrapImagesInLightbox } from '$lib/components';
 	import { contributors } from '$lib/contributors';
 	import { stories } from '$lib/stories';
+	import videos from '$lib/videos/videos.json';
 	import historicAerial from './conestee-aerial-1970.webp?enhanced';
 	import newDam from './new-dam.webp?enhanced';
 	import oldDam from './old-dam.webp?enhanced';
+
+	const firstVideo = videos.find((video) => video.id === 1);
 
 	let exploreDialog: HTMLDialogElement | null = null;
 	let exploreButton: HTMLButtonElement | null = null;
@@ -116,7 +119,10 @@
 				new dam now keeps it in place.
 			</p>
 			<div class="actions">
-				<a class="button primary" href={resolve('/story')}>
+				<a
+					class="button primary"
+					href={resolve(`video/${firstVideo?.codes[0] || firstVideo?.id || 1}`)}
+				>
 					<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"
 						><path
 							d="M7.60846 4.61489C7.1087 4.34296 6.5 4.70472 6.5 5.27368V18.726C6.5 19.2949 7.1087 19.6567 7.60846 19.3848L19.97 12.6586C20.4921 12.3746 20.4921 11.6251 19.97 11.341L7.60846 4.61489ZM5 5.27368C5 3.56682 6.82609 2.48151 8.32538 3.2973L20.687 10.0235C22.2531 10.8756 22.2531 13.124 20.687 13.9762L8.32538 20.7024C6.82609 21.5181 5 20.4328 5 18.726V5.27368Z"
