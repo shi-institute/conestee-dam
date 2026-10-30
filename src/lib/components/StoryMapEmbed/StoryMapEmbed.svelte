@@ -473,7 +473,13 @@
 	{/if}
 {/snippet}
 
-<div class="storymap-embed-wrapper {className ?? ''}" bind:this={wrapper}>
+<!-- while the story loads, the heading and the loading area together fill the loading height -->
+<div
+	class="storymap-embed-wrapper {className ?? ''}"
+	class:loading={!loaded}
+	style:min-height={loaded ? undefined : (loadingHeight ?? '100dvh')}
+	bind:this={wrapper}
+>
 	{#if showHeading && metadata}
 		<div in:flyIn>
 			<StoryHeading
@@ -490,8 +496,8 @@
 			/>
 		</div>
 	{/if}
-	<!-- reserve the loading height up front, since the story is only added to the page after it mounts -->
-	<div class="storymap-area" style:min-height={loaded ? undefined : (loadingHeight ?? '100dvh')}>
+	<!-- the story is clipped while it loads so that the page cannot be scrolled past the loading message -->
+	<div class="storymap-area" class:loading={!loaded}>
 		<div class="storymap-slot" {@attach adopt}></div>
 		{#if !loaded && showHeading}
 			<!-- below the heading, the message is shown right away instead of in the middle of the space for the story -->
@@ -519,6 +525,19 @@
 	.storymap-area {
 		position: relative;
 	}
+	.storymap-embed-wrapper.loading {
+		display: flex;
+		flex-direction: column;
+	}
+	.storymap-area.loading {
+		flex-grow: 1;
+		overflow: clip;
+	}
+	/* the story (which has the full loading height) must not make the loading area taller */
+	.storymap-area.loading > .storymap-slot {
+		position: absolute;
+		inset: 0;
+	}
 
 	.loading-message {
 		position: absolute;
@@ -535,10 +554,15 @@
 		right: 0;
 		background-color: light-dark(#f5f9ff, #212121);
 	}
+	/* it is in the flow so that the loading area is always tall enough to show it */
 	.loading-message.below-heading {
-		inset: 0;
+		position: relative;
 		justify-content: flex-start;
 		padding-top: clamp(1.5rem, 4vw, 2.5rem);
+		padding-bottom: calc(2 * clamp(1.5rem, 4vw, 2.5rem));
+	}
+	/* cover the story with the surface color across the rest of the loading area */
+	.storymap-area.loading:has(> .loading-message.below-heading) {
 		background-color: var(--color-surface);
 	}
 
