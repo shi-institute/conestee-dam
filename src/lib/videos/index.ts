@@ -1,4 +1,5 @@
 import { stories } from '$lib/stories';
+import type { Picture } from '@sveltejs/enhanced-img';
 import data from './videos.json';
 
 export interface Video {
@@ -34,6 +35,8 @@ export interface Episode {
 	description: string;
 	/** The id of the video on YouTube, for its thumbnail. */
 	youtubeId?: string;
+	/** The story's cover image, for its thumbnail. */
+	picture?: Picture;
 }
 
 export const videos = data as Video[];
@@ -71,7 +74,13 @@ export function getNextEpisode(video: Video): Episode | null {
 
 	const story = stories.find((story) => story.href === normalizePath(path));
 	if (!story) return null;
-	return { type, path: story.href, label: story.label, description: story.description };
+	return {
+		type,
+		path: story.href,
+		label: story.label,
+		description: story.description,
+		picture: story.picture
+	};
 }
 
 /** Lists every story in the project as an episode. */
@@ -80,6 +89,7 @@ export function getStoryEpisodes(): Episode[] {
 		type: 'story',
 		path: story.href,
 		label: story.label,
-		description: story.description
+		description: story.description,
+		picture: story.picture
 	}));
 }

@@ -5,9 +5,9 @@
 	import { ProjectTitle, wrapImagesInLightbox } from '$lib/components';
 	import { contributors } from '$lib/contributors';
 	import { stories } from '$lib/stories';
+	import historicAerial from './conestee-aerial-1970.webp?enhanced';
 	import newDam from './new-dam.webp?enhanced';
 	import oldDam from './old-dam.webp?enhanced';
-	import historicAerial from './conestee-aerial-1970.webp?enhanced';
 
 	let exploreDialog: HTMLDialogElement | null = null;
 	let exploreButton: HTMLButtonElement | null = null;
@@ -59,7 +59,12 @@
 	<ul class="cards">
 		{#each stories as story (story.href)}
 			<li>
-				<a href={resolve(story.href)}>
+				<a href={resolve(...([story.href] as Parameters<typeof resolve>))}>
+					<!-- {#if story.picture}
+						<div class="card-image" aria-hidden="true">
+							<enhanced:img src={story.picture} alt="" sizes="(min-width: 40rem) 24rem, 100vw" />
+						</div>
+					{/if} -->
 					<h3>{story.label}</h3>
 					<p>{story.description}</p>
 					<span class="more" aria-hidden="true">Read the story →</span>
@@ -174,7 +179,9 @@
 				alt="Aerial photograph of the mill at Conestee beside the dam, with Lake Conestee stretching behind it and pale mudflats of sediment rising out of the upper lake, 1970"
 				sizes="(min-width: 800px) 480px, 100vw"
 			/>
-			<figcaption>Aerial view of the mill, dam, and Lake Conestee, 1970, with a visible prograding delta</figcaption>
+			<figcaption>
+				Aerial view of the mill, dam, and Lake Conestee, 1970, with a visible prograding delta
+			</figcaption>
 		</figure>
 	</section>
 
@@ -645,6 +652,7 @@
 		background-color: var(--color-surface);
 		border: 1px solid var(--color-border);
 		border-radius: var(--radius-surface);
+		overflow: hidden;
 		color: inherit;
 		text-decoration: none;
 		cursor: pointer;
@@ -665,6 +673,26 @@
 		transform: translateY(0);
 		box-shadow: none;
 		background-color: var(--color-accent-bg);
+	}
+
+	/* the image spans the full width of the card, above its padded content */
+	.card-image {
+		margin: -1.25rem -1.25rem 0.25rem;
+		aspect-ratio: 16 / 9;
+		overflow: hidden;
+		border-bottom: 1px solid var(--color-border);
+		background-color: var(--color-accent-bg);
+	}
+
+	.card-image :global(picture) {
+		display: contents;
+	}
+
+	.card-image :global(img) {
+		display: block;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
 	}
 
 	.cards a:hover .more {

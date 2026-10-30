@@ -154,6 +154,8 @@
 		<div class="thumbnail" aria-hidden="true">
 			{#if episode.youtubeId}
 				<img src="https://i.ytimg.com/vi/{episode.youtubeId}/mqdefault.jpg" alt="" loading="lazy" />
+			{:else if episode.picture}
+				<enhanced:img src={episode.picture} alt="" sizes="9rem" loading="lazy" />
 			{:else}
 				<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 					<path
@@ -595,7 +597,11 @@
 		color: var(--color-accent);
 	}
 
-	.thumbnail img {
+	.thumbnail :global(picture) {
+		display: contents;
+	}
+
+	.thumbnail :global(img) {
 		width: 100%;
 		height: 100%;
 		object-fit: cover;

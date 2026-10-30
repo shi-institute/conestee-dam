@@ -1,0 +1,32 @@
+[
+	{
+		"href": "/story/pollution",
+		"label": "Pollution history",
+		"description": "Textile mills, power plants, sewage, and more: how many kinds of pollution reached the Reedy River.",
+		"image": "pollution.webp"
+	},
+	{
+		"href": "/story/sediment",
+		"label": "Sediment aggradation",
+		"description": "An exploration of how sediment has reduced the size of Lake Conestee over time.",
+		"image": "sediment.webp"
+	},
+	{
+		"href": "/story/watershed",
+		"label": "About the watershed",
+		"description": "What a watershed is and how it works, the Reedy River watershed, and the challenges of an aging dam.",
+		"image": "watershed.webp"
+	},
+	{
+		"href": "/timeline",
+		"label": "Timeline",
+		"description": "A chronological timeline of the dam, the mills, and the river since the 18ᵗʰ century.",
+		"image": "timeline.webp"
+	},
+	{
+		"href": "/story/dam",
+		"label": "The new dam",
+		"description": "Completed in 2025, a containment barrier built just downstream of the old dam.",
+		"image": "new-dam.webp"
+	}
+]
