@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { goto } from '$app/navigation';
+	import { afterNavigate, beforeNavigate, goto } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import { page } from '$app/state';
 	import ProgressRing from '$components/ProgressRing/ProgressRing.svelte';
@@ -8,6 +8,12 @@
 	import { mount, tick, unmount, type Component } from 'svelte';
 	import { expoOut } from 'svelte/easing';
 	import { fade, fly } from 'svelte/transition';
+	import {
+		hasScrollPosition,
+		restoreScrollPosition,
+		saveScrollPosition,
+		scrollToElement
+	} from './scrollMemory';
 	import type { StoryLoad } from './storyLoader';
 	import StoryNavigation from './StoryNavigation.svelte';
 
@@ -289,15 +295,86 @@
 		await tick();
 		const scroll = () => {
 			const target = article?.ownerDocument.getElementById(id);
-			if (target && article?.contains(target)) target.scrollIntoView({ block: 'start' });
+			if (target && article?.contains(target)) scrollToElement(target);
 		};
 		requestAnimationFrame(scroll);
 		setTimeout(scroll, 250);
 	}
 
+	let resolveNavigated!: () => void;
+	/** Resolves once it is known how the page was shown (see `restoring`). */
+	const navigated = new Promise<void>((resolve) => (resolveNavigated = resolve));
+
+	/**
+	 * Whether the reader will be returned to where they were in the story once it loads,
+	 * which is when they return to the page (by going back or forward in the browser's
+	 * history or by reloading it) and a position was remembered.
+	 */
+	let restoring = $state(false);
+
+	// going to a section of the story while it loads takes the reader there instead
+	const initialHash = page.url.hash;
+	$effect(() => {
+		if (hash !== initialHash) {
+			restoring = false;
+		}
+	});
+
+	/** Whether the reader is navigating to another page, which scrolls this one before it is removed. */
+	let leaving = false;
+	let saveTimeout: ReturnType<typeof setTimeout> | undefined;
+
+	let navigatedOnce = false;
+	afterNavigate((navigation) => {
+		leaving = false;
+
+		if (navigatedOnce) {
+			return;
+		}
+		navigatedOnce = true;
+
+		const entry = performance.getEntriesByType('navigation')[0] as
+			PerformanceNavigationTiming | undefined;
+		const returning =
+			navigation.type === 'popstate' ||
+			(navigation.type === 'enter' && (entry?.type === 'back_forward' || entry?.type === 'reload'));
+		restoring = returning && !!story && hasScrollPosition(story.storyId);
+		resolveNavigated();
+	});
+
+	// remember where the reader was in the story right before they leave it
+	beforeNavigate((navigation) => {
+		if (navigation.to?.url.pathname === page.url.pathname) {
+			// moving between sections of the story stays on the page
+			return;
+		}
+
+		clearTimeout(saveTimeout);
+		if (loaded && article && story) {
+			saveScrollPosition(story.storyId, article);
+		}
+		leaving = true;
+	});
+
+	// remember where the reader is in the story as they scroll, in case they leave the site
+	function onScroll() {
+		if (!loaded || leaving) {
+			return;
+		}
+
+		clearTimeout(saveTimeout);
+		saveTimeout = setTimeout(() => {
+			if (!leaving && article && story) {
+				saveScrollPosition(story.storyId, article);
+			}
+		}, 200);
+	}
+
 	// move the story from the off-screen container into this page
 	function adopt(slot: HTMLDivElement) {
-		if (!story) return;
+		if (!story) {
+			return;
+		}
 		const host = story.host;
 		host.style.setProperty('--loading-height', loadingHeight ?? '100dvh');
 		slot.appendChild(host);
@@ -314,7 +391,13 @@
 			article = storyArticle;
 			stopEnhancing = enhanceStory(storyArticle);
 			onStoryLoaded?.(storyArticle);
-			scrollToHash();
+
+			// return to where the reader was when going back (or forward) to the story or
+			// reloading it, and otherwise go to the section in the URL
+			navigated.then(() => {
+				if (cancelled) return;
+				if (!restoring || !restoreScrollPosition(story.storyId, storyArticle)) scrollToHash();
+			});
 
 			// link glossary terms in the story, including any content injected by `onStoryLoaded`
 			fetchGlossary()
@@ -329,6 +412,7 @@
 
 		return () => {
 			cancelled = true;
+			clearTimeout(saveTimeout);
 			stopLinkingGlossaryTerms?.();
 			stopEnhancing?.();
 			story.dispose();
@@ -373,12 +457,14 @@
 	}
 </script>
 
-<svelte:window onkeydown={openEditor} />
+<svelte:window onkeydown={openEditor} onscroll={onScroll} />
 
 {#snippet loadingMessage()}
 	<ProgressRing></ProgressRing>
 	<span>Please wait while the {loadingName} loads.</span>
-	{#if linkedHeading}
+	{#if restoring}
+		<span>You will be returned to where you left off in a moment.</span>
+	{:else if linkedHeading}
 		<span>You will be brought to “{linkedHeading.text}” in a moment.</span>
 	{:else if hash.length > 1}
 		<span>You will be brought to the section in a moment.</span>
