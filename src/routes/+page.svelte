@@ -7,7 +7,7 @@
 	import { stories } from '$lib/stories';
 	import newDam from './new-dam.webp?enhanced';
 	import oldDam from './old-dam.webp?enhanced';
-	import historicMap from './story/pollution/Sanborn-ConesteeMills-1920.png?enhanced';
+	import historicAerial from './conestee-aerial-1970.webp?enhanced';
 
 	let exploreDialog: HTMLDialogElement | null = null;
 	let exploreButton: HTMLButtonElement | null = null;
@@ -170,11 +170,11 @@
 		</div>
 		<figure {@attach wrapImagesInLightbox}>
 			<enhanced:img
-				src={historicMap}
-				alt="Sanborn fire insurance map of Conestee Mills, 1920"
+				src={historicAerial}
+				alt="Aerial photograph of the mill at Conestee beside the dam, with Lake Conestee stretching behind it and pale mudflats of sediment rising out of the upper lake, 1970"
 				sizes="(min-width: 800px) 480px, 100vw"
 			/>
-			<figcaption>Sanborn fire insurance map of Conestee Mills, 1920</figcaption>
+			<figcaption>Aerial view of the mill, dam, and Lake Conestee, 1970, with a visible prograding delta</figcaption>
 		</figure>
 	</section>
 
@@ -479,6 +479,8 @@
 		display: block;
 		width: 100%;
 		height: auto;
+		aspect-ratio: 500 / 310;
+		object-fit: cover;
 		border: 1px solid var(--color-border);
 		border-radius: var(--radius-surface);
 	}
