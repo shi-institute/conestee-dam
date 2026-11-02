@@ -178,6 +178,13 @@
 				released if the old dam were to fail. The lake is also home to a nature preserve. These
 				stories walk through how we arrived here.
 			</p>
+			<p>
+				The past decisions that harmed the watershed and Lake Conestee weren't always made with ill
+				intent. Most were made one at a time, by people solving the problem in front of them. Today
+				we make similar choices about development, stormwater, and new contaminants like PFAS
+				("forever chemicals"), often without seeing the whole system. As you explore these stories,
+				consider what we're setting in motion now, and who will inherit our choices.
+			</p>
 		</div>
 		<figure {@attach wrapImagesInLightbox}>
 			<enhanced:img
