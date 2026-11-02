@@ -1,51 +1,37 @@
 [
 	{
-		"name": "Avery Thompson",
-		"role": "Role",
-		"photo": "avery-thompson.jpg"
+		"name": "Adelaide Bates",
+		"role": "project coordination, narrative development",
+		"photo": "adelaide-bates.png"
 	},
 	{
-		"name": "Jordan Ellis",
-		"role": "Role",
-		"photo": "jordan-ellis.jpg"
+		"name": "Jack Buehner",
+		"role": "GIS, web development",
+		"photo": "jack-buehner.png"
 	},
 	{
-		"name": "Morgan Reyes",
-		"role": "Role",
-		"photo": "morgan-reyes.jpg"
+		"name": "Dave Hargett, Ph.D.",
+		"role": "environmental scientist, technical and historical advisor",
+		"photo": "dave-hargett.png"
 	},
 	{
-		"name": "Riley Chen",
-		"role": "Role",
-		"photo": "riley-chen.jpg"
+		"name": "Kelly Lowry",
+		"role": "project sponsor, content advisor",
+		"photo": "kelly-lowry.png"
 	},
 	{
-		"name": "Casey Patel",
-		"role": "Role",
-		"photo": "casey-patel.jpg"
+		"name": "Michella Stowers",
+		"role": "creative content, animation development",
+		"photo": "michella-stowers.png"
 	},
 	{
-		"name": "Taylor Brooks",
-		"role": "Role",
-		"photo": "taylor-brooks.jpg"
+		"name": "Mary Sturgill",
+		"role": "documentary filmmaker, creative content",
+		"photo": "mary-sturgill.png"
 	},
 	{
-		"name": "Quinn Alvarez",
-		"role": "Role",
-		"photo": "quinn-alvarez.jpg"
-	},
-	{
-		"name": "Sam Okafor",
-		"role": "Role",
-		"photo": "sam-okafor.jpg"
-	},
-	{
-		"name": "Jamie Novak",
-		"role": "Role"
-	},
-	{
-		"name": "Drew Larsen",
-		"role": "Role",
-		"photo": "drew-larsen.jpg"
+		"name": "Mike Winiski",
+		"role": "GIS, web development, project coordination",
+		"photo": "mike-winiski.png"
 	}
 ]
