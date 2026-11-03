@@ -717,4 +717,20 @@
 			transition: none;
 		}
 	}
+
+	/* force the story content to be full-width so that it utilizes the entire desciption box */
+	.description-story :global(.grid-item-lite) {
+		--grid-item-lite-number-of-columns-lg: 12 !important;
+	}
+	/* always use the 1rem font size*/
+	.description-story :global(p.medium) {
+		font-size: 1rem;
+	}
+	.description-story :global(p.large) {
+		font-size: 1.25rem;
+	}
+	.description-story :global(h2.heading),
+	.description-story :global(h3.heading) {
+		font-size: 1.25rem;
+	}
 </style>
