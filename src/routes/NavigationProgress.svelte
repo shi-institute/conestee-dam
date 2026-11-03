@@ -1,7 +1,7 @@
 <script lang="ts">
-	import { beforeNavigate, goto, preloadData } from '$app/navigation';
-	import { disposeStaleStories } from '$lib/components';
-	import { navigating } from '$app/state';
+	import { afterNavigate, beforeNavigate, goto, preloadData } from '$app/navigation';
+	import { navigating, page } from '$app/state';
+	import { disposeStaleStories, type StoryLoad } from '$lib/components';
 
 	/** Navigations that finish faster than this do not show any progress. */
 	const SHOW_DELAY_MS = 100;
@@ -11,6 +11,8 @@
 	const FINISH_DURATION_MS = 250;
 	/** How long going back or forward waits for SvelteKit to start navigating before giving up. */
 	const TRAVERSAL_CLAIM_MS = 250;
+	/** The longest the browser's indicator keeps showing for a story after its page is shown. */
+	const STORY_HOLD_MAX_MS = 30_000;
 
 	let visible = $state(false);
 	let progress = $state(0);
@@ -82,6 +84,61 @@
 		releaseNativeIndicator?.();
 		releaseNativeIndicator = undefined;
 	}
+
+	/**
+	 * Finishes the navigation that keeps the browser's indicator
+	 * showing while a story loads.
+	 */
+	let releaseStoryHold: (() => void) | undefined;
+
+	/**
+	 * Keeps the browser's own loading indicator showing after a page is shown until its story
+	 * has loaded since the page is shown as soon as the story's metadata is available.
+	 *
+	 * Replacing the history entry with itself starts a navigation that can be intercepted
+	 * (like in `withNativeIndicator()`). Any later navigation aborts it, which stops the indicator.
+	 */
+	function holdUntilStoryLoads(story: StoryLoad) {
+		releaseStoryHold?.();
+		releaseStoryHold = undefined;
+
+		const navigation = getNavigation();
+		if (!navigation || story.article) return;
+
+		let release!: () => void;
+		const hold = new Promise<void>((resolve) => (release = resolve));
+		const onNavigate = (event: Event) => {
+			const navigateEvent = event as NavigateEvent;
+			if (!navigateEvent.canIntercept) return;
+			navigateEvent.intercept({ handler: () => hold, focusReset: 'manual', scroll: 'manual' });
+		};
+
+		navigation.addEventListener('navigate', onNavigate);
+		try {
+			// call the original method so that SvelteKit's built-in history and navigation features continue to work
+			History.prototype.replaceState.call(history, history.state, '', location.href);
+		} finally {
+			navigation.removeEventListener('navigate', onNavigate);
+		}
+
+		const timeout = setTimeout(release, STORY_HOLD_MAX_MS);
+		const current = () => {
+			clearTimeout(timeout);
+			release();
+			if (releaseStoryHold === current) releaseStoryHold = undefined;
+		};
+		releaseStoryHold = current;
+		story.ready.then(current);
+	}
+
+	afterNavigate(() => {
+		const story = (page.data as { story?: StoryLoad | null }).story;
+		if (story) holdUntilStoryLoads(story);
+		else {
+			releaseStoryHold?.();
+			releaseStoryHold = undefined;
+		}
+	});
 
 	/** Finishes the intercepted back or forward navigation. */
 	let traversal: { release: () => void; claimed: boolean } | undefined;
@@ -320,6 +377,7 @@
 		clearTimeout(finishTimeout);
 		clearInterval(tickInterval);
 		stopNativeIndicator();
+		releaseStoryHold?.();
 	});
 </script>
 
