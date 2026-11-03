@@ -515,7 +515,7 @@
 			<p>
 				After two rounds of hearings by the SC Supreme Court, the parties reached a settlement. Six
 				years of litigation in Conestee Mills v. City of Greenville resulted in the City of
-				Greenville paying $75,000 in financial damages.
+				Greenville paying $100,000 in financial damages.
 			</p>
 		</Timeline.Entry>
 
