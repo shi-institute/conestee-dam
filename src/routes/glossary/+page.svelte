@@ -87,7 +87,6 @@
 
 		color: var(--color-text);
 		line-height: 1.55;
-		/* leave room for the under construction banner */
 		padding-bottom: 6rem;
 	}
 
