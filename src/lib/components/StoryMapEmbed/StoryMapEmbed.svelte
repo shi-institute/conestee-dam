@@ -14,6 +14,7 @@
 		saveScrollPosition,
 		scrollToElement
 	} from './scrollMemory';
+	import type { ResolvedByline } from '$lib/bylines';
 	import type { StoryLoad } from './storyLoader';
 	import StoryNavigation from './StoryNavigation.svelte';
 
@@ -24,6 +25,7 @@
 		loadingName = 'story',
 		navigation = false,
 		heading = true,
+		byline,
 		components = {},
 		class: className
 	}: {
@@ -67,11 +69,14 @@
 		 *
 		 * The heading shows the story's title, snippet, and cover photo (with its attribution)
 		 * from `getStoryMetadata()`, so it is shown while the rest of the story loads.
-		 * It does not show the byline or published date. If the metadata cannot be loaded,
+		 * It does not show the StoryMaps byline or published date (see `byline`). If the metadata cannot be loaded,
 		 * the StoryMaps cover is shown instead. Turn it off to use a custom cover
 		 * from `onStoryLoaded` instead.
 		 */
 		heading?: boolean;
+
+		/** The author of the story, which is shown below the cover photo in the heading. */
+		byline?: ResolvedByline;
 
 		/**
 		 * Components to mount in place of placeholder code blocks in the story.
@@ -493,6 +498,7 @@
 							attribution: metadata.image.attribution ?? undefined
 						}
 					: undefined}
+				{byline}
 			/>
 		</div>
 	{/if}

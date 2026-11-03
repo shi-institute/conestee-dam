@@ -1,3 +1,4 @@
+import { resolveByline, type Byline } from '$lib/bylines';
 import { stories } from '$lib/stories';
 import type { Picture } from '@sveltejs/enhanced-img';
 import data from './videos.json';
@@ -24,6 +25,8 @@ export interface Video {
 	/** The path of the page to watch or read after this video, such as `/story/pollution`. */
 	next_episode_path: string | null;
 	next_episode_type: 'video' | 'story' | null;
+	/** The author shown on the video's page (but not in links to it). */
+	byline?: Byline;
 }
 
 /** A video or story that can be listed beside a video. */
@@ -39,7 +42,10 @@ export interface Episode {
 	picture?: Picture;
 }
 
-export const videos = data as Video[];
+export const videos = (data as Video[]).map((video) => ({
+	...video,
+	byline: video.byline ? resolveByline(video.byline) : undefined
+}));
 
 export function normalizePath(path: string) {
 	return path.replace(/\/+$/, '') || '/';

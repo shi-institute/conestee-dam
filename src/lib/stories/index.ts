@@ -1,3 +1,4 @@
+import { resolveByline, type Byline } from '$lib/bylines';
 import type { Picture } from '@sveltejs/enhanced-img';
 import data from './stories.json';
 
@@ -11,6 +12,8 @@ export interface Story {
 	 * No image is shown when it is omitted or the file does not exist.
 	 */
 	image?: string;
+	/** The author shown on the story's page. */
+	byline?: Byline;
 }
 
 /** The images in this folder, keyed by file name. */
@@ -27,5 +30,11 @@ const images = Object.fromEntries(
 /** The StoryMaps stories in this project */
 export const stories = (data as Story[]).map((story) => ({
 	...story,
-	picture: story.image ? images[story.image] : undefined
+	picture: story.image ? images[story.image] : undefined,
+	byline: story.byline ? resolveByline(story.byline) : undefined
 }));
+
+/** Finds a story by the path of its page, such as `/story/pollution`. */
+export function findStory(href: string) {
+	return stories.find((story) => story.href === href);
+}

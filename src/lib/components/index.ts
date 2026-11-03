@@ -1,3 +1,4 @@
+export * from './Byline';
 export * from './Lightbox';
 export * from './ProjectTitle';
 export * from './StoryHeading';

@@ -1,7 +1,14 @@
 <script lang="ts">
+	import Byline from '$components/Byline/Byline.svelte';
 	import { wrapImagesInLightbox } from '$components/Lightbox';
+	import type { ResolvedByline } from '$lib/bylines';
 
-	const { title, summary, image }: {
+	const {
+		title,
+		summary,
+		image,
+		byline
+	}: {
 		/** The title of the story. */
 		title: string;
 
@@ -17,6 +24,9 @@
 		 * `attribution` is HTML (it may contain links) that is shown below the photo.
 		 */
 		image?: { src?: string; srcset?: string; alt: string; attribution?: string };
+
+		/** The author of the story, which is shown below the photo. */
+		byline?: ResolvedByline;
 	} = $props();
 </script>
 
@@ -46,6 +56,11 @@
 	{/if}
 	{#if image?.attribution}
 		<p class="attribution">{@html image.attribution}</p>
+	{/if}
+	{#if byline}
+		<div class="byline">
+			<Byline {byline} />
+		</div>
 	{/if}
 </header>
 
@@ -118,6 +133,11 @@
 	}
 	.attribution :global(a:hover) {
 		color: var(--color-accent);
+	}
+
+	/* account for the gap created by the photo attribution */
+	.byline {
+		margin-top: calc(-1 * clamp(1.5rem, 4vw, 2.25rem) + 1rem);
 	}
 
 	img.image {

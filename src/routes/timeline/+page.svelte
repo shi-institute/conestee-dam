@@ -1,7 +1,7 @@
 <script lang="ts">
 	import { StoryHeading, Timeline } from '$lib/components';
 	import { fetchGlossary, linkGlossaryTerms } from '$lib/glossary';
-	import { stories } from '$lib/stories';
+	import { findStory } from '$lib/stories';
 	import type { Attachment } from 'svelte/attachments';
 
 	import photo18901915TextileMillsBuilt from '../story/pollution/timeline-photos/1890-1915-textile-mills-built.webp?enhanced&w=112&aspect=1';
@@ -33,7 +33,7 @@
 	import photo2023ConesteeSellsProperty from './timeline-photos/2023-conestee-sells-property.webp?enhanced&w=112&aspect=1';
 	import photo2026HistoricalKioskConstructed from './timeline-photos/2026-historical-kiosk-constructed.webp?enhanced&w=112&aspect=1';
 
-	const story = stories.find((story) => story.href === '/story/timeline');
+	const story = findStory('/timeline');
 
 	// link glossary terms in the timeline
 	const linkGlossary: Attachment<HTMLElement> = (element) => {
@@ -58,7 +58,7 @@
 	<title>Timeline - Lake Conestee Dam</title>
 </svelte:head>
 
-<StoryHeading title="Timeline" summary={story?.description} />
+<StoryHeading title="Timeline" summary={story?.description} byline={story?.byline} />
 
 <main class="timeline" {@attach linkGlossary}>
 	<Timeline.Track>

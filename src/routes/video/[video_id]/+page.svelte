@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import { ProjectTitle, StoryMapEmbed } from '$lib/components';
+	import { Byline, ProjectTitle, StoryMapEmbed } from '$lib/components';
 	import '$lib/videojs';
 	import { getNextEpisode, getStoryEpisodes, normalizePath, type Episode } from '$lib/videos';
 	import type { YouTubeVideoElement } from '@videojs/html/media/youtube-video';
@@ -241,6 +241,12 @@
 				</div>
 			</div>
 
+			{#if video.byline}
+				<div class="byline">
+					<Byline byline={video.byline} />
+				</div>
+			{/if}
+
 			<button type="button" class="jump-button" onclick={scrollToDescription}>
 				<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
 					<path
@@ -322,7 +328,7 @@
 		box-sizing: border-box;
 		display: grid;
 		grid-template-columns: minmax(0, 1fr);
-		grid-template-areas: 'player' 'title' 'jump' 'related' 'description';
+		grid-template-areas: 'player' 'title' 'byline' 'jump' 'related' 'description';
 		margin-inline: auto;
 		padding: var(--gutter);
 	}
@@ -492,6 +498,11 @@
 		border-color: var(--color-accent);
 		background-color: var(--color-accent);
 		color: var(--color-surface);
+	}
+
+	.byline {
+		grid-area: byline;
+		margin-bottom: 1.5rem;
 	}
 
 	.jump-button {
