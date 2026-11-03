@@ -136,7 +136,8 @@
 			</a>
 		</li>
 
-		<li>
+		<!-- TODO: unhide this and update the service worker to use the correct URL for the archive  -->
+		<!-- <li>
 			<a href={resolve('/archive/[...path]', { path: '' })} data-sveltekit-reload>
 				<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
 					<path
@@ -146,7 +147,7 @@
 				</svg>
 				<span>Archive: Lake Conestee Dam Restoration Project</span>
 			</a>
-		</li>
+		</li> -->
 	</ul>
 </nav>
 

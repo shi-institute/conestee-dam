@@ -16,6 +16,10 @@ sw.addEventListener('install', () => sw.skipWaiting());
 sw.addEventListener('activate', (event) => event.waitUntil(sw.clients.claim()));
 
 sw.addEventListener('fetch', (event) => {
+	// TODO: get rid of this line, which makes the service worker do nothing
+	return;
+
+
 	const url = new URL(event.request.url);
 	if (url.origin !== sw.location.origin) return;
 	if (url.pathname !== ARCHIVE_PREFIX && !url.pathname.startsWith(`${ARCHIVE_PREFIX}/`)) return;
