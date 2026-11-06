@@ -50,6 +50,23 @@
 		view-transition-name: root;
 	}
 
+	/* glossary terms linked by `linkGlossaryTerms` are subtle so that prose with many terms
+	is still easy to read */
+	:global(a.glossary-term) {
+		color: inherit;
+		font: inherit;
+		text-decoration-line: underline;
+		text-decoration-style: dotted;
+		text-decoration-thickness: 1.5px;
+		text-decoration-color: var(--color-accent);
+		text-underline-offset: 0.2em;
+		cursor: help;
+	}
+	:global(a.glossary-term:hover) {
+		text-decoration-style: solid;
+		color: var(--color-accent);
+	}
+
 	/* the page content fades out, then the new page fades in while rising slightly */
 	:global(::view-transition-old(root)) {
 		animation: page-out 120ms cubic-bezier(0.455, 0.03, 0.515, 0.955) both;

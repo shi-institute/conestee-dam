@@ -1097,20 +1097,4 @@
 		color: var(--color-text);
 		line-height: 1.55;
 	}
-
-	/* match the glossary term style used in the StoryMaps stories */
-	.timeline :global(a.glossary-term) {
-		color: inherit;
-		font: inherit;
-		text-decoration-line: underline;
-		text-decoration-style: dotted;
-		text-decoration-thickness: 1.5px;
-		text-decoration-color: var(--color-accent);
-		text-underline-offset: 0.2em;
-		cursor: help;
-	}
-	.timeline :global(a.glossary-term:hover) {
-		text-decoration-style: solid;
-		color: var(--color-accent);
-	}
 </style>
