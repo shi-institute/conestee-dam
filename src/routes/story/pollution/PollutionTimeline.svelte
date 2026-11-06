@@ -124,9 +124,9 @@
 		{/snippet}
 
 		<p>
-			Typhoid fever broke out in Conestee and the greater Greenville area. Employees at Conestee
-			Mills abandoned their houses along the Reedy River and, in 1916, refused to move into new
-			houses near the reservoir and along the river.
+			Typhoid fever, due to contaminated water, broke out in Conestee and the greater Greenville
+			area. Employees at Conestee Mills abandoned their houses along the Reedy River and, in 1916,
+			refused to move into new houses near the reservoir and along the river.
 		</p>
 	</Timeline.Entry>
 
