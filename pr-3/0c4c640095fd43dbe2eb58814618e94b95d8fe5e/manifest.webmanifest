@@ -1,0 +1,20 @@
+{
+	"name": "Lake Conestee Dam",
+	"short_name": "Conestee Dam",
+	"description": "The story of the Lake Conestee Dam on the Reedy River: its history, the pollution it holds back, and the new dam built to contain it.",
+	"start_url": ".",
+	"scope": ".",
+	"display": "standalone",
+	"background_color": "#ffffff",
+	"theme_color": "#4868a9",
+	"icons": [
+		{ "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+		{ "src": "icon-512.png", "sizes": "512x512", "type": "image/png" },
+		{
+			"src": "icon-maskable-512.png",
+			"sizes": "512x512",
+			"type": "image/png",
+			"purpose": "maskable"
+		}
+	]
+}
