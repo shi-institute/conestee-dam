@@ -9,6 +9,7 @@
 	import historicAerial from './conestee-aerial-1970.webp?enhanced';
 	import newDam from './new-dam.webp?enhanced';
 	import oldDam from './old-dam.webp?enhanced';
+	import { fetchGlossary, openGlossaryTerm } from '$lib/glossary';
 
 	const firstVideo = videos.find((video) => video.id === 1);
 
@@ -47,6 +48,20 @@
 
 	/** Which dam is shown in the hero photo. */
 	let era = $state<(typeof facts)[number]['era']>('new');
+
+	/** Opens the glossary pop-up to "PFAS". */
+	async function showPFAS(event: MouseEvent) {
+		// let ctrl/cmd/shift-click open the glossary page in a new tab as usual
+		if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)
+			return;
+		event.preventDefault();
+		try {
+			openGlossaryTerm(await fetchGlossary(), 'pfas');
+		} catch {
+			// if the glossary can't load, fall back to the glossary page
+			location.assign(resolve('/glossary') + '#pfas');
+		}
+	}
 </script>
 
 <svelte:head>
@@ -179,21 +194,27 @@
 				stories walk through how we arrived here.
 			</p>
 			<p>
-				The past decisions that harmed the watershed and Lake Conestee weren't always made with ill
-				intent. Most were made one at a time, by people solving the problem in front of them. Today
-				we make similar choices about development, stormwater, and new contaminants like PFAS
-				("forever chemicals"), often without seeing the whole system. As you explore these stories,
-				consider what we're setting in motion now, and who will inherit our choices.
+				The past decisions that harmed the watershed and Lake Conestee weren't necessarily made with
+				ill intent. Most were made one at a time, by people solving the problem in front of them.
+				Today we make similar choices about development, stormwater, and new contaminants like <a
+					class="glossary-term"
+					href={resolve('/glossary') + '#pfas'}
+					onclick={showPFAS}>PFAS</a
+				> ("forever chemicals"), often without seeing the whole system. As you explore these stories,
+				consider what we're setting in motion now, and who will inherit our choices. Our hope is that
+				a better systems understanding of the watershed, and how discrete choices aggregate over time
+				and space, might lead to improved decisions and stewardship in Greenville County and beyond.
 			</p>
 		</div>
 		<figure {@attach wrapImagesInLightbox}>
 			<enhanced:img
 				src={historicAerial}
-				alt="Aerial photograph of the mill at Conestee beside the dam, with Lake Conestee stretching behind it and pale mudflats of sediment rising out of the upper lake, 1970"
+				alt="Aerial photograph of the mill at Conestee beside the dam, with Lake Conestee stretching behind it and pale mudflats of sediment rising out of the upper lake, 1970."
 				sizes="(min-width: 800px) 480px, 100vw"
 			/>
 			<figcaption>
-				Aerial view of the mill, dam, and Lake Conestee, 1970, with a visible prograding delta
+				Aerial view of the mill, dam, and Lake Conestee, 1970, with a visible prograding delta.
+				Photo scanning courtesy of the Digital Collections Center at Furman University.
 			</figcaption>
 		</figure>
 	</section>
