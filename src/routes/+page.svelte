@@ -9,7 +9,8 @@
 	import historicAerial from './conestee-aerial-1970.webp?enhanced';
 	import newDam from './new-dam.webp?enhanced';
 	import oldDam from './old-dam.webp?enhanced';
-	import { fetchGlossary, openGlossaryTerm } from '$lib/glossary';
+	import { fetchGlossary, linkGlossaryTerms } from '$lib/glossary';
+	import type { Attachment } from 'svelte/attachments';
 
 	const firstVideo = videos.find((video) => video.id === 1);
 
@@ -49,19 +50,29 @@
 	/** Which dam is shown in the hero photo. */
 	let era = $state<(typeof facts)[number]['era']>('new');
 
-	/** Opens the glossary pop-up to "PFAS". */
-	async function showPFAS(event: MouseEvent) {
-		// let ctrl/cmd/shift-click open the glossary page in a new tab as usual
-		if (event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey)
-			return;
-		event.preventDefault();
-		try {
-			openGlossaryTerm(await fetchGlossary(), 'pfas');
-		} catch {
-			// if the glossary can't load, fall back to the glossary page
-			location.assign(resolve('/glossary') + '#pfas');
-		}
-	}
+	/** The glossary terms that are linked on the home page. */
+	const linkedGlossaryTermIds = ['pfas'];
+
+	// link a limited set of glossary terms in the introduction
+	const linkGlossary: Attachment<HTMLElement> = (element) => {
+		let cancelled = false;
+		let stopLinkingGlossaryTerms: (() => void) | undefined;
+
+		fetchGlossary()
+			.then((glossary) => {
+				if (cancelled) return;
+				const entries = glossary.entries.filter((entry) =>
+					linkedGlossaryTermIds.includes(entry.id)
+				);
+				stopLinkingGlossaryTerms = linkGlossaryTerms(element, { ...glossary, entries });
+			})
+			.catch((error) => console.error('Glossary terms could not be linked:', error));
+
+		return () => {
+			cancelled = true;
+			stopLinkingGlossaryTerms?.();
+		};
+	};
 </script>
 
 <svelte:head>
@@ -180,7 +191,7 @@
 	</section>
 
 	<section class="about">
-		<div class="about-text">
+		<div class="about-text" {@attach linkGlossary}>
 			<h2>A river's history, settled in sediment</h2>
 			<p>
 				Built in 1892 to power a textile mill, the Lake Conestee Dam has stood for more than a
@@ -196,14 +207,12 @@
 			<p>
 				The past decisions that harmed the watershed and Lake Conestee weren't necessarily made with
 				ill intent. Most were made one at a time, by people solving the problem in front of them.
-				Today we make similar choices about development, stormwater, and new contaminants like <a
-					class="glossary-term"
-					href={resolve('/glossary') + '#pfas'}
-					onclick={showPFAS}>PFAS</a
-				> ("forever chemicals"), often without seeing the whole system. As you explore these stories,
-				consider what we're setting in motion now, and who will inherit our choices. Our hope is that
-				a better systems understanding of the watershed, and how discrete choices aggregate over time
-				and space, might lead to improved decisions and stewardship in Greenville County and beyond.
+				Today we make similar choices about development, stormwater, and new contaminants like PFAS
+				("forever chemicals"), often without seeing the whole system. As you explore these stories,
+				consider what we're setting in motion now, and who will inherit our choices. Our hope is
+				that a better systems understanding of the watershed, and how discrete choices aggregate
+				over time and space, might lead to improved decisions and stewardship in Greenville County
+				and beyond.
 			</p>
 		</div>
 		<figure {@attach wrapImagesInLightbox}>

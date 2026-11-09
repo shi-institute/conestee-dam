@@ -663,22 +663,6 @@
 		grid-row: 1 !important;
 	}
 
-	/* glossary terms are subtle so that prose with many terms is still easy to read */
-	:global(.storymap-embed a.glossary-term) {
-		color: inherit;
-		font: inherit;
-		text-decoration-line: underline;
-		text-decoration-style: dotted;
-		text-decoration-thickness: 1.5px;
-		text-decoration-color: var(--color-accent);
-		text-underline-offset: 0.2em;
-		cursor: help;
-	}
-	:global(.storymap-embed a.glossary-term:hover) {
-		text-decoration-style: solid;
-		color: var(--color-accent);
-	}
-
 	:global(#storymaps-root) {
 		--sm-story-theme-spacing-xxs: calc(
 			var(--sm-story-theme-spacing-xxs-raw) * var(--storymaps-spacing-scale, 1)
