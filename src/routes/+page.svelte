@@ -4,13 +4,13 @@
 	import logo from '$lib/assets/favicon.svg';
 	import { ProjectTitle, wrapImagesInLightbox } from '$lib/components';
 	import { contributors } from '$lib/contributors';
+	import { fetchGlossary, linkGlossaryTerms } from '$lib/glossary';
 	import { stories } from '$lib/stories';
 	import videos from '$lib/videos/videos.json';
+	import type { Attachment } from 'svelte/attachments';
 	import historicAerial from './conestee-aerial-1970.webp?enhanced';
 	import newDam from './new-dam.webp?enhanced';
 	import oldDam from './old-dam.webp?enhanced';
-	import { fetchGlossary, linkGlossaryTerms } from '$lib/glossary';
-	import type { Attachment } from 'svelte/attachments';
 
 	const firstVideo = videos.find((video) => video.id === 1);
 
@@ -223,7 +223,9 @@
 			/>
 			<figcaption>
 				Aerial view of the mill, dam, and Lake Conestee, 1970, with a visible prograding delta.
-				Photo scanning courtesy of the Digital Collections Center at Furman University.
+				<span class="attribution">
+					Photo scanning courtesy of the Digital Collections Center at Furman University.
+				</span>
 			</figcaption>
 		</figure>
 	</section>
@@ -553,6 +555,10 @@
 		margin-top: 0.5rem;
 		font-size: 0.85rem;
 		color: var(--color-muted);
+	}
+
+	.attribution {
+		opacity: 0.7;
 	}
 
 	/* explore */
