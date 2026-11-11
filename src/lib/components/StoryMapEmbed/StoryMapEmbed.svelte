@@ -4,6 +4,7 @@
 	import { page } from '$app/state';
 	import ProgressRing from '$components/ProgressRing/ProgressRing.svelte';
 	import StoryHeading from '$components/StoryHeading/StoryHeading.svelte';
+	import type { ResolvedByline } from '$lib/bylines';
 	import { fetchGlossary, linkGlossaryTerms } from '$lib/glossary';
 	import { mount, tick, unmount, type Component } from 'svelte';
 	import { expoOut } from 'svelte/easing';
@@ -14,7 +15,6 @@
 		saveScrollPosition,
 		scrollToElement
 	} from './scrollMemory';
-	import type { ResolvedByline } from '$lib/bylines';
 	import type { StoryLoad } from './storyLoader';
 	import StoryNavigation from './StoryNavigation.svelte';
 
@@ -586,6 +586,11 @@
 
 	:global(.storymap-embed.hide-cover article.story > :first-child) {
 		display: none;
+	}
+
+	/* hide StoryMaps' built-in section link buttons since they generate broken links */
+	:global(.storymap-embed button[aria-label='Copy section link']) {
+		display: none !important;
 	}
 
 	/* leave room below the titlebar when jumping to a heading */
