@@ -17,6 +17,7 @@
 	} from './scrollMemory';
 	import type { StoryLoad } from './storyLoader';
 	import StoryNavigation from './StoryNavigation.svelte';
+	import './storymaps-variables.css';
 
 	const {
 		story,
@@ -630,7 +631,6 @@
 		grid-auto-flow: column;
 		display: inline-grid;
 		gap: var(--sm-web-theme-spacing-xxxs);
-		--sm-web-theme-spacing-xxxs: calc(var(--storymaps-spacing-scale, 1) * 0.8rem);
 		align-items: center;
 	}
 	:global(.storymap-embed)
@@ -641,8 +641,6 @@
 				> .icon-wrapper
 		) {
 		width: auto;
-		--sm-web-theme-spacing-xxxs: calc(var(--storymaps-spacing-scale, 1) * 0.8rem);
-		--sm-web-theme-spacing-md: calc(var(--storymaps-spacing-scale, 1) * 4rem);
 		height: var(--sm-web-theme-spacing-md);
 		padding: var(--sm-web-theme-spacing-xxxs);
 	}
@@ -673,12 +671,5 @@
 	:global(.storymap-embed)
 		:global(:is(.immersive, [class*='_immersive__']).categorized .places-section) {
 		grid-row: 1 !important;
-	}
-
-	:global(#storymaps-root) {
-		--sm-story-theme-spacing-xxs: calc(
-			var(--sm-story-theme-spacing-xxs-raw) * var(--storymaps-spacing-scale, 1)
-		);
-		--sm-story-theme-spacing-xxs-raw: 1.6rem;
 	}
 </style>

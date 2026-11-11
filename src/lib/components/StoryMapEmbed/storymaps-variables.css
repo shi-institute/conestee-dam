@@ -1,0 +1,319 @@
+/* esri stopped sending these critical css custom properties in the september 2026 storymaps update */
+#storymaps-root,
+.storymaps-root-external {
+	--sm-app-offset-vertical: 0rem;
+	--sm-web-theme-spacing-xxxxxs: calc(var(--storymaps-spacing-scale, 1) * 0.2rem);
+	--sm-web-theme-spacing-xxxxs: calc(var(--storymaps-spacing-scale, 1) * 0.4rem);
+	--sm-web-theme-spacing-xxxs: calc(var(--storymaps-spacing-scale, 1) * 0.8rem);
+	--sm-web-theme-spacing-xxs: calc(var(--storymaps-spacing-scale, 1) * 1.6rem);
+	--sm-web-theme-spacing-xs: calc(var(--storymaps-spacing-scale, 1) * 2.4rem);
+	--sm-web-theme-spacing-sm: calc(var(--storymaps-spacing-scale, 1) * 3.2rem);
+	--sm-web-theme-spacing-md: calc(var(--storymaps-spacing-scale, 1) * 4rem);
+	--sm-web-theme-spacing-lg: calc(var(--storymaps-spacing-scale, 1) * 4.8rem);
+	--sm-web-theme-spacing-xl: calc(var(--storymaps-spacing-scale, 1) * 6.4rem);
+	--sm-web-theme-spacing-xxl: calc(var(--storymaps-spacing-scale, 1) * 9.6rem);
+	--sm-web-theme-spacing-xxxl: calc(var(--storymaps-spacing-scale, 1) * 12.8rem);
+	--sm-web-theme-spacing-xxxxl: calc(var(--storymaps-spacing-scale, 1) * 19.2rem);
+	--sm-web-theme-spacing-xxxxxl: calc(var(--storymaps-spacing-scale, 1) * 25.6rem);
+	--sm-web-theme-border-radius-small: 0;
+	--sm-web-theme-border-radius-regular: 2px;
+	--sm-web-theme-border-radius-mid: 2px;
+	--sm-web-theme-border-radius-full: 50%;
+	--sm-deprecated-color-dark-green: #002625;
+	--sm-deprecated-color-cool-grey: #7a9998;
+	--sm-deprecated-color-beau-blue: #bfdad9;
+	--sm-deprecated-color-cadet: #3d6665;
+	--sm-deprecated-color-ash-grey: #a9b4b3;
+	--sm-deprecated-color-anti-flash-white: #f3f3f3;
+	--sm-deprecated-color-blue-de-france: #007ac2;
+	--sm-web-theme-white: #fff;
+	--sm-web-theme-black: #000;
+	--sm-web-theme-label-primary: #001f1e;
+	--sm-web-theme-label-secondary: #526b6b;
+	--sm-web-theme-label-disabled: #a5bbbb;
+	--sm-web-theme-label-link: #0077bd;
+	--sm-web-theme-label-reverse: #f6fcfb;
+	--sm-web-theme-label-success: #288134;
+	--sm-web-theme-label-dangerous: #d43121;
+	--sm-web-theme-interactive-default: #00807c;
+	--sm-web-theme-interactive-hover: #00615f;
+	--sm-web-theme-interactive-active: #003836;
+	--sm-web-theme-interactive-disabled: #c7d6d5;
+	--sm-web-theme-surface-default: #ffffff;
+	--sm-web-theme-surface-default-strong: #dbe6e6;
+	--sm-web-theme-surface-hover: #e1f4f2;
+	--sm-web-theme-surface-active: #d0ebe7;
+	--sm-web-theme-surface-disabled: #f4f6f6;
+	--sm-web-theme-surface-error-hover: #fff1f0;
+	--sm-web-theme-outline-subdued-default: #c7d6d5;
+	--sm-web-theme-outline-subdued-hover: #57c7c3;
+	--sm-web-theme-outline-active: #00807c;
+	--sm-web-theme-outline-error: #d43121;
+	--sm-web-theme-outline-tooltip: #779897;
+	--sm-web-theme-background-primary: #ffffff;
+	--sm-web-theme-background-secondary: #f4f6f6;
+	--sm-web-theme-background-overlay: rgba(9, 14, 19, 0.8);
+	--sm-web-theme-outer-glow: rgba(0, 0, 0, 0.2);
+	--sm-print-page-height-letter: 10in;
+	--sm-print-background-color: #ffffff;
+	--sm-print-text-color: #001c1b;
+	--sm-product-variables-color-primary050: #f6fcfb;
+	--sm-product-variables-color-primary300: #9ae0d9;
+	--sm-product-variables-color-primary600: #007e7a;
+	--sm-product-variables-color-success100: #d4f7d9;
+	--sm-product-variables-color-success700: #1d6326;
+	--sm-product-variables-color-error200: #ffdad6;
+	--sm-product-variables-color-error700: #a0291d;
+	--sm-product-variables-color-neutral100: #e8eded;
+	--sm-product-variables-color-neutral300: #c7d6d5;
+	--sm-product-variables-color-neutral950: #0b0f0f;
+	--sm-product-variables-color-link700: #00598f;
+	--sm-product-variables-border-radius-regular: 2px;
+	--sm-product-variables-border-radius-mid: 2px;
+	--sm-product-variables-border-radius-full: 50%;
+	--sm-component-editor-body-color: var(--sm-story-theme-label-paragraph-color);
+	--sm-component-editor-body-color-muted: var(--sm-story-theme-label-paragraph-color-muted);
+	--sm-component-editor-title-color: var(--sm-story-theme-label-title-color);
+	--sm-component-editor-blockquote-color: var(--sm-story-theme-block-quote-color);
+	--sm-story-theme-spacing-xxxxxs-raw: 0.2rem;
+	--sm-story-theme-spacing-xxxxs-raw: 0.4rem;
+	--sm-story-theme-spacing-xxxs-raw: 0.8rem;
+	--sm-story-theme-spacing-xxs-raw: 1.6rem;
+	--sm-story-theme-spacing-xs-raw: 2.4rem;
+	--sm-story-theme-spacing-sm-raw: 3.2rem;
+	--sm-story-theme-spacing-md-raw: 4rem;
+	--sm-story-theme-spacing-xl-raw: 6.4rem;
+	--sm-story-theme-spacing-xxl-raw: 9.6rem;
+	--sm-story-theme-spacing-xxxxxs: calc(
+		var(--sm-story-theme-spacing-xxxxxs-raw) * var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-spacing-xxxxs: calc(
+		var(--sm-story-theme-spacing-xxxxs-raw) * var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-spacing-xxxs: calc(
+		var(--sm-story-theme-spacing-xxxs-raw) * var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-spacing-xxs: calc(
+		var(--sm-story-theme-spacing-xxs-raw) * var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-spacing-xs: calc(
+		var(--sm-story-theme-spacing-xs-raw) * var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-spacing-sm: calc(
+		var(--sm-story-theme-spacing-sm-raw) * var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-spacing-md: calc(
+		var(--sm-story-theme-spacing-md-raw) * var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-spacing-xl: calc(
+		var(--sm-story-theme-spacing-xl-raw) * var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-spacing-xxl: calc(
+		var(--sm-story-theme-spacing-xxl-raw) * var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-byline-font-size: calc(
+		var(--sm-story-theme-item-byline-font-size-raw) * var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-byline-font-size-base: calc(
+		var(--sm-story-theme-item-byline-font-size-base-raw) * var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-byline-font-size-medium: calc(
+		var(--sm-story-theme-item-byline-font-size-medium-raw) * var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-heading-1-font-size: calc(
+		var(--sm-story-theme-item-heading-1-font-size-raw) * var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-heading-1-font-size-base: calc(
+		var(--sm-story-theme-item-heading-1-font-size-base-raw) * var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-heading-1-font-size-medium: calc(
+		var(--sm-story-theme-item-heading-1-font-size-medium-raw) * var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-heading-1-font-size-large: calc(
+		var(--sm-story-theme-item-heading-1-font-size-large-raw) * var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-heading-2-font-size: calc(
+		var(--sm-story-theme-item-heading-2-font-size-raw) * var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-heading-2-font-size-base: calc(
+		var(--sm-story-theme-item-heading-2-font-size-base-raw) * var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-heading-2-font-size-medium: calc(
+		var(--sm-story-theme-item-heading-2-font-size-medium-raw) * var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-heading-2-font-size-large: calc(
+		var(--sm-story-theme-item-heading-2-font-size-large-raw) * var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-heading-3-font-size: calc(
+		var(--sm-story-theme-item-heading-3-font-size-raw) * var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-heading-3-font-size-base: calc(
+		var(--sm-story-theme-item-heading-3-font-size-base-raw) * var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-heading-3-font-size-medium: calc(
+		var(--sm-story-theme-item-heading-3-font-size-medium-raw) * var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-heading-3-font-size-large: calc(
+		var(--sm-story-theme-item-heading-3-font-size-large-raw) * var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-paragraph-xxlarge-font-size: calc(
+		var(--sm-story-theme-item-paragraph-xxlarge-font-size-raw) * var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-paragraph-xxlarge-font-size-base: calc(
+		var(--sm-story-theme-item-paragraph-xxlarge-font-size-base-raw) *
+			var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-paragraph-xlarge-font-size: calc(
+		var(--sm-story-theme-item-paragraph-xlarge-font-size-raw) * var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-paragraph-xlarge-font-size-base: calc(
+		var(--sm-story-theme-item-paragraph-xlarge-font-size-base-raw) *
+			var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-paragraph-large-font-size: calc(
+		var(--sm-story-theme-item-paragraph-large-font-size-raw) * var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-paragraph-large-font-size-base: calc(
+		var(--sm-story-theme-item-paragraph-large-font-size-base-raw) *
+			var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-paragraph-large-font-size-medium: calc(
+		var(--sm-story-theme-item-paragraph-large-font-size-medium-raw) *
+			var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-paragraph-large-font-size-large: calc(
+		var(--sm-story-theme-item-paragraph-large-font-size-large-raw) *
+			var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-paragraph-medium-font-size: calc(
+		var(--sm-story-theme-item-paragraph-medium-font-size-raw) * var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-paragraph-medium-font-size-base: calc(
+		var(--sm-story-theme-item-paragraph-medium-font-size-base-raw) *
+			var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-paragraph-medium-font-size-medium: calc(
+		var(--sm-story-theme-item-paragraph-medium-font-size-medium-raw) *
+			var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-paragraph-medium-font-size-large: calc(
+		var(--sm-story-theme-item-paragraph-medium-font-size-large-raw) *
+			var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-paragraph-small-font-size: calc(
+		var(--sm-story-theme-item-paragraph-small-font-size-raw) * var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-paragraph-small-font-size-base: calc(
+		var(--sm-story-theme-item-paragraph-small-font-size-base-raw) *
+			var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-paragraph-small-font-size-medium: calc(
+		var(--sm-story-theme-item-paragraph-small-font-size-medium-raw) *
+			var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-paragraph-small-font-size-large: calc(
+		var(--sm-story-theme-item-paragraph-small-font-size-large-raw) *
+			var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-caption-font-size: calc(
+		var(--sm-story-theme-item-caption-font-size-raw) * var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-caption-font-size-base: calc(
+		var(--sm-story-theme-item-caption-font-size-base-raw) * var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-caption-font-size-medium: calc(
+		var(--sm-story-theme-item-caption-font-size-medium-raw) * var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-caption-font-size-large: calc(
+		var(--sm-story-theme-item-caption-font-size-large-raw) * var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-quote-font-size: calc(
+		var(--sm-story-theme-item-quote-font-size-raw) * var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-quote-font-size-base: calc(
+		var(--sm-story-theme-item-quote-font-size-base-raw) * var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-quote-font-size-medium: calc(
+		var(--sm-story-theme-item-quote-font-size-medium-raw) * var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-quote-font-size-large: calc(
+		var(--sm-story-theme-item-quote-font-size-large-raw) * var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-quote-attribution-font-size: calc(
+		var(--sm-story-theme-item-quote-attribution-font-size-raw) * var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-quote-attribution-font-size-base: calc(
+		var(--sm-story-theme-item-quote-attribution-font-size-base-raw) *
+			var(--storymaps-spacing-scale, 1)
+	);
+	--sm-story-theme-item-quote-attribution-font-size-medium: calc(
+		var(--sm-story-theme-item-quote-attribution-font-size-medium-raw) *
+			var(--storymaps-spacing-scale, 1)
+	);
+	--sm-briefing-footer-height: var(--sm-story-theme-spacing-xl);
+	--sm-briefing-slide-margin: var(--sm-story-theme-spacing-md);
+}
+
+.website-design-provider[class*='_light-theme__'] {
+	--sm-web-theme-label-primary: #001f1e;
+	--sm-web-theme-label-secondary: #526b6b;
+	--sm-web-theme-label-disabled: #a5bbbb;
+	--sm-web-theme-label-link: #0077bd;
+	--sm-web-theme-label-reverse: #f6fcfb;
+	--sm-web-theme-label-success: #288134;
+	--sm-web-theme-label-dangerous: #d43121;
+	--sm-web-theme-interactive-default: #00807c;
+	--sm-web-theme-interactive-hover: #00615f;
+	--sm-web-theme-interactive-active: #003836;
+	--sm-web-theme-interactive-disabled: #c7d6d5;
+	--sm-web-theme-surface-default: #ffffff;
+	--sm-web-theme-surface-default-strong: #dbe6e6;
+	--sm-web-theme-surface-hover: #e1f4f2;
+	--sm-web-theme-surface-active: #d0ebe7;
+	--sm-web-theme-surface-disabled: #f4f6f6;
+	--sm-web-theme-surface-error-hover: #fff1f0;
+	--sm-web-theme-outline-subdued-default: #c7d6d5;
+	--sm-web-theme-outline-subdued-hover: #57c7c3;
+	--sm-web-theme-outline-active: #00807c;
+	--sm-web-theme-outline-error: #d43121;
+	--sm-web-theme-outline-tooltip: #779897;
+	--sm-web-theme-background-primary: #ffffff;
+	--sm-web-theme-background-secondary: #f4f6f6;
+	--sm-web-theme-background-overlay: rgba(9, 14, 19, 0.8);
+	--sm-web-theme-outer-glow: rgba(0, 0, 0, 0.2);
+}
+
+.website-design-provider[class*='_dark-theme__'] {
+	--sm-web-theme-label-primary: #f6fcfb;
+	--sm-web-theme-label-secondary: #a5bbbb;
+	--sm-web-theme-label-disabled: #526b6b;
+	--sm-web-theme-label-link: #7cbde3;
+	--sm-web-theme-label-reverse: #001f1e;
+	--sm-web-theme-label-success: #67c674;
+	--sm-web-theme-label-dangerous: #f59d94;
+	--sm-web-theme-interactive-default: #57c7c3;
+	--sm-web-theme-interactive-hover: #9ae0d9;
+	--sm-web-theme-interactive-active: #e1f4f2;
+	--sm-web-theme-interactive-disabled: #455959;
+	--sm-web-theme-surface-default: #0b0f0f;
+	--sm-web-theme-surface-default-strong: #354545;
+	--sm-web-theme-surface-hover: #003836;
+	--sm-web-theme-surface-active: #004d4c;
+	--sm-web-theme-surface-disabled: #1b2727;
+	--sm-web-theme-surface-error-hover: #3d0600;
+	--sm-web-theme-outline-subdued-default: #455959;
+	--sm-web-theme-outline-subdued-hover: #00807c;
+	--sm-web-theme-outline-active: #57c7c3;
+	--sm-web-theme-outline-error: #f59d94;
+	--sm-web-theme-outline-tooltip: #779897;
+	--sm-web-theme-background-primary: #0b0f0f;
+	--sm-web-theme-background-secondary: #1b2727;
+	--sm-web-theme-background-overlay: rgba(9, 14, 19, 0.8);
+	--sm-web-theme-outer-glow: rgba(255, 255, 255, 0.2);
+}
+
+/* esri is ignoring the custom-set font weights */
+#storymaps-root#storymaps-root,
+.storymaps-root-external.storymaps-root-external {
+	--sm-story-theme-title-font-weight: var(--sm-story-theme-title-font-weight-bold);
+}
