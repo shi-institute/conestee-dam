@@ -617,10 +617,11 @@
 	/* Esri has a bug where they do not set the display mode for
 	the category buttons inside categorical map tours. It also
 	causes missing styles for the category dropdown. */
-	:global(.storymap-embed) :global(.immersive.categorized > .places-section .sm-button),
+	:global(.storymap-embed)
+		:global(:is(.immersive, [class*='_immersive__']).categorized > .places-section .sm-button),
 	:global(.storymap-embed)
 		:global(
-			.immersive.categorized
+			:is(.immersive, [class*='_immersive__']).categorized
 				[data-testid='categorized-tour-nav-header']
 				:where(.sm-button, .sm-button > .icon-wrapper)
 		) {
@@ -629,11 +630,15 @@
 		grid-auto-flow: column;
 		display: inline-grid;
 		gap: var(--sm-web-theme-spacing-xxxs);
+		--sm-web-theme-spacing-xxxs: calc(var(--storymaps-spacing-scale, 1) * 0.8rem);
 		align-items: center;
 	}
 	:global(.storymap-embed)
 		:global(
-			.immersive.categorized [data-testid='categorized-tour-nav-header'] .sm-button > .icon-wrapper
+			:is(.immersive, [class*='_immersive__']).categorized
+				[data-testid='categorized-tour-nav-header']
+				.sm-button
+				> .icon-wrapper
 		) {
 		width: auto;
 		--sm-web-theme-spacing-xxxs: calc(var(--storymaps-spacing-scale, 1) * 0.8rem);
@@ -652,7 +657,8 @@
 	}
 
 	/* the header of a categorized map tour (shown after choosing a category) should stick below the titlebar */
-	:global(.storymap-embed) :global(.immersive.categorized nav.header) {
+	:global(.storymap-embed)
+		:global(:is(.immersive, [class*='_immersive__']).categorized nav.header) {
 		position: sticky !important;
 		top: var(--header-height) !important;
 		z-index: 2;
@@ -664,7 +670,8 @@
 		grid-row: 1 !important;
 		align-self: start;
 	}
-	:global(.storymap-embed) :global(.immersive.categorized .places-section) {
+	:global(.storymap-embed)
+		:global(:is(.immersive, [class*='_immersive__']).categorized .places-section) {
 		grid-row: 1 !important;
 	}
 
