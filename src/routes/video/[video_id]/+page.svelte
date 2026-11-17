@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { resolve } from '$app/paths';
-	import { Byline, ProjectTitle, StoryMapEmbed } from '$lib/components';
+	import { Byline, ContainmentTitle, StoryMapEmbed } from '$lib/components';
 	import '$lib/videojs';
 	import { getNextEpisode, getStoryEpisodes, normalizePath, type Episode } from '$lib/videos';
 	import type { YouTubeVideoElement } from '@videojs/html/media/youtube-video';
@@ -187,7 +187,7 @@
 			<div class="title-row">
 				{#if video.id === PROJECT_TITLE_VIDEO_ID}
 					<div class="project-title">
-						<ProjectTitle />
+						<ContainmentTitle />
 					</div>
 				{:else}
 					<div class="title">
@@ -434,7 +434,7 @@
 	}
 
 	.project-title {
-		--project-title-size: clamp(2.5rem, 6vw, 4rem);
+		--project-title-size: clamp(2.5rem, 6vw, 4.5rem);
 		--project-subtitle-size: clamp(0.9rem, 1.8vw, 1.125rem);
 		--project-title-shadow: none;
 	}

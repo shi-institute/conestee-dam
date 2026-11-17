@@ -1,5 +1,5 @@
 <script lang="ts">
-	import { ProjectTitle, StoryMapEmbed } from '$lib/components';
+	import { ContainmentTitle, StoryMapEmbed } from '$lib/components';
 	import { mount } from 'svelte';
 	import type { PageProps } from './$types';
 
@@ -15,7 +15,7 @@
 		target.style.margin = '0 auto';
 		firstBlock.firstElementChild.innerHTML = '';
 		firstBlock.firstElementChild.appendChild(target);
-		mount(ProjectTitle, { target });
+		mount(ContainmentTitle, { target });
 	}
 
 	let { data }: PageProps = $props();

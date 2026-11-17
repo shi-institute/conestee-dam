@@ -2,7 +2,7 @@
 	import { afterNavigate } from '$app/navigation';
 	import { resolve } from '$app/paths';
 	import logo from '$lib/assets/favicon.svg';
-	import { ProjectTitle, wrapImagesInLightbox } from '$lib/components';
+	import { ContainmentTitle, wrapImagesInLightbox } from '$lib/components';
 	import { contributors } from '$lib/contributors';
 	import { fetchGlossary, linkGlossaryTerms } from '$lib/glossary';
 	import { stories } from '$lib/stories';
@@ -138,7 +138,7 @@
 			</div>
 		</div>
 		<div class="hero-inner">
-			<ProjectTitle />
+			<ContainmentTitle />
 			<p class="lead">
 				Since 1892, a dam on the Reedy River has shaped the land, the water, and the communities
 				around it. Explore how Lake Conestee came to hold more than a century of sediment, and how a

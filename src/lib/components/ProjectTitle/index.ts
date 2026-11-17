@@ -1,1 +1,1 @@
-export { default as ProjectTitle } from './ProjectTitle.svelte';
+export { default as ContainmentTitle } from './ContainmentTitle.svelte';
