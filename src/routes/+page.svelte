@@ -140,9 +140,11 @@
 		<div class="hero-inner">
 			<DammedTitle />
 			<p class="lead">
-				Since 1892, a dam on the Reedy River has shaped the land, the water, and the communities
-				around it. Explore how Lake Conestee came to hold more than a century of sediment, and how a
-				new dam now keeps it in place.
+				Since it was constructed in 1892, a dam on the Reedy River has had a quiet, but profound
+				impact in the Upstate. Explore that dam’s story here--its purpose, its fate, and how its
+				reservoir became a trap for pollutants, wastes, and sediments flowing into it for over a
+				century. Now, a new dam helps protect the future of the Reedy River, and that of the
+				communities downstream.
 			</p>
 			<div class="actions">
 				<a
@@ -196,23 +198,14 @@
 			<p>
 				Built in 1892 to power a textile mill, the Lake Conestee Dam has stood for more than a
 				century, and its reservoir has shaped the area through many phases of its history. Over
-				those decades, mills, power plants, sewage, and industry sent contaminated sediment down the
-				Reedy River, and much of it came to rest behind the dam.
+				those decades, mills, power plants, municipalities, and industry sent contaminated sediment
+				and sewage down the Reedy River, and much of it came to rest behind the dam.
 			</p>
 			<p>
-				Today, the new Lake Conestee Dam acts as a containment barrier so that sediment cannot be
-				released if the old dam were to fail. The lake is also home to a nature preserve. These
-				stories walk through how we arrived here.
-			</p>
-			<p>
-				The past decisions that harmed the watershed and Lake Conestee weren't necessarily made with
-				ill intent. Most were made one at a time, by people solving the problem in front of them.
-				Today we make similar choices about development, stormwater, and new contaminants like PFAS
-				("forever chemicals"), often without seeing the whole system. As you explore these stories,
-				consider what we're setting in motion now, and who will inherit our choices. Our hope is
-				that a better systems understanding of the watershed, and how discrete choices aggregate
-				over time and space, might lead to improved decisions and stewardship in Greenville County
-				and beyond.
+				Today, the new Lake Conestee Dam acts as a barrier so that sediment cannot be released if
+				the old dam were to fail. The area is also home to a nature preserve. These stories walk
+				through how we arrived here and how understanding that history can hopefully lead to better
+				stewardship of the watershed in the future.
 			</p>
 		</div>
 		<figure {@attach wrapImagesInLightbox}>
