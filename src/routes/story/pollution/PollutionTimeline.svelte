@@ -13,17 +13,20 @@
 </script>
 
 <Timeline.Track>
-	<Timeline.Entry date={1785}>
+	<Timeline.Entry date={1794}>
 		{#snippet heading()}
-			First land grant along the Reedy River
+			First land grants along the Reedy River
 		{/snippet}
 		{#snippet caption()}
-			1785
+			1794
 		{/snippet}
 
 		<p>
-			The first land grant along the Reedy River is made, followed by another in 1794, and the
-			development of multiple dams and mills.
+			The first land grants along the upper Reedy River were made after the Revolutionary War.
+			Wherever grants included a river shoals, dams and mills would quickly follow. One grant was
+			made in 1794, at the place that would become known as “Reedy River.” Around a grist mill, a
+			sawmill, and then a textile factory a village grew. After over more than a century, the
+			factory and the village was renamed Conestee.
 		</p>
 	</Timeline.Entry>
 
@@ -36,8 +39,9 @@
 		{/snippet}
 
 		<p>
-			Carruth’s armory, which has now constructed a musket factory and accompanying dam, begins
-			manufacturing muskets for the cause of the War of 1812.
+			In response to the War of 1812, Carruth constructs a musket factory to build standardized
+			“Springfield” long rifles under government contracts. Located one mile upstream from Conestee,
+			Carruth used a dam on the Reedy to power his operation.
 		</p>
 	</Timeline.Entry>
 
@@ -49,7 +53,34 @@
 			1820
 		{/snippet}
 
-		<p>A village is developed around the mills at the Reedy River.</p>
+		<p>Wherever dams and mills were constructed along the river, settlements soon followed.</p>
+	</Timeline.Entry>
+
+	<Timeline.Entry date={1831}>
+		{#snippet heading()}
+			McBee constructs dam
+		{/snippet}
+		{#snippet caption()}
+			1831
+		{/snippet}
+
+		<p>
+			At Reedy River, Vardry McBee constructs a dam and Reedy River Factory at Conestee. Here he
+			produced woolen and cotton goods and manufactured paper.
+		</p>
+	</Timeline.Entry>
+	<Timeline.Entry date={1861}>
+		{#snippet heading()}
+			Civil War production
+		{/snippet}
+		{#snippet caption()}
+			1861
+		{/snippet}
+
+		<p>
+			During the Civil War, Reedy River Factory was fully engaged in producing uniforms and other
+			supplies for the Confederacy.
+		</p>
 	</Timeline.Entry>
 
 	<Timeline.Entry
@@ -80,9 +111,9 @@
 		{/snippet}
 
 		<p>
-			A sewer system is constructed for the City of Greenville; the collection system, which did not
-			have an accompanying treatment facility, discharges at the junction of Richland Creek and
-			Reedy River (present-day Cleveland Park).
+			The City of Greenville constructs its first sewage collection system. It simply conveniently
+			piped the waste downstream, discharging it at the junction of Richland Creek and Reedy River
+			(present-day Cleveland Park).
 		</p>
 	</Timeline.Entry>
 
@@ -95,24 +126,38 @@
 		{/snippet}
 
 		<p>
-			The Reedy River Manufacturing Company built a dam across the Reedy River to provide mechanical
-			power for its growing textile factory. This dam and power works were first converted to
-			hydroelectric power in 1916, providing more power for what was then Conestee Mill. The 1892
-			stone-masonry dam was a remarkable construction achievement when it was built. It created a
-			large reservoir, extraordinary for its time at 140 acres.
-		</p>
-
-		<p>
-			(This dam remains today, though it is now submerged by the New Lake Conestee Dam, which was
-			completed in 2025 and is located immediately downstream of the old dam. This new structure
-			provides a ‘containment barrier’ to keep the massive amount of contaminated sediment behind it
-			from being released if the old dam were to fail.)
+			The Reedy River Manufacturing Company, under the leadership of Joel D. Charles, builds a new
+			dam across the Reedy River to provide mechanical power for its growing textile factory. The
+			1892 stone-masonry dam was a remarkable engineering and construction achievement when it was
+			built, taller and longer than any similar dam in the upstate. It created a large reservoir,
+			extraordinary for its time at roughly 140 acres. This dam and power works were first converted
+			to hydroelectric power production in 1916. This dam remains today, though it is now submerged
+			by the New Lake Conestee Dam, which was completed in 2025. This new structure eliminates the
+			very serious concern that the old dam could fail at any time. The new dam provides a
+			'containment barrier' to keep the massive amount of contaminated sediment behind the old dam
+			from being released in the event of a failure.
 		</p>
 
 		<enhanced:img
 			src="./timeline-photos/1892-dam-built.webp"
 			alt="1893 Sanborn fire insurance map of the Reedy River Manufacturing Company cotton mills"
 		/>
+	</Timeline.Entry>
+	<Timeline.Entry date={1908}>
+		{#snippet heading()}
+			Flood of record
+		{/snippet}
+		{#snippet caption()}
+			1908
+		{/snippet}
+
+		<p>
+			The flood of record occurred in August 1908. Some accounts reported the dam had been
+			destroyed, but this was not the case. There had been only limited damage to the dam. The
+			impacts inside the mill were far worse, where the lower two floors of equipment, materials in
+			process, and products were flooded. It took a year for the mill to be retooled and come back
+			on line.
+		</p>
 	</Timeline.Entry>
 
 	<Timeline.Entry date={1915}>
@@ -186,7 +231,7 @@
 
 		<p>
 			The Greater Greenville Sanitation District is created (now ReWa), resulting in the
-			construction of Greenville’s first ‘modern’ wastewater treatment plant.
+			construction of Greenville's first 'modern' wastewater treatment plant.
 		</p>
 	</Timeline.Entry>
 
@@ -256,7 +301,7 @@
 		<p>
 			During the Great Depression, Conestee Mills closed in 1939 and never operated again as a
 			locally owned textile plant. Over the next several decades, other mills are sold and cease
-			operations, marking the sunset of Greenville’s days as the “Textile Center of the World.”
+			operations, marking the sunset of Greenville's days as the “Textile Center of the World.”
 		</p>
 
 		<p>
@@ -295,15 +340,71 @@
 		{/snippet}
 
 		<p>
-			Conestee Foundation acquires the Lake Conestee Dam and Reservoir, initiates decades of
-			assessments, studies, design, and permitting, and enters a Voluntary Cleanup Contract to
-			establish a long-term management plan for the Lake Conestee Site.
+			The Foundation receives a grant from the State to acquire the Lake Conestee Dam and Reservoir.
+			The grant came from the State's civil settlement with Colonial Pipeline, following its
+			devastating 1996 petroleum spill to the lower Reedy River, downstream of Conestee. This was
+			the first project authorized under the Reedy River Restoration Fund.
+		</p>
+		<p>
+			The purchase required extensive assessment of contamination of the former reservoir under a
+			Voluntary Cleanup Contract. Those initial efforts were completed, and a Restrictive Covenant
+			was formalized in 2007. This agreement specified how the lake site and the dam would be
+			managed to control the massive amount of hazardous waste present at the site.
 		</p>
 
 		<enhanced:img
 			src="./timeline-photos/2000-foundation-acquires.webp"
 			alt="Water flowing over the 1892 Lake Conestee Dam"
 		/>
+	</Timeline.Entry>
+	<Timeline.Entry date={2004}>
+		{#snippet heading()}
+			Site qualifies as a 'Superfund-Caliber' site
+		{/snippet}
+		{#snippet caption()}
+			2004
+		{/snippet}
+
+		<p>
+			Based on extensive sampling of sediment, soils, and waters of the old reservoir, SCDHEC
+			determines the Lake Conestee Site qualifies as a federal “Superfund-Caliber” Site. This
+			information was critical input to the management requirements specified in the 2007
+			Restrictive Covenant. The site was not put on the federal Superfund List.
+		</p>
+	</Timeline.Entry>
+
+	<Timeline.Entry date={2008}>
+		{#snippet heading()}
+			Dam engineering study conducted
+		{/snippet}
+		{#snippet caption()}
+			2008
+		{/snippet}
+
+		<p>
+			The first of several engineering studies of the old Lake Conestee Dam was conducted. Further
+			studies in 2012, 2019, and 2023 examined all feasibility options for rehabilitating or
+			replacing the 1892 structure. All studies concluded that due to the age and condition of the
+			old dam it could not be rehabilitated at any price. These efforts culminated in the completion
+			of the new Lake Conestee Dam in 2025.
+		</p>
+	</Timeline.Entry>
+	<Timeline.Entry date={2024}>
+		{#snippet heading()}
+			EPA formally recognizes the Lake Conestee Site as a 'Superfund-Caliber' site
+		{/snippet}
+		{#snippet caption()}
+			2024
+		{/snippet}
+
+		<p>
+			The EPA formally recognizes the “Lake Conestee Site” is a "large, serious, and complex"
+			contaminated hazardous waste site, and that it meets all requirements of a federal
+			"Superfund-Caliber" site. To avoid putting the Site on the federal Superfund List, EPA assigns
+			the Site to SCDES to oversee its long-term care, and to assure contaminants of concern are
+			properly managed, and are not allowed to be released downstream. This classification of the
+			Site is unrelated to the new dam construction.
+		</p>
 	</Timeline.Entry>
 
 	<Timeline.Entry date={2025} icon={{ src: photo2025NewDamCompleted, alt: '' }}>
@@ -315,17 +416,22 @@
 		{/snippet}
 
 		<p>
-			A new dam is completed in October 2025, immediately downstream of the old 1892 Lake Conestee
-			Dam. Thanks to the dedication of the Lake Conestee Dam Rehabilitation Project, the old Lake
+			A new dam is completed in October 2025, funded primarily by the SC General Assembly, with
+			limited contributions from others. Located immediately downstream of the old 1892 Lake
+			Conestee Dam the new structure provides a “containment barrier” designed to minimize the
+			release of legacy contaminants trapped behind the old dam.
+		</p>
+		<p>
+			Thanks to the dedication of the Lake Conestee Dam Rehabilitation Project, the old Lake
 			Conestee Dam no longer presents a risk of physical failure and the catastrophic release of
 			massive quantities of contaminated sediments downstream.
-		</p>
 
-		<enhanced:img
-			src="./timeline-photos/2025-new-dam-completed.webp"
-			alt="Aerial photograph of water flowing over the completed new Lake Conestee Dam in October 2025"
-		/>
-	</Timeline.Entry>
+			<enhanced:img
+				src="./timeline-photos/2025-new-dam-completed.webp"
+				alt="Aerial photograph of water flowing over the completed new Lake Conestee Dam in October 2025"
+			/>
+		</p></Timeline.Entry
+	>
 
 	<Timeline.Entry date={2027} icon={{ src: photo2027TakeOwnership, alt: '' }}>
 		{#snippet heading()}
@@ -336,11 +442,12 @@
 		{/snippet}
 
 		<p>
-			Today, the new dam is owned by the Lake Conestee Dam Rehabilitation Project, LLC. Pending
-			legislative authorization, a new governmental entity (the Lake Conestee Dam Authority) is
-			expected to take ownership of the dam in 2027. That entity will be responsible for ongoing
-			maintenance and monitoring of the dam. The agency will be overseen by appointed
-			representatives from Greenville, Laurens, and Greenwood Counties.
+			The new dam completed in 2025 is owned by the Lake Conestee Dam Rehabilitation Project, LLC, a
+			trust entity created to administer the construction project. Pending legislative
+			authorization, a new governmental entity (the Lake Conestee Dam Authority) is expected to take
+			ownership of the dam in 2027. That entity will be responsible for ongoing maintenance and
+			monitoring of the dam indefinitely. The agency will be overseen by appointed representatives
+			from Greenville, Laurens, and Greenwood Counties.
 		</p>
 
 		<enhanced:img
