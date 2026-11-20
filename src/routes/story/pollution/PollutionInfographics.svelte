@@ -30,7 +30,7 @@
 </script>
 
 {#snippet heavyMetalsNarrative()}
-	<p><strong>Heavy Metals (Cadmium, Chromium, Copper, Lead, Zinc):</strong></p>
+	<p><strong>Heavy Metals (Cadmium, Chromium, Copper, Lead, Mercury, Zinc):</strong></p>
 	<p>
 		Naturally occurring. Also used in various industries, including textiles, electroplating, and
 		metal finishing. These stable elements do not break down in the environment, remain bound to
