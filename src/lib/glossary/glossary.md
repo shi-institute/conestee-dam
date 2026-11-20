@@ -32,6 +32,10 @@ Establishes the basic structure for regulating discharges of pollutants into the
 
 Refers to structures, physical barriers, or completely enclosed units designed under U.S. Environmental Protection Agency (EPA) regulations to stop hazardous wastes, chemicals, oils, or lead dust from escaping into the environment, groundwater, or surrounding areas ([EPA](https://www.epa.gov/oil-spills-prevention-and-preparedness-regulations/spill-prevention-control-and-countermeasure-spcc)).
 
+## Ecological Screening Values {#ecological-screening-values}
+
+Concentrations of a contaminant in soil, sediment, or water that are used as an early check for possible harm to plants and animals. Measured levels at a site are compared to these values. A contaminant that exceeds its value is flagged for closer study; it is not automatically considered harmful. Screening values are a first step, not cleanup levels ([EPA](https://archive.epa.gov/region5/superfund/ecology/web/html/screeningbench.html)).
+
 ## Effluent
 
 Treated or untreated liquid waste, including sewage, industrial chemicals, or water from manufacturing or commercial processes that leaves a facility, such as a wastewater treatment plant, and enters a natural water body ([EPA](https://www.epa.gov/eg)).
@@ -40,13 +44,17 @@ Treated or untreated liquid waste, including sewage, industrial chemicals, or wa
 
 Natural or man-made substances that mimic, block, or interfere with the body's natural hormones and disrupt normal endocrine system functions ([Endocrine Society](https://www.endocrine.org/patient-engagement/endocrine-library/edcs)).
 
+## Heavy Metals (Cadmium, Chromium, Copper, Lead, Mercury, Zinc) {#heavy-metals}
+
+A broad group of more than 30 elements that can harm people and other living things, some at very low concentrations. They occur naturally in many geologic settings and are also released by industry, including textile manufacturing, electroplating, metal finishing, and the burning of coal and other fuels. Some, such as zinc, copper, and chromium, are needed by humans and other organisms in tiny amounts but are harmful at higher levels. Others, including lead, cadmium, arsenic, and mercury, serve no beneficial role in the body, can build up over time, and can cause organ damage, immune effects, and cancer ([EPA](https://www.epa.gov/sites/default/files/2014-11/documents/human_health_effects.pdf)). Heavy metals cling to sediment particles and tend to stay bound to riverbed sediments indefinitely, as long as the sediment is left undisturbed.
+
+## Human Health Screening Values {#human-health-screening-values also="Human screening values"}
+
+Risk-based concentrations of contaminants in soil, air, or drinking water, calculated from toxicity data and typical exposure assumptions. They are used as an early check on whether contamination might affect people and needs further investigation. Exceeding a screening value is a signal to look closer; these values are not cleanup standards ([EPA](https://www.epa.gov/risk/regional-screening-table)).
+
 ## Hydrologic Unit Codes
 
 Watershed sizes are classified using Hydrologic Unit Codes (HUCs), a standard system for identifying and delineating watersheds from the smallest to the largest. These areas do not exist in isolation; smaller watersheds nest within the bounds of larger watersheds ([USGS](https://nas.er.usgs.gov/about/hucs.aspx)).
-
-## Heavy Metals (Cadmium, Chromium, Copper, Lead, Zinc) {#heavy-metals}
-
-Naturally occurring. Also used in various industries, including textiles, electroplating, and metal finishing. These stable elements do not break down in the environment, remain bound to riverbed sediments indefinitely, and can affect multiple organ systems, including known or suspected carcinogens ([EPA](https://www.epa.gov/sites/default/files/2014-11/documents/human_health_effects.pdf)).
 
 ## Impervious Surface
 
@@ -62,19 +70,19 @@ A porous surface area that allows rainwater to soak naturally into the ground, r
 
 ## Per- and Polyfluoroalkyl Substances (PFAS) {#pfas}
 
-Commonly known as ‘forever chemicals,’ these artificial chemicals are found in non-stick cookware, waterproof and fire-resistant clothing, stain-resistant carpets, food packaging, and firefighting foam. PFAS are extremely persistent in the environment (hence the ‘forever’ distinction). PFAS are known to accumulate in blood, soil, water, and wildlife and are associated with human health risks, including reproductive and developmental effects, cancer risk, compromised immune system, and more ([EPA](https://www.epa.gov/pfas/our-current-understanding-human-health-and-environmental-risks-pfas)).
+Commonly known as ‘forever chemicals,’ this group of more than 10,000 man-made compounds has been manufactured since the 1940s and is now found throughout the environment and in living things, including people. PFAS are used in non-stick cookware, waterproof and fire-resistant clothing, stain-resistant carpets, food packaging, and firefighting foam. They are extremely persistent and accumulate in blood, tissues, soil, sediment, water, and wildlife. They are associated with reproductive and developmental effects, cancer risk, weakened immune systems, and metabolic disruption ([EPA](https://www.epa.gov/pfas/our-current-understanding-human-health-and-environmental-risks-pfas)). In 2024, EPA listed two of the most common, PFOS and PFOA, as hazardous substances, and drinking water limits for them are now as low as 4 ng/L (parts per trillion).
 
 ## Pesticides
 
-Substances intended to kill or control pests such as weeds, insects, rodents, fungi, bacteria, or other organisms. The human health effects vary by pesticide type; however, they may affect the nervous system, be carcinogens, or affect the body's hormone or endocrine system ([EPA](https://www.epa.gov/pesticide-science-and-assessing-pesticide-risks/human-health-issues-related-pesticides)).
+Chemical or biological substances used to kill or control pests such as weeds, insects, rodents, and fungi. Many also affect organisms they weren't meant to target, and they and their breakdown products can build up in soils, sediments, and living things. Many pesticides are persistent, bioaccumulative, and toxic, concentrating as they move up the food chain, and some are harmful at extremely low concentrations. Several, such as DDT and other organochlorines, are now banned. Effects on people vary by pesticide but include poisoning, nervous system and cognitive effects, reproductive harm, birth defects, endocrine disruption, and cancer ([EPA](https://www.epa.gov/pesticide-science-and-assessing-pesticide-risks/human-health-issues-related-pesticides)).
 
 ## Polycyclic Aromatic Hydrocarbons (PAHs) {#pahs}
 
-Found in coal tar, coal gas, creosote, road and roofing tar, asphalt, and petroleum distillates. These chemicals can impact human health in a variety of ways depending on the type of PAHs, and may cause “harmful effects on skin, body fluids, and the body’s system for fighting disease.” Several of these chemicals are known carcinogens ([CDC](https://wwwn.cdc.gov/tsp/PHS/PHS.aspx?phsid=120&toxid=25)).
+A group of hundreds of carbon-based chemicals, 16 of which are designated priority pollutants because of their toxicity, persistence, and widespread presence. They come mainly from burning coal, petroleum, and other fuels, and are found in coal tar, coal gas, coal ash, creosote, road and roofing tar, asphalt, and petroleum products. Effects depend on the type, but PAHs can harm the skin, body fluids, and immune system, and several are known carcinogens ([CDC](https://wwwn.cdc.gov/tsp/PHS/PHS.aspx?phsid=120&toxid=25)). They bind tightly to soil and sediment particles, where they can persist for decades.
 
 ## Polychlorinated Biphenyls (PCBs) {#pcbs}
 
-Used in electrical transformers and capacitors, in some textile processing, and in a variety of other industrial processes. These chemicals have been demonstrated to be linked to a variety of adverse human (and animal) health effects, including reproductive effects, developmental effects, neurological effects, endocrine disruption, cancer risks, compromised immune system, and more ([EPA](https://www.epa.gov/pcbs/learn-about-polychlorinated-biphenyls)).
+Chlorinated chemicals used from the 1930s in electrical transformers and capacitors because they insulate well, and also in textile processing, flame retardants, plastics, adhesives, paints, caulking, and hydraulic systems. US production was halted in the late 1970s, but PCBs resist breakdown and persist for decades, mostly bound up in sediments and soils. They are persistent, bioaccumulative, and toxic, and are linked to reproductive, developmental, neurological, and immune effects, endocrine disruption, and cancer in people and animals ([EPA](https://www.epa.gov/pcbs/learn-about-polychlorinated-biphenyls)).
 
 ## Prograding Delta
 
