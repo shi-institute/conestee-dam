@@ -319,6 +319,32 @@
 			the 1970s, new sites and sources of contamination will continue to be recognized.
 		</p>
 	</Timeline.Entry>
+	<Timeline.Entry date={1972}>
+		{#snippet heading()}
+			Federal Clean Water Act is signed into law
+		{/snippet}
+		{#snippet caption()}
+			1972
+		{/snippet}
+
+		<p>
+			The Federal Clean Water Act (CWA) is signed, establishing a strong regulatory authority to
+			protect the nation’s waters, ambitiously aspiring to make them all ‘fishable and swimmable.’
+		</p>
+	</Timeline.Entry>
+	<Timeline.Entry date={1987}>
+		{#snippet heading()}
+			South Carolina’s Pollution Control Act is enacted
+		{/snippet}
+		{#snippet caption()}
+			1987
+		{/snippet}
+
+		<p>
+			South Carolina’s Pollution Control Act provided a broader state framework for environmental
+			pollution control.
+		</p>
+	</Timeline.Entry>
 
 	<Timeline.Entry date={1999} icon={{ src: photo1999FoundationChartered, alt: '' }}>
 		{#snippet heading()}

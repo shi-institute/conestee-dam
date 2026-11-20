@@ -24,18 +24,20 @@
 </script>
 
 <Timeline.Track>
-	<Timeline.Entry date={1785}>
+	<Timeline.Entry date={1794}>
 		{#snippet heading()}
-			Early land ownership in the future Lake Conestee area
+			First land grants along the Reedy River
 		{/snippet}
 		{#snippet caption()}
-			1785
+			1794
 		{/snippet}
 
 		<p>
-			Land records show early ownership of property in the area that would become part of the Lake
-			Conestee site. The development of multiple dams and mills is known to have occurred as early
-			as the 1790s.
+			The first land grants along the upper Reedy River were made after the Revolutionary War.
+			Wherever grants included a river shoals, dams and mills would quickly follow. One grant was
+			made in 1794, at the place that would become known as “Reedy River.” Around a grist mill, a
+			sawmill, and then a textile factory a village grew. After over more than a century, the
+			factory and the village was renamed Conestee.
 		</p>
 	</Timeline.Entry>
 
